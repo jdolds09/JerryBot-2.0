@@ -16,13 +16,17 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 # Bot coming online message
 @bot.event
 async def on_ready():
-    print('Powering On')
-    print(bot.user.name)
+    print("JerryBot2.0 Powering On")
 
-#Ignore messages from the bot
+#React to messages
 @bot.event
 async def on_message(message):
     if message.author == bot.user:
         return
+
+    #Set all characters of message to lower case
+    msg = message.content.lower()
+    if msg == "!hello":
+        await message.channel.send('Hello World!')
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
