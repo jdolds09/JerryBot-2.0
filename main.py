@@ -18,6 +18,10 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 async def on_ready():
     print("JerryBot2.0 Powering On")
 
+commands = ["cog.poll"]
+
+async def setup_hook()
+
 #React to messages
 @bot.event
 async def on_message(message):
@@ -26,7 +30,5 @@ async def on_message(message):
 
     #Set all characters of message to lower case
     msg = message.content.lower()
-    if msg.startswith("!hello"):
-        await message.channel.send('Hello World!')
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
