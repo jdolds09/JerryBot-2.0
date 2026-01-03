@@ -5,9 +5,10 @@ class Poll(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-# Poll function
+    # Poll function
     @commands.command()
     async def poll(self, ctx, *, message = None):
+
         # Dumbass user didn't format the poll command correctly
         if message is None:
             await ctx.send("You need to have at least one argument dumbass")
@@ -15,6 +16,7 @@ class Poll(commands.Cog):
             await ctx.send("!poll \"Is Jerry the most handsome man on the planet?\"")
             await ctx.send("To create a multi answer poll, follow the format:")
             await ctx.send("!poll \"What are we playing for game night?\" \"KOTOR\" \"KOTOR 2\" \"The Witcher 3\"")
+
         else:
             # Create reaction variables
             yn_reactions = ["👍", "👎"]
@@ -47,7 +49,29 @@ class Poll(commands.Cog):
                 await ctx.send("To create a multi answer poll, follow the format:")
                 await ctx.send("!poll \"What are we playing for game night?\" \"KOTOR\" \"KOTOR 2\" \"The Witcher 3\"")
 
-            
+            # Too many arguments
+            elif len(msg) > 10:
+                await ctx.send("Too many arguments!")
+                await ctx.send("Please limit the number of poll options to 9 or fewer.")
+
+            # Create a Yes/No Poll
+            elif len(msg) == 1:
+                embed = discord.Embed(title=f"{msg[0]}")
+                poll_message = await ctx.send(embed=embed)
+                await poll_message.add_reaction(yn_reactions[0])
+                await poll_message.add_reaction(yn_reactions[1])
+
+            # Create a multi answer Poll
+            else:
+                embed = discord.Embed(title=f"{msg[0]}")
+                del msg[0]
+                for i, option in enumerate(msg):
+                    embed.add_field(name=f"{msg[i]}", value=f"{num_reactions[i]}", inline=False)
+
+                poll_message = await ctx.send(embed=embed)
+
+                for i, option in enumerate(msg):
+                    await poll_message.add_reaction(num_reactions[i])
 
 async def setup(bot):
     await bot.add_cog(Poll(bot))

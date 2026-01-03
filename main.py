@@ -11,7 +11,7 @@ token = os.getenv("DISCORD_TOKEN")
 intents = discord.Intents.all()
 
 # Set command prefix
-bot = commands.Bot(command_prefix='!', intents=intents)
+bot = commands.Bot(command_prefix='!', case_insensitive=True, intents=intents)
 
 # Bot coming online message
 @bot.event
