@@ -3,6 +3,7 @@ from discord.ext import commands
 import logging
 from dotenv import load_dotenv
 import os
+import asyncio
 
 load_dotenv()
 token = os.getenv("DISCORD_TOKEN")
@@ -10,7 +11,7 @@ token = os.getenv("DISCORD_TOKEN")
 handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
 intents = discord.Intents.all()
 
-#Set command prefix
+# Set command prefix
 bot = commands.Bot(command_prefix='!', intents=intents)
 
 # Bot coming online message
@@ -18,17 +19,15 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 async def on_ready():
     print("JerryBot2.0 Powering On")
 
-commands = ["cog.poll"]
+# Loading command files
+async def load():
+    for filename in os.listdir("./commands"):
+        if filename.endswith(".py"):
+            await bot.load_extension(f"commands.{filename[:-3]}")
 
-async def setup_hook()
+async def main():
+    async with bot:
+        await load()
+        await bot.start(token)
 
-#React to messages
-@bot.event
-async def on_message(message):
-    if message.author == bot.user:
-        return
-
-    #Set all characters of message to lower case
-    msg = message.content.lower()
-
-bot.run(token, log_handler=handler, log_level=logging.DEBUG)
+asyncio.run(main())

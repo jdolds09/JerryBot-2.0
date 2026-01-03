@@ -1,9 +1,13 @@
 import discord
 from discord.ext import commands
-from discord import app_commands
 
-class poll(commands.Cog):
-    def __init__(self, client: commands.Bot):
-        self.client = client
+class Poll(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
 
-@app_commands.command(name="poll", description="Creates a Yes/No poll or a multi choice poll depending on number of arguments")
+    @commands.command()
+    async def poll(self, ctx, *, message):
+        await message.channel.send(message)
+
+async def setup(bot):
+    await bot.add_cog(Poll(bot))
