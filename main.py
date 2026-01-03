@@ -26,7 +26,7 @@ async def on_message(message):
 
     #Set all characters of message to lower case
     msg = message.content.lower()
-    if msg == "!hello":
+    if msg.startswith("!hello"):
         await message.channel.send('Hello World!')
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)

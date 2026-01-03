@@ -169,3 +169,22 @@
 [2026-01-03 00:31:49] [DEBUG   ] discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
 [2026-01-03 00:32:30] [DEBUG   ] discord.gateway: Keeping shard ID None websocket alive with sequence 2.
 [2026-01-03 00:32:30] [DEBUG   ] discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+[2026-01-03 00:33:12] [DEBUG   ] discord.gateway: Keeping shard ID None websocket alive with sequence 2.
+[2026-01-03 00:33:12] [DEBUG   ] discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+[2026-01-03 00:33:53] [DEBUG   ] discord.gateway: Keeping shard ID None websocket alive with sequence 2.
+[2026-01-03 00:33:53] [DEBUG   ] discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+[2026-01-03 00:34:34] [DEBUG   ] discord.gateway: Keeping shard ID None websocket alive with sequence 2.
+[2026-01-03 00:34:34] [DEBUG   ] discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+[2026-01-03 00:35:15] [DEBUG   ] discord.gateway: Keeping shard ID None websocket alive with sequence 2.
+[2026-01-03 00:35:15] [DEBUG   ] discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+[2026-01-03 00:35:35] [DEBUG   ] discord.gateway: For Shard ID None: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 3, 'op': 0, 'd': {'type': 0, 'tts': False, 'timestamp': '2026-01-03T06:35:35.031000+00:00', 'pinned': False, 'nonce': '1456898771563577344', 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'member': {'roles': [], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2020-06-27T04:20:30.680000+00:00', 'flags': 0, 'deaf': False, 'communication_disabled_until': None, 'banner': None, 'avatar': None}, 'id': '1456898771647729756', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': '!hello', 'components': [], 'channel_type': 0, 'channel_id': '726290842469400659', 'author': {'username': 'jerryatric09', 'public_flags': 0, 'primary_guild': None, 'id': '314133512628207628', 'global_name': 'Jerryatric', 'display_name_styles': None, 'discriminator': '0', 'collectibles': None, 'clan': None, 'avatar_decoration_data': None, 'avatar': '767780f5ec945ca2664c821535883efc'}, 'attachments': [], 'guild_id': '726290842469400656'}}
+[2026-01-03 00:35:35] [DEBUG   ] discord.client: Dispatching event socket_event_type
+[2026-01-03 00:35:35] [DEBUG   ] discord.client: Dispatching event message
+[2026-01-03 00:35:57] [DEBUG   ] discord.gateway: Keeping shard ID None websocket alive with sequence 3.
+[2026-01-03 00:35:57] [DEBUG   ] discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+[2026-01-03 00:36:38] [DEBUG   ] discord.gateway: Keeping shard ID None websocket alive with sequence 3.
+[2026-01-03 00:36:38] [DEBUG   ] discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+[2026-01-03 00:37:19] [DEBUG   ] discord.gateway: Keeping shard ID None websocket alive with sequence 3.
+[2026-01-03 00:37:19] [DEBUG   ] discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+[2026-01-03 00:38:00] [DEBUG   ] discord.gateway: Keeping shard ID None websocket alive with sequence 3.
+[2026-01-03 00:38:01] [DEBUG   ] discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
