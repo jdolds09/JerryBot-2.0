@@ -21,9 +21,9 @@ async def on_ready():
 
 # Loading command files
 async def load():
-    for filename in os.listdir("./commands"):
+    for filename in os.listdir("./Commands"):
         if filename.endswith(".py"):
-            await bot.load_extension(f"commands.{filename[:-3]}")
+            await bot.load_extension(f"Commands.{filename[:-3]}")
 
 async def main():
     async with bot:
