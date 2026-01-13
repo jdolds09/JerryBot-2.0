@@ -5,10 +5,13 @@ class Pause(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    # Pause function
     @commands.command()
     async def pause(self, ctx):
+        # Pause
         if ctx.voice_client and ctx.voice_client.is_playing():
             ctx.voice_client.pause()
+        # If user reused pause command while paused, resume playing
         elif ctx.voice_client and ctx.voice_client.is_paused():
             ctx.voice_client.resume()
 

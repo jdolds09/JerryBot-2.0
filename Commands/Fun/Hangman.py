@@ -13,10 +13,10 @@ class Hangman(commands.Cog):
         # Get guild id
         guild_id = ctx.guild.id
 
-        # Create hangman game attributes
+        # Create hangman game attributes, guild_id is required to keep each server hangman game info separate
         if guild_id not in self.hangman_game:
             self.hangman_game[guild_id] = {}
-            self.hangman_game[guild_id]["word"] = random_word_gen.random_word()
+            self.hangman_game[guild_id]["word"] = random_word_gen.random_word().lower()
             self.hangman_game[guild_id]["letters"] = []
             self.hangman_game[guild_id]["strikes"] = 0
             self.hangman_game[guild_id]["hit"] = False
@@ -29,7 +29,7 @@ class Hangman(commands.Cog):
 
         else:
             # Get the letter the user guessed
-            letter = message[0]
+            letter = message[0].lower()
             # User guessed a letter that exists in the hangman word
             if letter in self.hangman_game[guild_id]["word"]:
                 # If user guesses an already correctly guessed letter

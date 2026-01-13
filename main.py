@@ -3,8 +3,6 @@ from discord.ext import commands
 from dotenv import load_dotenv
 import os
 import asyncio
-import requests
-import json
 from openai import OpenAI
 
 load_dotenv()
@@ -21,7 +19,11 @@ bot = commands.Bot(command_prefix='!', case_insensitive=True, intents=intents)
 bot.remove_command("help")
 
 # Create a list to keep track of all commands
-commands = []
+commands = ["meme", "vagina", "cock", "cocks", "dick", "dicks", "wiener", "wieners", "tits", "boob", "boobies",
+            "titties", "butt", "butts", "titty", "disconnect", "stop"]
+
+# Chat history
+chat_history = []
 
 # Bot coming online message
 @bot.event
@@ -69,12 +71,18 @@ async def on_message(message):
 
         # If message starts with ! and is not in the list of commands, execute chatbot
         if first_token.lower() not in (command.lower() for command in commands):
+
+            ''' This block is for conversation memory. I don't know how to implement it yet :D
+            
             chat_history = [text.content async for text in message.channel.history(limit=11)]
+            while len(chat_history) > 10:
+                #del chat_history[-1]
+            '''
 
             try:
                 response = grok_client.chat.completions.create( model="grok-4-1-fast-reasoning", messages=[
-                    {"role": "system", "content": "You are a bot named JerryBot and you are a witty, crass, mean, cruel, asshole of a bot that provides short unhinged responses."},
-                    {"role": "user", "content": f"{chat_history}"}]
+                    {"role": "system", "content": "You are a bot named JerryBot that provides short, witty, a tiny bit crass responses."},
+                    {"role": "user", "content": f"{full_message[1:]}"},]
                 )
 
             except Exception as e:

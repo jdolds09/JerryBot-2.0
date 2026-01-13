@@ -5,9 +5,12 @@ class Leave(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    # Leave function
+    @commands.command(aliases=["disconnect", "stop"])
     async def leave(self, ctx):
+        # JerryBot 2.0 must be in a voice channel to disconnect
         if ctx.voice_client is not None:
+            # Clear the queue and disconnect from the voice channel
             guild_id = ctx.guild.id
             play_cog = self.bot.get_cog('Play')
             play_cog.queue[guild_id].clear()
