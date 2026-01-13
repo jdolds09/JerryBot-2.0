@@ -1,3 +1,4 @@
+import aiohttp
 import discord
 from discord.ext import commands
 import requests
@@ -43,6 +44,22 @@ class Ass(commands.Cog):
             search_url = f"https://reddit.com/r/{subreddit}/{search_mode}.json"
 
         # Get JSON data
+        headers = {'User-Agent': 'JerryBot/1.0 by jerryatric09'}
+        async with aiohttp.ClientSession(headers=headers) as session:
+            async with session.get(search_url) as response:
+                data = await response.json()
+
+        #Scrape image URLs
+        try:
+            posts = data['data']['children']
+            for post in posts:
+                print(post['data']['url'])
+                if post['data']['url']:
+                    image_urls.append(post['data']['url'])
+        except Exception as e:
+            print(e)
+
+        '''
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WIN64; x64) AppleWebKit/537.36'}
         response = requests.get(search_url, headers=headers, timeout=60)
         data = response.json().get("data", {})
@@ -52,6 +69,8 @@ class Ass(commands.Cog):
         for child in children:
             post = child["data"]
             image_urls.append(post.get("url_overriden_by_dest", post.get("url")))
+            
+        '''
 
         # Randomly select an image url from the list
         image = random.choice(image_urls)
