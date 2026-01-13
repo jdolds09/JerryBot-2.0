@@ -25,11 +25,9 @@ class Porn(commands.Cog):
         top_search_modes = ["hour", "day", "week", "month", "year", "all"]
         # This will hold all the image urls we are able to scrape from the JSON file
         image_urls = []
-        await ctx.send('shit')
         # choose a random subreddit and search mode
         subreddit = random.choice(subreddits)
         search_mode = random.choice(search_modes)
-        await ctx.send('shit')
         # If the "top" search mode was randomly selected, randomly select the time range and set the search_url
         if search_mode == "top":
             top_search_mode = random.choice(top_search_modes)
@@ -39,13 +37,15 @@ class Porn(commands.Cog):
         else:
             search_url = f"https://reddit.com/r/{subreddit}/{search_mode}.json"
 
-        await ctx.send('shit')
         # Get JSON data
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WIN64; x64) AppleWebKit/537.36'}
-        response = requests.get(search_url, headers=headers, timeout=60)
-        data = response.json().get("data", {})
-        children = data.get("children", [])
-        await ctx.send('shit')
+        try:
+            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WIN64; x64) AppleWebKit/537.36'}
+            response = requests.get(search_url, headers=headers, timeout=60)
+            data = response.json().get("data", {})
+            children = data.get("children", [])
+        except Exception as e:
+            return await ctx.send(e)
+
         # Scrape image URLs
         for child in children:
             post = child["data"]
@@ -54,16 +54,13 @@ class Porn(commands.Cog):
         # Randomly select an image url from the list
         image = random.choice(image_urls)
         image_string = f"{image}"
-        await ctx.send('shit')
         # If image is in preview or gallery format, remove from list and select another url
         while "preview" in image_string or "gallery" in image_string:
             image_urls.remove(image)
             image = random.choice(image_urls)
             image_string = f"{image}"
-        await ctx.send('shit')
         # Post the image
         if image_string:
-            await ctx.send('shit')
             await ctx.send(image_string)
         else:
             await ctx.send("Unable to fetch image.")
