@@ -38,13 +38,10 @@ class Porn(commands.Cog):
             search_url = f"https://reddit.com/r/{subreddit}/{search_mode}.json"
 
         # Get JSON data
-        try:
-            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WIN64; x64) AppleWebKit/537.36'}
-            response = requests.get(search_url, headers=headers, timeout=60)
-            data = response.json().get("data", {})
-            children = data.get("children", [])
-        except Exception as e:
-            return await ctx.send(e)
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WIN64; x64) AppleWebKit/537.36'}
+        response = requests.get(search_url, headers=headers, timeout=60)
+        data = response.json().get("data", {})
+        children = data.get("children", [])
 
         # Scrape image URLs
         for child in children:
