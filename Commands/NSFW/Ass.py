@@ -45,7 +45,11 @@ class Ass(commands.Cog):
 
         # Get JSON data
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WIN64; x64) AppleWebKit/537.36'}
-        response = requests.get(search_url, headers=headers, timeout=60)
+        proxies = {'http': 'http://ekfdieif:vvc1rdkpv2bg@142.111.48.253:7030'}
+        try:
+            response = requests.get(search_url, headers=headers, proxies=proxies, timeout=60)
+        except Exception as e:
+            print(e)
         data = response.json().get("data", {})
         children = data.get("children", [])
 
