@@ -1,8 +1,9 @@
-import aiohttp
 import discord
 from discord.ext import commands
 import requests
 import random
+import os
+from dotenv import load_dotenv
 
 class Ass(commands.Cog):
     def __init__(self, bot):
@@ -24,6 +25,10 @@ class Ass(commands.Cog):
             "PantyPeel","tightsqueeze", "twerking", "twerk"
         ]
 
+        # Need to load proxy information
+        load_dotenv()
+        proxy = os.getenv("RESIDENTIAL_PROXY")
+
         search_modes = ["new", "top", "hot", "best"]
         # If the "top" search mode is randomly selected, we need to also specify the time range
         top_search_modes = ["hour", "day", "week", "month", "year", "all"]
@@ -43,12 +48,14 @@ class Ass(commands.Cog):
         else:
             search_url = f"https://reddit.com/r/{subreddit}/{search_mode}.json"
 
+
         # Get JSON data
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WIN64; x64) AppleWebKit/537.36'}
+        proxies = {'http': f'{proxy}', 'https': f'{proxy}'}
         try:
-            response = requests.get(search_url, headers=headers, timeout=60)
+            response = requests.get(search_url, headers=headers, proxies=proxies, timeout=60)
         except Exception as e:
-            await ctx.send(e)
+            print(e)
         data = response.json().get("data", {})
         children = data.get("children", [])
 
