@@ -80,9 +80,9 @@ async def on_message(message):
             '''
 
             try:
-                response = grok_client.chat.completions.create( model="grok-4-1-fast-reasoning", messages=[
+                response = grok_client.chat.completions.create(model="grok-4-1-fast-reasoning", messages=[
                     {"role": "system", "content": "You are a bot named JerryBot that provides short, witty, a tiny bit crass responses."},
-                    {"role": "user", "content": f"{full_message[1:]}"},]
+                    {"role": "user", "content": f"{full_message[1:]}"}]
                 )
 
             except Exception as e:
