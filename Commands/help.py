@@ -7,7 +7,7 @@ class Help(commands.Cog):
         self.bot = bot
 
     # Help function
-    @commands.command()
+    @commands.command(aliases=["commands", "command"])
     async def help(self, ctx):
         fun_cog_commands = []
         music_cog_commands = []
