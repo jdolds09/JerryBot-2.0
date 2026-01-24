@@ -14,13 +14,17 @@ class Poll(commands.Cog):
             await ctx.send("You need to have at least one argument dumbass")
             await ctx.send("To create a Yes/No poll, follow the format:")
             await ctx.send("!poll \"Is Jerry the most handsome man on the planet?\"")
-            await ctx.send("To create a multi answer poll, follow the format:")
+            await ctx.send("To create a multi choice poll, follow the format:")
             await ctx.send("!poll \"What are we playing for game night?\" \"KOTOR\" \"KOTOR 2\" \"The Witcher 3\"")
 
         else:
             # Create reaction variables
-            yn_reactions = ["👍", "👎"]
+            yn_reactions = ["👍", "👎", "🤷‍♂️"]
             num_reactions = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"]
+
+            #Replace unicode quotation marks with ascii quotation marks
+            message = message.replace('\u201c', '"')
+            message = message.replace('\u201d', '"')
 
             #Check to see if user used quotation marks
             quotation_marks = "\""
@@ -28,7 +32,7 @@ class Poll(commands.Cog):
                 await ctx.send("Separate each argument with quotation marks")
                 await ctx.send("To create a Yes/No poll, follow the format:")
                 await ctx.send("!poll \"Is Jerry the most handsome man on the planet?\"")
-                await ctx.send("To create a multi answer poll, follow the format:")
+                await ctx.send("To create a multi choice poll, follow the format:")
                 await ctx.send("!poll \"What are we playing for game night?\" \"KOTOR\" \"KOTOR 2\" \"The Witcher 3\"")
 
             # Split the message arguments
@@ -46,7 +50,7 @@ class Poll(commands.Cog):
                 await ctx.send("You need to have at least one argument dumbass")
                 await ctx.send("To create a Yes/No poll, follow the format:")
                 await ctx.send("!poll \"Is Jerry the most handsome man on the planet?\"")
-                await ctx.send("To create a multi answer poll, follow the format:")
+                await ctx.send("To create a multi choice poll, follow the format:")
                 await ctx.send("!poll \"What are we playing for game night?\" \"KOTOR\" \"KOTOR 2\" \"The Witcher 3\"")
 
             # Too many arguments
@@ -60,6 +64,7 @@ class Poll(commands.Cog):
                 poll_message = await ctx.send(embed=embed)
                 await poll_message.add_reaction(yn_reactions[0])
                 await poll_message.add_reaction(yn_reactions[1])
+                await poll_message.add_reaction(yn_reactions[2])
 
             # Create a multi answer Poll
             else:
