@@ -24,7 +24,7 @@ class Roll(commands.Cog):
                 await ctx.send("You didn't enter a positive integer dumbass.")
 
     async def command_help(self, ctx):
-        await ctx.send("**!roll OPTIONAL: [number]**: Roll between 1 and given number. If no number given, roll a random number between 1-100.**.")
+        await ctx.send("**!roll OPTIONAL: [number]**: Roll between 1 and given number. If no number given, roll a random number between 1-100.")
 
 async def setup(bot):
     await bot.add_cog(Roll(bot))

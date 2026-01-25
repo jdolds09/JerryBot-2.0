@@ -43,5 +43,8 @@ class Help(commands.Cog):
         for c in nsfw_cog_commands:
             await c.command_help(ctx)
 
+        await ctx.send("**__CHATBOT FEATURE__**")
+        await ctx.send("Start your message with **!** and type anything afterwards, JerryBot will respond!")
+
 async def setup(bot):
     await bot.add_cog(Help(bot))
