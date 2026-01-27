@@ -23,7 +23,7 @@ commands = ["meme", "vagina", "cock", "cocks", "dick", "dicks", "wiener", "wiene
             "titties", "butt", "butts", "titty", "disconnect", "stop", "commands", "command"]
 
 # Chat history
-chat_history = []
+#chat_history = []
 
 # Bot coming online message
 @bot.event

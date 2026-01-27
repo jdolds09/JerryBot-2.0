@@ -6,7 +6,6 @@ import random
 class Schedule(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.schedule_tracker = {}
 
     # Schedule function
     @commands.command()
@@ -19,79 +18,73 @@ class Schedule(commands.Cog):
             if 'stop' in message.lower():
                 return await Schedule.stop_task(self, ctx)
 
-        # Set task running variable to true
-        self.schedule_tracker[ctx.guild.id]["is_running"] = True
         Schedule.post_images.start(self, ctx)
 
     @tasks.loop(hours=2)
     async def post_images(self, ctx):
-        if self.schedule_tracker[ctx.guild.id]["is_running"]:
-            # Subreddits we are going to scrape
-            subreddits = ["ass", "butt", "cosplaybutts","girlsinyogapants", "smalltitsbigass", "booty", "WhiteCheeks", "HungryButts", "beautifulbutt",
-                "pawg", "asstastic","CuteLittleButts", "bootypetite", "PantyPeel","tightsqueeze", "twerking", "twerk", "Boobies", "tits", "boobs",
-                "PerfectTits", "adorableporn", "amazingtits", "topless", "fortyfivefiftyfive", "BustyPetite", "Titties", "NSFWfashion", "Playboy",
-                "bodyperfection", "Nudes", "Nude_Selfie", "BestTits", "boobbounce", "TittyDrop", "CasualJiggles", "stripgirls", "BiggerThanYouThought",
-                "cosplaygirls", "cosplay", "cosplaybabes", "CosplayLewd", "nsfwcosplay", "geekygirls", "cosplaybutts", "suicidegirls", "cameltoe", "Innie",
-                "vagina", "Innies", "GodPussy", "shavedpussies", "simps", "rearpussy", "gonewild", "nsfw", "NSFW_GIF", "RealGirls", "cumsluts", "nsfw_gifs",
-                "GirlsFinishingTheJob", "porninfifteenseconds", "60fpsporn", "FunWithFriends", "Blowjobs", "edging", "porn", "Facials", "collegesluts", "LegalTeens",
-                "Amateur", "TooCuteForPorn", "gifsgonewild", "18_19", "porn_gifs", "CollegeAmateurs", "RuinedOrgasms","amateurcumsluts", "AmateurPorn"]
+        # Subreddits we are going to scrape
+        subreddits = ["ass", "butt", "cosplaybutts","girlsinyogapants", "smalltitsbigass", "booty", "WhiteCheeks", "HungryButts", "beautifulbutt",
+            "pawg", "asstastic","CuteLittleButts", "bootypetite", "PantyPeel","tightsqueeze", "twerking", "twerk", "Boobies", "tits", "boobs",
+            "PerfectTits", "adorableporn", "amazingtits", "topless", "fortyfivefiftyfive", "BustyPetite", "Titties", "NSFWfashion", "Playboy",
+            "bodyperfection", "Nudes", "Nude_Selfie", "BestTits", "boobbounce", "TittyDrop", "CasualJiggles", "stripgirls", "BiggerThanYouThought",
+            "cosplaygirls", "cosplay", "cosplaybabes", "CosplayLewd", "nsfwcosplay", "geekygirls", "cosplaybutts", "suicidegirls", "cameltoe", "Innie",
+            "vagina", "Innies", "GodPussy", "shavedpussies", "simps", "rearpussy", "gonewild", "FunWithFriends", "TooCuteForPorn", "RealGirls"]
 
-            for _ in range(20):
-                try:
-                    search_modes = ["new", "top", "hot", "best"]
-                    # If the "top" search mode is randomly selected, we need to also specify the time range
-                    top_search_modes = ["hour", "day", "week", "month", "year", "all"]
-                    # This will hold all the image urls we are able to scrape from the JSON file
-                    image_urls = []
-                    # choose a random subreddit and search mode
-                    subreddit = random.choice(subreddits)
-                    search_mode = random.choice(search_modes)
-                    # If the "top" search mode was randomly selected, randomly select the time range and set the search_url
-                    if search_mode == "top":
-                        top_search_mode = random.choice(top_search_modes)
-                        search_url = f"https://reddit.com/r/{subreddit}/top.json?t={top_search_mode}"
+        for _ in range(20):
+            try:
+                search_modes = ["new", "top", "hot", "best"]
+                # If the "top" search mode is randomly selected, we need to also specify the time range
+                top_search_modes = ["hour", "day", "week", "month", "year", "all"]
+                # This will hold all the image urls we are able to scrape from the JSON file
+                image_urls = []
+                # choose a random subreddit and search mode
+                subreddit = random.choice(subreddits)
+                search_mode = random.choice(search_modes)
+                # If the "top" search mode was randomly selected, randomly select the time range and set the search_url
+                if search_mode == "top":
+                    top_search_mode = random.choice(top_search_modes)
+                    search_url = f"https://reddit.com/r/{subreddit}/top.json?t={top_search_mode}"
 
-                    # All other search modes other than "top"
-                    else:
-                        search_url = f"https://reddit.com/r/{subreddit}/{search_mode}.json"
+                # All other search modes other than "top"
+                else:
+                    search_url = f"https://reddit.com/r/{subreddit}/{search_mode}.json"
 
-                    # Get JSON data
-                    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WIN64; x64) AppleWebKit/537.36'}
-                    response = requests.get(search_url, headers=headers, timeout=60)
-                    data = response.json().get("data", {})
-                    children = data.get("children", [])
+                # Get JSON data
+                headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WIN64; x64) AppleWebKit/537.36'}
+                response = requests.get(search_url, headers=headers, timeout=60)
+                data = response.json().get("data", {})
+                children = data.get("children", [])
 
-                    # Scrape image URLs
-                    for child in children:
-                        post = child["data"]
-                        image_urls.append(post.get("url"))
+                # Scrape image URLs
+                for child in children:
+                    post = child["data"]
+                    image_urls.append(post.get("url"))
 
-                    # Randomly select an image url from the list
+                # Randomly select an image url from the list
+                image = random.choice(image_urls)
+                image_string = f"{image}"
+                # If image is in preview or gallery format, remove from list and select another url
+                while "preview" in image_string or "gallery" in image_string:
+                    image_urls.remove(image)
+                    if not image_urls:
+                        data = response.json().get("data", {})
+                        children = data.get("children", [])
+                        for child in children:
+                            post = child["data"]
+                            image_urls.append(post.get("url"))
+
                     image = random.choice(image_urls)
                     image_string = f"{image}"
-                    # If image is in preview or gallery format, remove from list and select another url
-                    while "preview" in image_string or "gallery" in image_string:
-                        image_urls.remove(image)
-                        if not image_urls:
-                            data = response.json().get("data", {})
-                            children = data.get("children", [])
-                            for child in children:
-                                post = child["data"]
-                                image_urls.append(post.get("url"))
-
-                        image = random.choice(image_urls)
-                        image_string = f"{image}"
-                    # Post the image
-                    if image_string:
-                        await ctx.send(image_string)
-                    else:
-                        await ctx.send("Unable to fetch image.")
-                except Exception as e:
-                    print(e)
+                # Post the image
+                if image_string:
+                    await ctx.send(image_string)
+                else:
+                    await ctx.send("Unable to fetch image.")
+            except Exception as e:
+                print(e)
 
     async def stop_task(self, ctx):
-        if self.schedule_tracker[ctx.guild.id]["is_running"]:
-            self.schedule_tracker[ctx.guild.id]["is_running"] = False
+        if Schedule.post_images.is_running():
             Schedule.post_images.stop()
             return await ctx.send("Task stopped.")
         else:

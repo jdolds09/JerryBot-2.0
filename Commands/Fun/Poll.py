@@ -68,7 +68,7 @@ class Poll(commands.Cog):
 
             # Create a multi answer Poll
             else:
-                embed = discord.Embed(title=f"📊 {msg[0].upper()},", color=0x0000FF)
+                embed = discord.Embed(title=f"📊 {msg[0].upper()}", color=0x0000FF)
                 del msg[0]
                 for i, option in enumerate(msg):
                     embed.add_field(name=f"{msg[i]}", value=f"{num_reactions[i]}", inline=False)
