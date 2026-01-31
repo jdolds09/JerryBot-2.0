@@ -6,7 +6,7 @@ class Stop(commands.Cog):
         self.bot = bot
 
     # Stop function
-    @commands.command(aliases=["disconnect", "stop"])
+    @commands.command(aliases=["disconnect", "leave"])
     async def stop(self, ctx):
         # JerryBot 2.0 must be in a voice channel to disconnect
         if ctx.voice_client is not None:

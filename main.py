@@ -20,7 +20,7 @@ bot.remove_command("help")
 
 # Create a list to keep track of all commands
 commands = ["meme", "vagina", "cock", "cocks", "dick", "dicks", "wiener", "wieners", "tits", "boob", "boobies",
-            "titties", "butt", "butts", "titty", "disconnect", "stop", "commands", "command"]
+            "titties", "butt", "butts", "titty", "disconnect", "leave", "commands", "command"]
 
 no_input_commands = ["meme", "vagina", "cock", "cocks", "dick", "dicks", "wiener", "wieners", "tits", "boob", "boobies",
             "titties", "butt", "butts", "titty", "disconnect", "stop", "commands", "command", "funny", "paper", "rock", "scissors", "size",
