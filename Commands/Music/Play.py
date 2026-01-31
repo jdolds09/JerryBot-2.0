@@ -20,7 +20,7 @@ class Play(commands.Cog):
         if ctx.author.voice is None:
             return await ctx.send("You must be in a voice channel to use this command dumbass.")
         # User didn't enter anything after !play command
-        if message is None:
+        if len(args) == 0:
             return await ctx.send("You need to enter something to play dumbass.")
 
         args = " ".join(args)
@@ -130,14 +130,13 @@ class Play(commands.Cog):
 
         # Bot is already connected to channel, add requested song(s) to queue
         else:
+            if len(tracks) == 1:
+                await ctx.send(f"{titles[0]} added to the queue!")
+            else:
+                await ctx.send("Songs have been added to the queue!")
             try:
                 for track in tracks:
-                    if len(tracks) == 1:
-                        await ctx.send(f"{titles[0]} added to the queue!")
-                    else:
-                        await ctx.send("Playlist has been added to the queue!")
                     self.queue[guild_id].append((track, titles.pop(0), webpage_urls.pop(0)))
-
             except Exception as e:
                 print(e)
             # If bot is currently not playing, play the first song added to queue
