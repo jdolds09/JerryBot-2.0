@@ -6,6 +6,7 @@ import random
 class Schedule(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.running_tasks = {}
 
     # Schedule function
     @commands.command()
@@ -18,7 +19,11 @@ class Schedule(commands.Cog):
             if 'stop' in message.lower():
                 return await Schedule.stop_task(self, ctx)
 
-        Schedule.post_images.start(self, ctx)
+        if ctx.guild.id in self.running_tasks and not self.running_tasks[ctx.guild.id].done():
+            await ctx.send("Schedule command is already running dumbass.")
+            return await ctx.send("Please use **!schedule stop** and then **!schedule** to restart the task.")
+
+        self.running_tasks[ctx.guild.id] = Schedule.post_images.start(self, ctx)
 
     @tasks.loop(hours=2)
     async def post_images(self, ctx):
@@ -84,8 +89,9 @@ class Schedule(commands.Cog):
                 print(e)
 
     async def stop_task(self, ctx):
-        if Schedule.post_images.is_running():
-            Schedule.post_images.stop()
+        if ctx.guild.id in self.running_tasks:
+            self.running_tasks[ctx.guild.id].cancel()
+            del self.running_tasks[ctx.guild.id]
             return await ctx.send("Task stopped.")
         else:
             return await ctx.send("Task is not running dumbass.")

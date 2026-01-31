@@ -22,6 +22,10 @@ bot.remove_command("help")
 commands = ["meme", "vagina", "cock", "cocks", "dick", "dicks", "wiener", "wieners", "tits", "boob", "boobies",
             "titties", "butt", "butts", "titty", "disconnect", "stop", "commands", "command"]
 
+no_input_commands = ["meme", "vagina", "cock", "cocks", "dick", "dicks", "wiener", "wieners", "tits", "boob", "boobies",
+            "titties", "butt", "butts", "titty", "disconnect", "stop", "commands", "command", "funny", "paper", "rock", "scissors", "size",
+                     "leave", "pause", "resume", "shuffle", "skip", "ass", "boobs", "cosplay", "hentai", "penis", "porn", "pussy"]
+
 # Chat history
 #chat_history = []
 
@@ -65,12 +69,17 @@ async def on_message(message):
     # Get the first token of the user's message
     full_message = message.content
     first_token = full_message.split()[0]
+    execute_chatbot = False
     if first_token.startswith("!"):
+
+        if first_token[1:] in no_input_commands and first_token != full_message.replace(" ", ""):
+            execute_chatbot = True
+
         # Remove the ! if message starts with !
         first_token = first_token[1:]
 
         # If message starts with ! and is not in the list of commands, execute chatbot
-        if first_token.lower() not in (command.lower() for command in commands):
+        if first_token.lower() not in (command.lower() for command in commands) or execute_chatbot:
 
             ''' This block is for conversation memory. I don't know how to implement it yet :D
             
@@ -89,7 +98,7 @@ async def on_message(message):
                 print(e)
 
             answer = response.choices[0].message.content
-            await message.channel.send(answer)
+            return await message.channel.send(answer)
 
     # Execute command if user entered pre-defined command
     await bot.process_commands(message)

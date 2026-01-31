@@ -3,7 +3,7 @@ from discord.ext import commands
 import yt_dlp
 
 YDL_PLAYLIST_OPTIONS = {'format': 'bestaudio', 'noplaylist' : False, 'no_warnings': True, 'skip_download': True, 'ignoreerrors': True, 'extract_flat': 'in_playlist', 'force_generic_extractor': True}
-YDL_OPTIONS = {'format' : 'bestaudio', 'noplaylist' : True, 'ignoreerrors': True, 'no_warnings': True}
+YDL_OPTIONS = {'format': 'bestaudio', 'noplaylist' : True, 'ignoreerrors': True, 'no_warnings': True}
 FFMPEG_OPTIONS = {"before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",'options' : '-vn -c:a libopus -b:a 96k'}
 VIDEO_OPTIONS = {'format' : 'bestaudio', 'ignoreerrors': True, 'no_warnings': True, 'skip_download': True}
 
@@ -18,8 +18,7 @@ class Play(commands.Cog):
     async def play(self, ctx, *args):
         # Check to see if user is in a voice channel
         if ctx.author.voice is None:
-            await ctx.send("You must be in a voice channel to use this command.")
-            return
+            return await ctx.send("You must be in a voice channel to use this command dumbass.")
         args = " ".join(args)
 
         # Need these two lists to keep track and display song titles and the YouTube URLs
@@ -162,9 +161,9 @@ class Play(commands.Cog):
                 # Play!
                 try:
                     source = await discord.FFmpegOpusAudio.from_probe(url, **FFMPEG_OPTIONS, executable="bin\\ffmpeg\\ffmpeg.exe")
+                    ctx.voice_client.play(source, after=lambda _:self.bot.loop.create_task(self.playTrack(ctx, tracks)))
                 except Exception as e:
                     print(e)
-                ctx.voice_client.play(source, after=lambda _:self.bot.loop.create_task(self.playTrack(ctx, tracks)))
 
     async def command_help(self, ctx):
         await ctx.send("**!play [youtube video or playlist link] OR [just type something it will search youtube for it!]**: "
