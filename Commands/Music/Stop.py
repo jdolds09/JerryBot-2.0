@@ -1,13 +1,13 @@
 import discord
 from discord.ext import commands
 
-class Leave(commands.Cog):
+class Stop(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    # Leave function
+    # Stop function
     @commands.command(aliases=["disconnect", "stop"])
-    async def leave(self, ctx):
+    async def stop(self, ctx):
         # JerryBot 2.0 must be in a voice channel to disconnect
         if ctx.voice_client is not None:
             # Clear the queue and disconnect from the voice channel
@@ -19,7 +19,7 @@ class Leave(commands.Cog):
             await ctx.send("JerryBot 2.0 is not in a voice channel dumbass.")
 
     async def command_help(self, ctx):
-        await ctx.send("**!leave**: JerryBot 2.0 disconnects from the voice channel.")
+        await ctx.send("**!stop**: JerryBot 2.0 stops playing, clears the music queue and disconnects from the voice channel.")
 
 async def setup(bot):
-    await bot.add_cog(Leave(bot))
+    await bot.add_cog(Stop(bot))

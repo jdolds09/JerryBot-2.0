@@ -69,9 +69,14 @@ async def on_message(message):
     # Get the first token of the user's message
     full_message = message.content
     first_token = full_message.split()[0]
+
     execute_chatbot = False
+
     if first_token.startswith("!"):
 
+        # This is for if the user input first token is a command but means to talk to jerrybot
+        # For example: "!stop whining jerrybot"
+        # stop is a command, but we don't want the stop command to execute we want the chatbot feature
         if first_token[1:] in no_input_commands and first_token != full_message.replace(" ", ""):
             execute_chatbot = True
 
@@ -88,6 +93,7 @@ async def on_message(message):
                 #del chat_history[-1]
             '''
 
+            # Get the AI response
             try:
                 response = grok_client.chat.completions.create(model="grok-4-1-fast-reasoning", messages=[
                     {"role": "system", "content": "You are a bot named JerryBot that provides short, witty, a tiny bit crass responses."},
@@ -97,6 +103,7 @@ async def on_message(message):
             except Exception as e:
                 print(e)
 
+            # Post the AI response
             answer = response.choices[0].message.content
             return await message.channel.send(answer)
 

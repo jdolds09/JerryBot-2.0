@@ -6,36 +6,45 @@ class Size(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    # Roll function
+    # Size function
     @commands.command()
     async def size(self, ctx):
-        random_number = random.randint(0, 10)
+        # Create a length that is random from 0-10
+        length = random.randint(0, 10)
         shaft = ""
+        # If Alex executed size command
         if ctx.author.name == "thatsaltysnipezguy":
+            # Give Alex a 5% chance of actually returning a random size
             alex_random = random.randint(1, 100)
             if alex_random < 6:
-                if random_number == 0:
+                # If he hit the 5% chance but also rolled a 0 on size, give him a size of 1
+                if length == 0:
                     await ctx.send(f"{ctx.author.name}'s penis size:")
                     return await ctx.send("8=D")
+                # Return Alex's random size
                 else:
-                    for _ in range(random_number):
+                    for _ in range(length):
                         shaft += "="
                     await ctx.send(f"{ctx.author.name}'s penis size:")
-                    if random_number == 10:
+                    if length == 10:
                         await ctx.send(f"8{shaft}D")
                         return ctx.send("**MAXIMUM SIZE**")
                     else:
                         return await ctx.send(f"8{shaft}D")
+            # Alex didn't hit the 5% chance, return his size as 0
             else:
                 await ctx.send(f"{ctx.author.name}'s penis size:")
                 return await ctx.send("8D")
+        # Execute everyone else's size
         else:
-            for _ in range(random_number):
+            for _ in range(length):
                 shaft += "="
-            if random_number == 10:
+            # Maximum size was rolled
+            if length == 10:
                 await ctx.send(f"{ctx.author.name}'s penis size:")
                 await ctx.send(f"8{shaft}D")
                 return await ctx.send("**MAXIMUM SIZE**")
+            # Return size
             else:
                 await ctx.send(f"{ctx.author.name}'s penis size:")
                 return await ctx.send(f"8{shaft}D")

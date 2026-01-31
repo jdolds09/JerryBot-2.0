@@ -15,10 +15,14 @@ class Play(commands.Cog):
         self.webpage_urls = {}
 
     @commands.command()
-    async def play(self, ctx, *args):
+    async def play(self, ctx, *args, message=None):
         # Check to see if user is in a voice channel
         if ctx.author.voice is None:
             return await ctx.send("You must be in a voice channel to use this command dumbass.")
+        # User didn't enter anything after !play command
+        if message is None:
+            return await ctx.send("You need to enter something to play dumbass.")
+
         args = " ".join(args)
 
         # Need these two lists to keep track and display song titles and the YouTube URLs
@@ -48,7 +52,7 @@ class Play(commands.Cog):
             except Exception as e:
                 print(e)
 
-        # Query
+        # User entered a query
         else:
             args = await Play.searchQuery(self, ctx, args, self.titles[ctx.guild.id], self.webpage_urls[ctx.guild.id])
             if args is None:
@@ -128,7 +132,12 @@ class Play(commands.Cog):
         else:
             try:
                 for track in tracks:
+                    if len(tracks) == 1:
+                        await ctx.send(f"{titles[0]} added to the queue!")
+                    else:
+                        await ctx.send("Playlist has been added to the queue!")
                     self.queue[guild_id].append((track, titles.pop(0), webpage_urls.pop(0)))
+
             except Exception as e:
                 print(e)
             # If bot is currently not playing, play the first song added to queue
