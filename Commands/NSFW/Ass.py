@@ -10,7 +10,7 @@ class Ass(commands.Cog):
         self.bot = bot
 
     # Ass function
-    @commands.command(aliases=['butt', 'butts'])
+    @commands.command(aliases=['butt', 'butts', 'cheeks'])
     async def ass(self, ctx):
         # Return if not in a NSFW channel
         if not ctx.channel.is_nsfw():

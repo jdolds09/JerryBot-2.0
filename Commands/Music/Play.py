@@ -15,7 +15,7 @@ class Play(commands.Cog):
         self.webpage_urls = {}
 
     @commands.command()
-    async def play(self, ctx, *args, message=None):
+    async def play(self, ctx, *args):
         # Check to see if user is in a voice channel
         if ctx.author.voice is None:
             return await ctx.send("You must be in a voice channel to use this command dumbass.")

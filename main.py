@@ -20,11 +20,14 @@ bot.remove_command("help")
 
 # Create a list to keep track of all commands
 commands = ["meme", "vagina", "cock", "cocks", "dick", "dicks", "wiener", "wieners", "tits", "boob", "boobies",
-            "titties", "butt", "butts", "titty", "disconnect", "leave", "commands", "command"]
+            "titties", "butt", "butts", "titty", "disconnect", "leave", "commands", "command", "level", "xp", "experience", "lvl",
+            "abilities", "cooldown", "cooldowns", "spellbook", "fight", 'attack', 'spell']
 
 no_input_commands = ["meme", "vagina", "cock", "cocks", "dick", "dicks", "wiener", "wieners", "tits", "boob", "boobies",
             "titties", "butt", "butts", "titty", "disconnect", "stop", "commands", "command", "funny", "paper", "rock", "scissors", "size",
-                     "leave", "pause", "resume", "shuffle", "skip", "ass", "boobs", "cosplay", "hentai", "penis", "porn", "pussy"]
+             "leave", "pause", "resume", "shuffle", "skip", "ass", "boobs", "cosplay", "hentai", "penis", "porn", "pussy", "classes", 
+             "level", "xp", "experience", "lvl", "cooldown", "cooldowns", "spellbook", "abilities", "fight", "battle", "exp", "gold",
+            "spells", "loot"]
 
 # Chat history
 #chat_history = []
@@ -54,6 +57,13 @@ async def nsfw_load():
         if filename.endswith(".py"):
             commands.append(filename[:-3])
             await bot.load_extension(f"Commands.NSFW.{filename[:-3]}")
+
+# Load RPG Commands
+async def rpg_load():
+    for filename in os.listdir("Commands/RPG"):
+        if filename.endswith(".py"):
+            commands.append(filename[:-3])
+            await bot.load_extension(f"Commands.RPG.{filename[:-3]}")
 
 # Load Help Command
 async def help_load():
@@ -115,6 +125,7 @@ async def main():
         await fun_load()
         await music_load()
         await nsfw_load()
+        await rpg_load()
         await help_load()
         await bot.start(token)
 

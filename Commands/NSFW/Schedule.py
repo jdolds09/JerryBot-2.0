@@ -28,7 +28,7 @@ class Schedule(commands.Cog):
         # Execute the task loop
         self.running_tasks[ctx.guild.id] = Schedule.post_images.start(self, ctx)
 
-    @tasks.loop(hours=2)
+    @tasks.loop(hours=1)
     async def post_images(self, ctx):
         # Subreddits we are going to scrape
         subreddits = ["ass", "butt", "cosplaybutts","girlsinyogapants", "smalltitsbigass", "booty", "WhiteCheeks", "HungryButts", "beautifulbutt",
@@ -74,15 +74,12 @@ class Schedule(commands.Cog):
                 # If image is in preview or gallery format, remove from list and select another url
                 while "preview" in image_string or "gallery" in image_string:
                     image_urls.remove(image)
-                    if not image_urls:
-                        data = response.json().get("data", {})
-                        children = data.get("children", [])
-                        for child in children:
-                            post = child["data"]
-                            image_urls.append(post.get("url"))
+                    if len(image_urls) != 0:
+                        image = random.choice(image_urls)
+                        image_string = f"{image}"
+                    else:
+                        continue
 
-                    image = random.choice(image_urls)
-                    image_string = f"{image}"
                 # Post the image
                 if image_string:
                     await ctx.send(image_string)
