@@ -2042,7 +2042,6 @@ class Cast(commands.Cog):
                 # Update HP in DB
                 try:
                     cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 10 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                    await ctx.send("------------------------------------------------------")
                 except Exception as e:
                     print(e)
                     return await ctx.send("Error updating character HP.")
@@ -2126,7 +2125,6 @@ class Cast(commands.Cog):
                 # Update HP in DB
                 try:
                     cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                    await ctx.send("------------------------------------------------------")
                 except Exception as e:
                     print(e)
                     return await ctx.send("Error updating character HP.")
@@ -2210,7 +2208,6 @@ class Cast(commands.Cog):
                 # Update HP in DB
                 try:
                     cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 30 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                    await ctx.send("------------------------------------------------------")
                 except Exception as e:
                     print(e)
                     return await ctx.send("Error updating character HP.")
@@ -2294,7 +2291,6 @@ class Cast(commands.Cog):
                 # Update HP in DB
                 try:
                     cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 40 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                    return await ctx.send("------------------------------------------------------")
                 except Exception as e:
                     print(e)
                     return await ctx.send("Error updating character HP.")
@@ -2378,7 +2374,6 @@ class Cast(commands.Cog):
                 # Update HP in DB
                 try:
                     cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 50 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                    await ctx.send("------------------------------------------------------")
                 except Exception as e:
                     print(e)
                     return await ctx.send("Error updating character HP.")
@@ -2462,7 +2457,6 @@ class Cast(commands.Cog):
                 # Update HP in DB
                 try:
                     cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 60 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                    await ctx.send("------------------------------------------------------")
                 except Exception as e:
                     print(e)
                     return await ctx.send("Error updating character HP.")
@@ -2546,7 +2540,6 @@ class Cast(commands.Cog):
                 # Update HP in DB
                 try:
                     cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 70 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                    await ctx.send("------------------------------------------------------")
                 except Exception as e:
                     print(e)
                     return await ctx.send("Error updating character HP.")
@@ -2630,7 +2623,6 @@ class Cast(commands.Cog):
                 # Update HP in DB
                 try:
                     cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 80 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                    await ctx.send("------------------------------------------------------")
                 except Exception as e:
                     print(e)
                     return await ctx.send("Error updating character HP.")
