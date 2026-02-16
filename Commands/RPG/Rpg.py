@@ -7,7 +7,7 @@ class Rpg(commands.Cog):
 
     # Exp function
     @commands.command()
-    async def rpg(self, ctx, *args):
+    async def rpg(self, ctx):
         
         await ctx.send("**RPG COMMANDS:**")
         await ctx.send("-------------------------------------------------")
