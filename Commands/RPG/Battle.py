@@ -318,7 +318,7 @@ class Battle(commands.Cog):
             self.enemy[guild_id]['block_chance'] = 10
             self.enemy[guild_id]['crit_chance'] = 10
             self.enemy[guild_id]['damage'] = 30
-            self.enemy[guild_id]['attacks'] = ["Lifesteal"]
+            self.enemy[guild_id]['attacks'] = ["lifesteal"]
             self.enemy[guild_id]['gold'] = 30
             self.enemy[guild_id]['exp'] = 50
             self.enemy[guild_id]['good_drop_chance'] = 30
