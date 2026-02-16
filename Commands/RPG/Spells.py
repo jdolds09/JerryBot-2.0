@@ -10,7 +10,7 @@ class Spells(commands.Cog):
         self.bot = bot
 
     # Spells function
-    @commands.command(aliases=['abilities', 'cooldown', 'cooldowns', 'spellbook'])
+    @commands.command(aliases=['abilities', 'cooldown', 'cooldowns', 'spellbook', 'cd', 'cds'])
     async def spells(self, ctx):
         # Connect to DB
         load_dotenv()

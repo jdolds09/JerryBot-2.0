@@ -21,13 +21,13 @@ bot.remove_command("help")
 # Create a list to keep track of all commands
 commands = ["meme", "vagina", "cock", "cocks", "dick", "dicks", "wiener", "wieners", "tits", "boob", "boobies",
             "titties", "butt", "butts", "titty", "disconnect", "leave", "commands", "command", "level", "xp", "experience", "lvl",
-            "abilities", "cooldown", "cooldowns", "spellbook", "fight", 'attack', 'spell']
+            "abilities", "cooldown", "cooldowns", "spellbook", "fight", "attack", "spell", "use", "cd", "cds"]
 
 no_input_commands = ["meme", "vagina", "cock", "cocks", "dick", "dicks", "wiener", "wieners", "tits", "boob", "boobies",
             "titties", "butt", "butts", "titty", "disconnect", "stop", "commands", "command", "funny", "paper", "rock", "scissors", "size",
              "leave", "pause", "resume", "shuffle", "skip", "ass", "boobs", "cosplay", "hentai", "penis", "porn", "pussy", "classes", 
              "level", "xp", "experience", "lvl", "cooldown", "cooldowns", "spellbook", "abilities", "fight", "battle", "exp", "gold",
-            "spells", "loot"]
+            "spells", "loot", "potion", "use", "cd", "cds"]
 
 # Chat history
 #chat_history = []
