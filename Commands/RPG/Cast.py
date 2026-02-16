@@ -2042,13 +2042,15 @@ class Cast(commands.Cog):
                 # Update HP in DB
                 try:
                     cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 10 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                    return await ctx.send("------------------------------------------------------")
+                    await ctx.send("------------------------------------------------------")
                 except Exception as e:
                     print(e)
                     return await ctx.send("Error updating character HP.")
                 
         # Gambler's attack succeeds
         else:
+            async with ctx.typing():
+                await asyncio.sleep(2)
             await ctx.send("**Success!**")
             # Calculate damage
             damage = 20
@@ -2124,13 +2126,15 @@ class Cast(commands.Cog):
                 # Update HP in DB
                 try:
                     cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                    return await ctx.send("------------------------------------------------------")
+                    await ctx.send("------------------------------------------------------")
                 except Exception as e:
                     print(e)
                     return await ctx.send("Error updating character HP.")
                 
         # Gambler's attack succeeds
         else:
+            async with ctx.typing():
+                await asyncio.sleep(2)
             await ctx.send("**Success!**")
             # Calculate damage
             damage = 50
@@ -2206,13 +2210,15 @@ class Cast(commands.Cog):
                 # Update HP in DB
                 try:
                     cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 30 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                    return await ctx.send("------------------------------------------------------")
+                    await ctx.send("------------------------------------------------------")
                 except Exception as e:
                     print(e)
                     return await ctx.send("Error updating character HP.")
                 
         # Gambler's attack succeeds
         else:
+            async with ctx.typing():
+                await asyncio.sleep(2)
             await ctx.send("**Success!**")
             # Calculate damage
             damage = 80
@@ -2278,7 +2284,7 @@ class Cast(commands.Cog):
                 try:
                     cursor.execute(f"DELETE FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
                     await ctx.send(f"**{ctx.author.name}** has died!")
-                    return await ctx.send("------------------------------------------------------")
+                    await ctx.send("------------------------------------------------------")
                 except Exception as e:
                     print(e)
                     return await ctx.send("Error deleting character.")
@@ -2295,6 +2301,8 @@ class Cast(commands.Cog):
                 
         # Gambler's attack succeeds
         else:
+            async with ctx.typing():
+                await asyncio.sleep(2)
             await ctx.send("**Success!**")
             # Calculate damage
             damage = 100
@@ -2370,13 +2378,15 @@ class Cast(commands.Cog):
                 # Update HP in DB
                 try:
                     cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 50 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                    return await ctx.send("------------------------------------------------------")
+                    await ctx.send("------------------------------------------------------")
                 except Exception as e:
                     print(e)
                     return await ctx.send("Error updating character HP.")
                 
         # Gambler's attack succeeds
         else:
+            async with ctx.typing():
+                await asyncio.sleep(2)
             await ctx.send("**Success!**")
             # Calculate damage
             damage = 120
@@ -2452,13 +2462,15 @@ class Cast(commands.Cog):
                 # Update HP in DB
                 try:
                     cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 60 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                    return await ctx.send("------------------------------------------------------")
+                    await ctx.send("------------------------------------------------------")
                 except Exception as e:
                     print(e)
                     return await ctx.send("Error updating character HP.")
                 
         # Gambler's attack succeeds
         else:
+            async with ctx.typing():
+                await asyncio.sleep(2)
             await ctx.send("**Success!**")
             # Calculate damage
             damage = 150
@@ -2534,13 +2546,15 @@ class Cast(commands.Cog):
                 # Update HP in DB
                 try:
                     cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 70 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                    return await ctx.send("------------------------------------------------------")
+                    await ctx.send("------------------------------------------------------")
                 except Exception as e:
                     print(e)
                     return await ctx.send("Error updating character HP.")
                 
         # Gambler's attack succeeds
         else:
+            async with ctx.typing():
+                await asyncio.sleep(2)
             await ctx.send("**Success!**")
             # Calculate damage
             damage = 200
@@ -2616,13 +2630,15 @@ class Cast(commands.Cog):
                 # Update HP in DB
                 try:
                     cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 80 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                    return await ctx.send("------------------------------------------------------")
+                    await ctx.send("------------------------------------------------------")
                 except Exception as e:
                     print(e)
                     return await ctx.send("Error updating character HP.")
                 
         # Gambler's attack succeeds
         else:
+            async with ctx.typing():
+                await asyncio.sleep(2)
             await ctx.send("**Success!**")
             # Calculate damage
             damage = 300
