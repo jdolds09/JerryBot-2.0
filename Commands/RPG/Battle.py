@@ -434,10 +434,10 @@ class Battle(commands.Cog):
             self.enemy[guild_id]['crit_chance'] = 10
             self.enemy[guild_id]['damage'] = 10
             self.enemy[guild_id]['attacks'] = ["beserk"]
-            self.enemy[guild_id]['gold'] = 20
-            self.enemy[guild_id]['exp'] = 30
+            self.enemy[guild_id]['gold'] = 100
+            self.enemy[guild_id]['exp'] = 200
             self.enemy[guild_id]['good_drop_chance'] = 0
-            self.enemy[guild_id]['rare_drop_chance'] = 30
+            self.enemy[guild_id]['rare_drop_chance'] = 40
             self.enemy[guild_id]['epic_drop_chance'] = 30
             self.enemy[guild_id]['legendary_drop_chance'] = 5
 

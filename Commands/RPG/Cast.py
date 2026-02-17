@@ -372,12 +372,18 @@ class Cast(commands.Cog):
 
         else:
             return await ctx.send("Invalid attack dumbass.")
+        
+    # --------------------------- BASIC ATTACK --------------------------------------
 
     async def user_basic_attack(self, ctx, result, cursor, battle_cog):
         # Add user to particpants list
         if result['username'] not in self.participant_names:
             self.participant_names.append(result['username'])
             self.participants.append(result)
+
+        # Dodge and Block booleans
+        dodge = False
+        block = False
 
         # Update cooldowns
         await self.update_cooldowns(ctx, result, cursor, 'basic', 0)
@@ -386,11 +392,11 @@ class Cast(commands.Cog):
             # Check to see if Gambler failed
             gambler_random = random.randint(1, 100)
             await ctx.send(f"{ctx.author.name}'s basic attack was a...")
-            async with ctx.typing():
-                await asyncio.sleep(2)
 
             # Gambler failed and hurt themself
             if gambler_random < 11 - result['hit_chance']:
+                async with ctx.typing():
+                    await asyncio.sleep(2)
                 await ctx.send("**Failure!**")
                 async with ctx.typing():
                     await asyncio.sleep(2)
@@ -418,6 +424,8 @@ class Cast(commands.Cog):
                     # Update HP in DB
                     try:
                         cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 5 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                        cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                        result = cursor.fetchone()
                         return await ctx.send("------------------------------------------------------")
                     except Exception as e:
                         print(e)
@@ -425,69 +433,33 @@ class Cast(commands.Cog):
                     
             # Gambler's basic attack succeeds
             else:
+                async with ctx.typing():
+                    await asyncio.sleep(2)
                 await ctx.send("**Success!**")
 
         # Check to see if enemy dodged
         dodge_check = random.randint(1, 100)
         if dodge_check <= self.enemy[ctx.guild.id]['dodge_chance'] - result['hit_chance']:
+            dodge = True
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"{ctx.author.name}'s attack missed!")
-            await ctx.send("------------------------------------------------------")
             if result['relentless_active'] == 0 and result['class'] != "rogue":
+                await ctx.send("------------------------------------------------------")
                 return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
             
         # Check to see if enemy blocked
         block_check = random.randint(1, 100)
         if block_check <= self.enemy[ctx.guild.id]['block_chance'] - result['hit_chance']:
+            block = True
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"{ctx.author.name}'s attack was blocked!")
-            await ctx.send("------------------------------------------------------")
             if result['relentless_active'] == 0 and result['class'] != "rogue":
+                await ctx.send("------------------------------------------------------")
                 return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
         
-        # Calculate damage
-        damage = 10 + result['main_hand_damage'] + result['off_hand_damage']
-        # Check if user critical hit
-        crit_check = random.randint(1, 100)
-        if crit_check <= result['crit_chance'] or result['precision_active'] > 0:
-            damage *= 2
-            if result['precision_active'] > 0:
-                cursor.execute(f"UPDATE Characters SET precision_active = precision_active - 1 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
-            async with ctx.typing():
-                await asyncio.sleep(2)
-            await ctx.send(f"**Critical Hit!**")
-
-        # Output damage message
-        async with ctx.typing():
-            await asyncio.sleep(2)
-        await ctx.send(f"{ctx.author.name} dealt **{damage}** damage to the {self.enemy[ctx.guild.id]['name']}!")
-        
-        # Update enemy HP
-        self.enemy[ctx.guild.id]['current_hp'] -= damage
-
-        if result['class'] == "rogue":
-            # Check to see if enemy dodged
-            dodge_check = random.randint(1, 100)
-            if dodge_check <= self.enemy[ctx.guild.id]['dodge_chance'] - result['hit_chance']:
-                async with ctx.typing():
-                    await asyncio.sleep(2)
-                await ctx.send(f"{ctx.author.name}'s attack missed!")
-                await ctx.send("------------------------------------------------------")
-                if result['relentless_active'] == 0:
-                    return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
-                
-            # Check to see if enemy blocked
-            block_check = random.randint(1, 100)
-            if block_check <= self.enemy[ctx.guild.id]['block_chance'] - result['hit_chance']:
-                async with ctx.typing():
-                    await asyncio.sleep(2)
-                await ctx.send(f"{ctx.author.name}'s attack was blocked!")
-                await ctx.send("------------------------------------------------------")
-                if result['relentless_active'] == 0:
-                    return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
-            
+        if not dodge and not block:
             # Calculate damage
             damage = 10 + result['main_hand_damage'] + result['off_hand_damage']
             # Check if user critical hit
@@ -496,6 +468,8 @@ class Cast(commands.Cog):
                 damage *= 2
                 if result['precision_active'] > 0:
                     cursor.execute(f"UPDATE Characters SET precision_active = precision_active - 1 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+                    cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                    result = cursor.fetchone()
                 async with ctx.typing():
                     await asyncio.sleep(2)
                 await ctx.send(f"**Critical Hit!**")
@@ -508,6 +482,52 @@ class Cast(commands.Cog):
             # Update enemy HP
             self.enemy[ctx.guild.id]['current_hp'] -= damage
 
+        if result['class'] == "rogue":
+            # Check to see if enemy dodged
+            dodge_check = random.randint(1, 100)
+            if dodge_check <= self.enemy[ctx.guild.id]['dodge_chance'] - result['hit_chance']:
+                dodge = True
+                async with ctx.typing():
+                    await asyncio.sleep(2)
+                await ctx.send(f"{ctx.author.name}'s attack missed!")
+                if result['relentless_active'] == 0:
+                    await ctx.send("------------------------------------------------------")
+                    return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
+                
+            # Check to see if enemy blocked
+            block_check = random.randint(1, 100)
+            if block_check <= self.enemy[ctx.guild.id]['block_chance'] - result['hit_chance']:
+                block = True
+                async with ctx.typing():
+                    await asyncio.sleep(2)
+                await ctx.send(f"{ctx.author.name}'s attack was blocked!")
+                if result['relentless_active'] == 0:
+                    await ctx.send("------------------------------------------------------")
+                    return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
+            
+            if not dodge and not block:
+                # Calculate damage
+                damage = 10 + result['main_hand_damage'] + result['off_hand_damage']
+                # Check if user critical hit
+                crit_check = random.randint(1, 100)
+                if crit_check <= result['crit_chance'] or result['precision_active'] > 0:
+                    damage *= 2
+                    if result['precision_active'] > 0:
+                        cursor.execute(f"UPDATE Characters SET precision_active = precision_active - 1 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+                        cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                        result = cursor.fetchone()
+                    async with ctx.typing():
+                        await asyncio.sleep(2)
+                    await ctx.send(f"**Critical Hit!**")
+
+                # Output damage message
+                async with ctx.typing():
+                    await asyncio.sleep(2)
+                await ctx.send(f"{ctx.author.name} dealt **{damage}** damage to the {self.enemy[ctx.guild.id]['name']}!")
+                
+                # Update enemy HP
+                self.enemy[ctx.guild.id]['current_hp'] -= damage
+
         async with ctx.typing():
             await asyncio.sleep(2)
         await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
@@ -515,6 +535,8 @@ class Cast(commands.Cog):
         # If relentless active, attack again
         if result['relentless_active'] > 0:
             cursor.execute(f"UPDATE Characters SET relentless_active = 0 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+            result = cursor.fetchone()
             async with ctx.typing():
                 await asyncio.sleep(2)            
             await ctx.send(f"{ctx.author.name} is relentless and attacks again!")
@@ -525,6 +547,8 @@ class Cast(commands.Cog):
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
+
+        # --------------------------- WARRIOR ABILITIES --------------------------------------
 
     # Warrior crush attack
     async def user_crush_attack(self, ctx, result, cursor, battle_cog):
@@ -797,12 +821,16 @@ class Cast(commands.Cog):
         if result['current_hp'] + damage >= result['max_hp']:
             try:
                 cursor.execute(f"UPDATE Characters SET current_hp = max_hp WHERE username = '{result['username']}' AND guild_id = '{ctx.guild.id}'")
+                cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                result = cursor.fetchone()
             except Exception as e:
                 print(e)
                 return await ctx.send("Error updating character HP.")
         else:
             try:
                 cursor.execute(f"UPDATE Characters SET current_hp = current_hp + {damage} WHERE username = '{result['username']}' AND guild_id = '{ctx.guild.id}'")
+                cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                result = cursor.fetchone()
             except Exception as e:
                 print(e)
                 return await ctx.send("Error updating character HP.")
@@ -851,7 +879,7 @@ class Cast(commands.Cog):
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Calculate damage
-        if self.enemy[ctx.guild.id]['current_hp'] / self.enemy[ctx.guild.id]['max_hp'] > 0.3:
+        if self.enemy[ctx.guild.id]['current_hp'] / self.enemy[ctx.guild.id]['max_hp'] <= 0.3:
             damage = 60 + result['main_hand_damage']
         else:
             damage = 20 + result['main_hand_damage']
@@ -955,6 +983,8 @@ class Cast(commands.Cog):
             # Update HP in DB
             try:
                 cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 30 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                result = cursor.fetchone()
             except Exception as e:
                 print(e)
                 return await ctx.send("Error updating character HP.")
@@ -1255,6 +1285,8 @@ class Cast(commands.Cog):
             # Update HP in DB
             try:
                 cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 100 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                result = cursor.fetchone()
             except Exception as e:
                 print(e)
                 return await ctx.send("Error updating character HP.")
@@ -1269,6 +1301,8 @@ class Cast(commands.Cog):
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
+
+    # --------------------------- HUNTER ABILITIES --------------------------------------
 
     # Hunter trishot attack
     async def user_trishot_attack(self, ctx, result, cursor, battle_cog):
@@ -1317,6 +1351,8 @@ class Cast(commands.Cog):
                     damage *= 2
                     if result['precision_active'] > 0:
                         cursor.execute(f"UPDATE Characters SET precision_active = precision_active - 1 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+                        cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                        result = cursor.fetchone()
                     async with ctx.typing():
                         await asyncio.sleep(2)
                     await ctx.send(f"**Critical Hit!**")
@@ -1360,6 +1396,8 @@ class Cast(commands.Cog):
 
         # Set precision to 3
         cursor.execute(f"UPDATE Characters SET precision_active = 3 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+        cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+        result = cursor.fetchone()
         async with ctx.typing():
             await asyncio.sleep(2)
         await ctx.send(f"{result['username']} is precise and their next 3 attacks will be critical hits!")
@@ -1416,6 +1454,8 @@ class Cast(commands.Cog):
             damage *= 2
             if result['precision_active'] > 0:
                 cursor.execute(f"UPDATE Characters SET precision_active = precision_active - 1 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+                cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                result = cursor.fetchone()
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"**Critical Hit!**")
@@ -1473,6 +1513,8 @@ class Cast(commands.Cog):
             damage *= 2
             if result['precision_active'] > 0:
                 cursor.execute(f"UPDATE Characters SET precision_active = precision_active - 1 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+                cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                result = cursor.fetchone()
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"**Critical Hit!**")
@@ -1542,6 +1584,8 @@ class Cast(commands.Cog):
                     damage *= 2
                     if result['precision_active'] > 0:
                         cursor.execute(f"UPDATE Characters SET precision_active = precision_active - 1 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+                        cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                        result = cursor.fetchone()
                     async with ctx.typing():
                         await asyncio.sleep(2)
                     await ctx.send(f"**Critical Hit!**")
@@ -1672,6 +1716,8 @@ class Cast(commands.Cog):
             damage *= 2
             if result['precision_active'] > 0:
                 cursor.execute(f"UPDATE Characters SET precision_active = precision_active - 1 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+                cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                result = cursor.fetchone()
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"**Critical Hit!**")
@@ -1752,6 +1798,8 @@ class Cast(commands.Cog):
                 damage *= 2
                 if result['precision_active'] > 0:
                     cursor.execute(f"UPDATE Characters SET precision_active = precision_active - 1 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+                    cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                    result = cursor.fetchone()
                 async with ctx.typing():
                     await asyncio.sleep(2)
                 await ctx.send(f"**Critical Hit!**")
@@ -1826,16 +1874,6 @@ class Cast(commands.Cog):
         # Calculate damage
         damage = 150 + result['main_hand_damage'] + result['off_hand_damage']
 
-        # Check if user critical hit
-        crit_check = random.randint(1, 100)
-        if crit_check <= result['crit_chance'] or result['precision_active'] > 0:
-            damage *= 2
-            if result['precision_active'] > 0:
-                cursor.execute(f"UPDATE Characters SET precision_active = precision_active - 1 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
-            async with ctx.typing():
-                await asyncio.sleep(2)
-            await ctx.send(f"**Critical Hit!**")
-
         # Check to see if hunter missed
         hit_check = random.randint(1, 100)
         if hit_check <= 30:
@@ -1844,6 +1882,18 @@ class Cast(commands.Cog):
             await ctx.send(f"{result['username']}'s Powershot was interrupted!")
             await ctx.send("------------------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
+
+        # Check if user critical hit
+        crit_check = random.randint(1, 100)
+        if crit_check <= result['crit_chance'] or result['precision_active'] > 0:
+            damage *= 2
+            if result['precision_active'] > 0:
+                cursor.execute(f"UPDATE Characters SET precision_active = precision_active - 1 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+                cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                result = cursor.fetchone()
+            async with ctx.typing():
+                await asyncio.sleep(2)
+            await ctx.send(f"**Critical Hit!**")
         
         # Output damage message
         async with ctx.typing():
@@ -1920,6 +1970,8 @@ class Cast(commands.Cog):
 
         # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
+
+    # --------------------------- GAMBLER ABILITIES --------------------------------------
 
     # Gambler deal attack
     async def user_deal_attack(self, ctx, result, cursor, battle_cog):
@@ -2445,7 +2497,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send("**Failure!**")
-            await ctx.send(f"{ctx.author.name} hurt themself for 30 damage!")
+            await ctx.send(f"{ctx.author.name} hurt themself for 60 damage!")
             # Gambler died
             if result['current_hp'] - 60 <= 0:
                 file_path = f"Images/respects.gif"
@@ -2738,6 +2790,8 @@ class Cast(commands.Cog):
         # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
+    # --------------------------- MAGE ABILITIES --------------------------------------
+
     # Mage fireball attack
     async def user_fireball_attack(self, ctx, result, cursor, battle_cog):
         # Add user to particpants list
@@ -2908,13 +2962,19 @@ class Cast(commands.Cog):
         # Heal user
         if result['current_hp'] + 50 > result['max_hp']:
             try:
+                await ctx.send(f"{result['username']}'s HP: **{result['max_hp']}/{result['max_hp']}**")
                 cursor.execute(f"UPDATE Characters SET current_hp = max_hp WHERE username = '{result['username']}' AND guild_id = '{ctx.guild.id}'")
+                cursor.execute(f"SELECT * FROM Characters WHERE username = '{result['username']}' AND guild_id = '{ctx.guild.id}'")
+                result = cursor.fetchone()
             except Exception as e:
                 print(e)
                 await ctx.send(f"An error occurred while updating HP")
         else:
             try:
+                await ctx.send(f"{result['username']}'s HP: **{result['current_hp'] + 50}/{result['max_hp']}**")
                 cursor.execute(f"UPDATE Characters SET current_hp = current_hp + 50 WHERE username = '{result['username']}' AND guild_id = '{ctx.guild.id}'")
+                cursor.execute(f"SELECT * FROM Characters WHERE username = '{result['username']}' AND guild_id = '{ctx.guild.id}'")
+                result = cursor.fetchone()
             except Exception as e:
                 print(e)
                 await ctx.send(f"An error occurred while updating HP")
@@ -2942,7 +3002,7 @@ class Cast(commands.Cog):
             cursor.execute(f"UPDATE Characters SET cooldown_10 = cooldown_10 - 2 WHERE username = '{result['username']}' AND guild_id = '{ctx.guild.id}'")
 
         # Update cooldowns
-        await self.update_cooldowns(ctx, result, cursor, 'cooldown_3', 6)
+        await self.update_cooldowns(ctx, result, cursor, 'cooldown_3', 3)
 
         await ctx.send("------------------------------------------------------")
 
@@ -3006,12 +3066,16 @@ class Cast(commands.Cog):
         if result['current_hp'] + damage > result['max_hp']:
             try:
                 cursor.execute(f"UPDATE Characters SET current_hp = max_hp WHERE username = '{result['username']}' AND guild_id = '{ctx.guild.id}'")
+                cursor.execute(f"SELECT * FROM Characters WHERE username = '{result['username']}' AND guild_id = '{ctx.guild.id}'")
+                result = cursor.fetchone()
             except Exception as e:
                 print(e)
                 await ctx.send(f"An error occurred while updating HP")
         else:
             try:
                 cursor.execute(f"UPDATE Characters SET current_hp = current_hp + {damage} WHERE username = '{result['username']}' AND guild_id = '{ctx.guild.id}'")
+                cursor.execute(f"SELECT * FROM Characters WHERE username = '{result['username']}' AND guild_id = '{ctx.guild.id}'")
+                result = cursor.fetchone()
             except Exception as e:
                 print(e)
                 await ctx.send(f"An error occurred while updating HP")
@@ -3356,14 +3420,6 @@ class Cast(commands.Cog):
         # Calculate damage
         damage = 150 + result['main_hand_damage'] + result['off_hand_damage']
 
-        # Check if user critical hit
-        crit_check = random.randint(1, 100)
-        if crit_check <= result['crit_chance']:
-            damage *= 2
-            async with ctx.typing():
-                await asyncio.sleep(2)
-            await ctx.send(f"**Critical Hit!**")
-
         # Check to see if mage missed
         hit_check = random.randint(1, 100)
         if hit_check <= 30:
@@ -3372,6 +3428,14 @@ class Cast(commands.Cog):
             await ctx.send(f"{result['username']}'s Pyroblast was interrupted!")
             await ctx.send("------------------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
+
+        # Check if user critical hit
+        crit_check = random.randint(1, 100)
+        if crit_check <= result['crit_chance']:
+            damage *= 2
+            async with ctx.typing():
+                await asyncio.sleep(2)
+            await ctx.send(f"**Critical Hit!**")
         
         # Output damage message
         async with ctx.typing():
@@ -3410,6 +3474,9 @@ class Cast(commands.Cog):
         fireball_block = False
         frostbolt_dodge = False
         frostbolt_block = False
+
+        freeze = False
+        lightning = True
 
         # ----------------- FIREBALL SECTION -----------------
 
@@ -3488,7 +3555,6 @@ class Cast(commands.Cog):
                 await ctx.send(f"**Critical Hit!**")
 
             # Check to see if frostbolt froze the enemy
-            freeze = False
             freeze_check = random.randint(1, 100)
             if freeze_check <= 30:
                 async with ctx.typing():
@@ -3500,6 +3566,9 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.enemy[ctx.guild.id]['name']}!")
+
+            # Update enemy HP
+            self.enemy[ctx.guild.id]['current_hp'] -= damage
 
         # ------------------ LIGHTNING SECTION -----------------
 
@@ -3524,8 +3593,6 @@ class Cast(commands.Cog):
             await self.update_cooldowns(ctx, result, cursor, 'cooldown_10', 10)
             await ctx.send("------------------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
-
-        lightning = True
 
         while lightning:
             # Calculate damage
@@ -3567,6 +3634,8 @@ class Cast(commands.Cog):
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, freeze)
+
+    # --------------------------- ROGUE ABILITIES --------------------------------------
 
     # Rogue gouge attack
     async def user_gouge_attack(self, ctx, result, cursor, battle_cog):
@@ -3639,6 +3708,8 @@ class Cast(commands.Cog):
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']}'s is relentless and attacks again!")
             cursor.execute(f"UPDATE Characters SET relentless_active = 0 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+            result = cursor.fetchone()
             await self.user_gouge_attack(ctx, result, cursor, battle_cog)
 
         async with ctx.typing():
@@ -3715,6 +3786,8 @@ class Cast(commands.Cog):
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']}'s is relentless and attacks again!")
             cursor.execute(f"UPDATE Characters SET relentless_active = 0 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+            result = cursor.fetchone()
             await self.user_stab_attack(ctx, result, cursor, battle_cog)
 
         async with ctx.typing():
@@ -3800,6 +3873,8 @@ class Cast(commands.Cog):
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']}'s is relentless and attacks again!")
             cursor.execute(f"UPDATE Characters SET relentless_active = 0 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+            result = cursor.fetchone()
             await self.user_sap_attack(ctx, result, cursor, battle_cog)
 
         async with ctx.typing():
@@ -3830,6 +3905,9 @@ class Cast(commands.Cog):
         
         # Update cooldowns
         await self.update_cooldowns(ctx, result, cursor, 'cooldown_4', 5)
+
+        # Total damage
+        total_damage = 0
 
         for _ in range(2):
             dodge = False
@@ -3869,18 +3947,24 @@ class Cast(commands.Cog):
 
                 # Update enemy HP
                 self.enemy[ctx.guild.id]['current_hp'] -= damage
+                # Add to total damage
+                total_damage += damage
 
         # Heal HP
-        if result['current_hp'] + damage > result['max_hp']:
+        if result['current_hp'] + total_damage > result['max_hp']:
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']}'s HP: {result['max_hp']}/{result['max_hp']}")
             cursor.execute(f"UPDATE Characters SET current_hp = max_hp WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+            result = cursor.fetchone()
         else:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"{result['username']}'s HP: {result['current_hp'] + damage}/{result['max_hp']}")
-            cursor.execute(f"UPDATE Characters SET current_hp = current_hp + {damage} WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+            await ctx.send(f"{result['username']}'s HP: {result['current_hp'] + total_damage}/{result['max_hp']}")
+            cursor.execute(f"UPDATE Characters SET current_hp = current_hp + {total_damage} WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+            result = cursor.fetchone()
 
         # Relentless
         if result['relentless_active'] > 0:
@@ -3888,6 +3972,8 @@ class Cast(commands.Cog):
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']}'s is relentless and attacks again!")
             cursor.execute(f"UPDATE Characters SET relentless_active = 0 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+            result = cursor.fetchone()
             await self.user_bleed_attack(ctx, result, cursor, battle_cog)
 
         async with ctx.typing():
@@ -3964,6 +4050,8 @@ class Cast(commands.Cog):
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']}'s is relentless and attacks again!")
             cursor.execute(f"UPDATE Characters SET relentless_active = 0 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+            result = cursor.fetchone()
             await self.user_betrayal_attack(ctx, result, cursor, battle_cog)
 
         async with ctx.typing():
@@ -3997,6 +4085,8 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{result['username']} is relentless and will preform the next attack twice!")
         cursor.execute(f"UPDATE Characters SET relentless_active = 1 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+        cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+        result = cursor.fetchone()
 
         # Update cooldowns
         await self.update_cooldowns(ctx, result, cursor, 'cooldown_6', 100)
@@ -4070,6 +4160,8 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{result['username']} dodges will do 20 damage and interrupt the enemy's attack for the rest of the fight!")
         cursor.execute(f"UPDATE Characters SET counter_active = 1 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+        cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+        result = cursor.fetchone()
 
         # Relentless
         if result['relentless_active'] > 0:
@@ -4077,6 +4169,8 @@ class Cast(commands.Cog):
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']}'s is relentless and attacks again!")
             cursor.execute(f"UPDATE Characters SET relentless_active = 0 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+            result = cursor.fetchone()
             await self.user_counter_attack(ctx, result, cursor, battle_cog)
 
         async with ctx.typing():
@@ -4139,7 +4233,30 @@ class Cast(commands.Cog):
                         self.enemy[ctx.guild.id]['current_hp'] = 0
                         instakill = True
                 
-                if not instakill:
+                    if not instakill:
+                        # Calculate damage
+                        damage = 10 + result['main_hand_damage'] + result['off_hand_damage']
+
+                        # Check if user critical hit
+                        crit_check = random.randint(1, 100)
+                        if crit_check <= result['crit_chance']:
+                            damage *= 2
+                            async with ctx.typing():
+                                await asyncio.sleep(2)
+                            await ctx.send(f"**Critical Hit!**")
+
+                        # Output damage message
+                        async with ctx.typing():
+                            await asyncio.sleep(2)
+                        await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.enemy[ctx.guild.id]['name']}!")
+
+                        # Update enemy HP
+                        self.enemy[ctx.guild.id]['current_hp'] -= damage
+                        async with ctx.typing():
+                            await asyncio.sleep(2)
+                        await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
+
+                else:
                     # Calculate damage
                     damage = 10 + result['main_hand_damage'] + result['off_hand_damage']
 
@@ -4168,6 +4285,8 @@ class Cast(commands.Cog):
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']}'s is relentless and attacks again!")
             cursor.execute(f"UPDATE Characters SET relentless_active = 0 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+            result = cursor.fetchone()
             await self.user_assassinate_attack(ctx, result, cursor, battle_cog)
 
         await ctx.send("------------------------------------------------------")
@@ -4221,10 +4340,8 @@ class Cast(commands.Cog):
 
                     # Check if user critical hit
                     crit_check = random.randint(1, 100)
-                    if crit_check <= result['crit_chance'] or result['precision_active'] > 0:
+                    if crit_check <= result['crit_chance']:
                         damage *= 2
-                        if result['precision_active'] > 0:
-                            cursor.execute(f"UPDATE Characters SET precision_active = precision_active - 1 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
                         async with ctx.typing():
                             await asyncio.sleep(2)
                         await ctx.send(f"**Critical Hit!**")
@@ -4255,6 +4372,8 @@ class Cast(commands.Cog):
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']}'s is relentless and attacks again!")
             cursor.execute(f"UPDATE Characters SET relentless_active = 0 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+            result = cursor.fetchone()
             await self.user_bladestorm_attack(ctx, result, cursor, battle_cog)
 
         async with ctx.typing():
@@ -4331,6 +4450,8 @@ class Cast(commands.Cog):
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']}'s is relentless and attacks again!")
             cursor.execute(f"UPDATE Characters SET relentless_active = 0 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+            cursor.execute(f"SELECT * FROM Characters WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+            result = cursor.fetchone()
             await self.user_backstab_attack(ctx, result, cursor, battle_cog)
 
         async with ctx.typing():
@@ -4341,6 +4462,8 @@ class Cast(commands.Cog):
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
+
+    # --------------------------- UPDATE COOLDOWNS --------------------------------------
 
     async def update_cooldowns(self, ctx, result, cursor, cooldown, cooldown_duration):
         # Update cooldowns
@@ -4367,6 +4490,8 @@ class Cast(commands.Cog):
 
         if cooldown != 'basic':
             cursor.execute(f"UPDATE Characters SET {cooldown} = {cooldown_duration} WHERE username = '{result['username']}' AND guild_id = '{ctx.guild.id}'")
+
+    # --------------------------- ENEMY HEALTH CHECK --------------------------------------
 
     async def enemy_health_check(self, ctx, result, battle_cog, cursor, stun):
     # Check if enemy died
@@ -4509,7 +4634,9 @@ class Cast(commands.Cog):
 
         else:
             if not stun:
-                await self.choose_enemy_attack(ctx, battle_cog, result, cursor)    
+                await self.choose_enemy_attack(ctx, battle_cog, result, cursor)
+
+    # --------------------------- ENEMY ABILITIES --------------------------------------  
 
     async def enemy_basic_attack(self, ctx, battle_cog, result, cursor):
         # Output enemy attack message
@@ -6093,6 +6220,8 @@ class Cast(commands.Cog):
         # Update beskerk damage for next attack
         self.beserk_damage *= 2
 
+    # --------------------------- CHOOSE ENEMY ATTACK --------------------------------------
+
     async def choose_enemy_attack(self, ctx, battle_cog, result, cursor):
         enemy_attack = random.choice(self.enemy[ctx.guild.id]['attacks'])
         if enemy_attack == "basic":
@@ -6129,6 +6258,8 @@ class Cast(commands.Cog):
             await self.enemy_bladestorm_attack(ctx, battle_cog, result, cursor)
         elif enemy_attack == "beserk":
             await self.enemy_beserk_attack(ctx, battle_cog, result, cursor)
+
+    # --------------------------- DISTRIBUTE LOOT --------------------------------------
 
     async def distribute_loot(self, ctx, loot_class, loot_slot, rarity, cursor):
         # Set roll for loot boolean
