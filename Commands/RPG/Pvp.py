@@ -333,7 +333,7 @@ class Pvp(commands.Cog):
                 else:
                     # Display current HP
                     await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 5}/{result['max_hp']}**")
-                    await ctx.send("------------------------------------------------------")
+                    await ctx.send("---------------------------------------------")
                     # Update HP in DB
                     try:
                         cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 5 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
@@ -342,6 +342,7 @@ class Pvp(commands.Cog):
                         temp_player = self.turn_player
                         self.turn_player = self.other_player
                         self.other_player = temp_player
+                        return
                     except Exception as e:
                         print(e)
                         return await ctx.send("Error updating character HP.")
@@ -385,7 +386,8 @@ class Pvp(commands.Cog):
                     except Exception as e:
                         print(e)
                         return await ctx.send("Error updating character HP.")
-            await ctx.send("------------------------------------------------------")
+                    
+            await ctx.send("---------------------------------------------")
             if self.turn_player['relentless_active'] == 0 and result['class'] != "rogue":
                 temp_player = self.turn_player
                 self.turn_player = self.other_player
@@ -404,7 +406,7 @@ class Pvp(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"{ctx.author.name}'s attack was blocked!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             if self.turn_player['relentless_active'] == 0 and result['class'] != "rogue":
                 temp_player = self.turn_player
                 self.turn_player = self.other_player
@@ -429,7 +431,7 @@ class Pvp(commands.Cog):
             # Output damage message
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"{ctx.author.name} dealt **{damage}** damage to the {self.other_player['username']}!")
+            await ctx.send(f"{ctx.author.name} dealt **{damage}** damage to {self.other_player['username']}!")
             
             # Check duelists hp
             if self.other_player['current_hp'] - damage <= 0:
@@ -470,18 +472,18 @@ class Pvp(commands.Cog):
                         await ctx.send(f"**{self.other_player['username']} has won the duel!**")
                         return await self.reset_duel(ctx, result, cursor)
                 
-                else:
-                    # Display current HP
-                    await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
-                    # Update HP in DB
-                    try:
-                        cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        self.turn_player = cursor.fetchone()
-                    except Exception as e:
-                        print(e)
-                        return await ctx.send("Error updating character HP.")
-                await ctx.send("------------------------------------------------------")
+                    else:
+                        # Display current HP
+                        await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
+                        # Update HP in DB
+                        try:
+                            cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            self.turn_player = cursor.fetchone()
+                        except Exception as e:
+                            print(e)
+                            return await ctx.send("Error updating character HP.")
+                await ctx.send("---------------------------------------------")
                 if self.turn_player['relentless_active'] == 0:
                     temp_player = self.turn_player
                     self.turn_player = self.other_player
@@ -494,7 +496,7 @@ class Pvp(commands.Cog):
                 async with ctx.typing():
                     await asyncio.sleep(2)
                 await ctx.send(f"{ctx.author.name}'s attack was blocked!")
-                await ctx.send("------------------------------------------------------")
+                await ctx.send("---------------------------------------------")
                 if self.turn_player['relentless_active'] == 0:
                     temp_player = self.turn_player
                     self.turn_player = self.other_player
@@ -518,7 +520,7 @@ class Pvp(commands.Cog):
             # Output damage message
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"{ctx.author.name} dealt **{damage}** damage to the {self.other_player['username']}!")
+            await ctx.send(f"{ctx.author.name} dealt **{damage}** damage to {self.other_player['username']}!")
         
             # Check duelists hp
             if self.other_player['current_hp'] - damage <= 0:
@@ -547,10 +549,10 @@ class Pvp(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)            
             await ctx.send(f"{ctx.author.name} is relentless and attacks again!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             await self.user_basic_attack(ctx, result, cursor)
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
 
     # ----------------------------- WARRIOR ABILITIES --------------------------------------
 
@@ -602,7 +604,7 @@ class Pvp(commands.Cog):
                     except Exception as e:
                         print(e)
                         return await ctx.send("Error updating character HP.")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -619,7 +621,7 @@ class Pvp(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"{self.other_player['username']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -661,9 +663,9 @@ class Pvp(commands.Cog):
         stun_check = random.randint(1, 100)
         if stun_check <= 50:
             await ctx.send(f"{result['username']} stunned {self.other_player['username']}!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
         else:
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -715,17 +717,17 @@ class Pvp(commands.Cog):
                         await ctx.send(f"**{self.other_player['username']} has won the duel!**")
                         return await self.reset_duel(ctx, result, cursor)
                 
-                else:
-                    # Display current HP
-                    await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
-                    # Update HP in DB
-                    try:
-                        cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        self.turn_player = cursor.fetchone()
-                    except Exception as e:
-                        print(e)
-                        return await ctx.send("Error updating character HP.")
+                    else:
+                        # Display current HP
+                        await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
+                        # Update HP in DB
+                        try:
+                            cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            self.turn_player = cursor.fetchone()
+                        except Exception as e:
+                            print(e)
+                            return await ctx.send("Error updating character HP.")
                 dodge = True
 
             # Check to see if enemy blocked
@@ -775,7 +777,7 @@ class Pvp(commands.Cog):
                 temp_player = self.turn_player
                 self.turn_player = self.other_player
                 self.other_player = temp_player
-                await ctx.send("------------------------------------------------------")
+                await ctx.send("---------------------------------------------")
                 return 
             except Exception as e:
                 print(e)
@@ -832,7 +834,7 @@ class Pvp(commands.Cog):
                     except Exception as e:
                         print(e)
                         return await ctx.send("Error updating character HP.")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -849,7 +851,7 @@ class Pvp(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"{self.other_player['username']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -898,7 +900,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
 
@@ -953,7 +955,7 @@ class Pvp(commands.Cog):
                     except Exception as e:
                         print(e)
                         return await ctx.send("Error updating character HP.")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -970,7 +972,7 @@ class Pvp(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"{self.other_player['username']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -1033,7 +1035,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Warrior execute attack
@@ -1087,7 +1089,7 @@ class Pvp(commands.Cog):
                     except Exception as e:
                         print(e)
                         return await ctx.send("Error updating character HP.")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -1104,7 +1106,7 @@ class Pvp(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"{self.other_player['username']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -1125,7 +1127,7 @@ class Pvp(commands.Cog):
         # Output damage message
         async with ctx.typing():
             await asyncio.sleep(2)
-        await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+        await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
          # Check duelists hp
         if self.other_player['current_hp'] - damage <= 0:
@@ -1148,7 +1150,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Warrior headbutt attack
@@ -1180,7 +1182,7 @@ class Pvp(commands.Cog):
         if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+            await ctx.send(f"{self.other_player['username']} dodged the attack!")
             if self.other_player['counter_active'] > 0:
                 async with ctx.typing():
                     await asyncio.sleep(2)
@@ -1202,7 +1204,7 @@ class Pvp(commands.Cog):
                     except Exception as e:
                         print(e)
                         return await ctx.send("Error updating character HP.")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -1218,8 +1220,8 @@ class Pvp(commands.Cog):
         if block_check <= self.other_player['block_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send(f"{self.other_player['username']} blocked the attack!")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -1237,7 +1239,7 @@ class Pvp(commands.Cog):
         # Output damage message
         async with ctx.typing():
             await asyncio.sleep(2)
-        await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+        await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
         async with ctx.typing():
             await asyncio.sleep(2)
         await ctx.send(f"{result['username']} has also done 30 damage to themself!")
@@ -1282,7 +1284,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Warrior haymaker attack
@@ -1314,7 +1316,7 @@ class Pvp(commands.Cog):
         if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+            await ctx.send(f"{self.other_player['username']} dodged the attack!")
             if self.other_player['counter_active'] > 0:
                 async with ctx.typing():
                     await asyncio.sleep(2)
@@ -1336,7 +1338,7 @@ class Pvp(commands.Cog):
                     except Exception as e:
                         print(e)
                         return await ctx.send("Error updating character HP.")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -1352,8 +1354,8 @@ class Pvp(commands.Cog):
         if block_check <= self.other_player['block_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send(f"{self.other_player['username']} blocked the attack!")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -1365,7 +1367,7 @@ class Pvp(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']} missed the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -1401,7 +1403,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Warrior whirlwind attack
@@ -1430,7 +1432,7 @@ class Pvp(commands.Cog):
         if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+            await ctx.send(f"{self.other_player['username']} dodged the attack!")
             if self.other_player['counter_active'] > 0:
                 async with ctx.typing():
                     await asyncio.sleep(2)
@@ -1452,9 +1454,10 @@ class Pvp(commands.Cog):
                     except Exception as e:
                         print(e)
                         return await ctx.send("Error updating character HP.")
+                    
             # Update cooldowns
             await self.update_cooldowns(ctx, result, cursor, 'cooldown_8', 5)
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -1470,10 +1473,10 @@ class Pvp(commands.Cog):
         if block_check <= self.other_player['block_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} blocked the attack!")
+            await ctx.send(f"{self.other_player['username']} blocked the attack!")
             # Update cooldowns
             await self.update_cooldowns(ctx, result, cursor, 'cooldown_8', 5)
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -1495,7 +1498,7 @@ class Pvp(commands.Cog):
             # Output damage message
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+            await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
             # Add to total damage
             total_damage += damage
@@ -1530,7 +1533,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Warrior retaliate attack
@@ -1566,7 +1569,7 @@ class Pvp(commands.Cog):
         if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+            await ctx.send(f"{self.other_player['username']} dodged the attack!")
             if self.other_player['counter_active'] > 0:
                 async with ctx.typing():
                     await asyncio.sleep(2)
@@ -1588,7 +1591,7 @@ class Pvp(commands.Cog):
                     except Exception as e:
                         print(e)
                         return await ctx.send("Error updating character HP.")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -1604,8 +1607,8 @@ class Pvp(commands.Cog):
         if block_check <= self.other_player['block_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send(f"{self.other_player['username']} blocked the attack!")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -1623,7 +1626,7 @@ class Pvp(commands.Cog):
         # Output damage message
         async with ctx.typing():
             await asyncio.sleep(2)
-        await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+        await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
         async with ctx.typing():
             await asyncio.sleep(2)
         await ctx.send(f"{result['username']} has also done 100 damage to themself!")
@@ -1668,7 +1671,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # -------------------------------- HUNTER ABILITIES --------------------------------
@@ -1706,7 +1709,7 @@ class Pvp(commands.Cog):
             if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+                await ctx.send(f"{self.other_player['username']} dodged the attack!")
                 if self.other_player['counter_active'] > 0:
                     async with ctx.typing():
                         await asyncio.sleep(2)
@@ -1717,17 +1720,17 @@ class Pvp(commands.Cog):
                         await ctx.send(f"**{self.other_player['username']} has won the duel!**")
                         return await self.reset_duel(ctx, result, cursor)
                 
-                else:
-                    # Display current HP
-                    await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
-                    # Update HP in DB
-                    try:
-                        cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        self.turn_player = cursor.fetchone()
-                    except Exception as e:
-                        print(e)
-                        return await ctx.send("Error updating character HP.")
+                    else:
+                        # Display current HP
+                        await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
+                        # Update HP in DB
+                        try:
+                            cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            self.turn_player = cursor.fetchone()
+                        except Exception as e:
+                            print(e)
+                            return await ctx.send("Error updating character HP.")
                 dodge = True
 
             # Check to see if enemy blocked
@@ -1740,7 +1743,7 @@ class Pvp(commands.Cog):
             if block_check <= self.other_player['block_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} blocked the attack!")
+                await ctx.send(f"{self.other_player['username']} blocked the attack!")
                 block = True
 
             if not dodge and not block:
@@ -1762,7 +1765,7 @@ class Pvp(commands.Cog):
                 # Output damage message
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+                await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
                 # Add to total damage
                 total_damage += damage
@@ -1788,7 +1791,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Hunter precision attack
@@ -1808,7 +1811,7 @@ class Pvp(commands.Cog):
             return await ctx.send(f"{result['username']}'s Precision attack is on cooldown for {result['cooldown_2']} more turns!")
         
         # Update cooldowns
-        await self.update_cooldowns(ctx, result, cursor, 'cooldown_2', 6)
+        await self.update_cooldowns(ctx, result, cursor, 'cooldown_2', 3)
 
         # Set precision to 3
         cursor.execute(f"UPDATE Characters SET precision_active = 3 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
@@ -1821,7 +1824,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Hunter blind attack
@@ -1853,7 +1856,7 @@ class Pvp(commands.Cog):
         if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+            await ctx.send(f"{self.other_player['username']} dodged the attack!")
             if self.other_player['counter_active'] > 0:
                 async with ctx.typing():
                     await asyncio.sleep(2)
@@ -1875,7 +1878,7 @@ class Pvp(commands.Cog):
                     except Exception as e:
                         print(e)
                         return await ctx.send("Error updating character HP.")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -1891,8 +1894,8 @@ class Pvp(commands.Cog):
         if block_check <= self.other_player['block_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send(f"{self.other_player['username']} blocked the attack!")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -1914,7 +1917,7 @@ class Pvp(commands.Cog):
         # Output damage message
         async with ctx.typing():
             await asyncio.sleep(2)
-        await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+        await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
         # Check duelists hp
         if self.other_player['current_hp'] - damage <= 0:
@@ -1937,7 +1940,7 @@ class Pvp(commands.Cog):
         # Output blind message
         async with ctx.typing():
             await asyncio.sleep(2)
-        await ctx.send(f"The {self.other_player['username']} has been blinded and has an additional 50% chance to miss their next attack!")
+        await ctx.send(f"{self.other_player['username']} has been blinded and has an additional 50% chance to miss their next attack!")
         cursor.execute(f"UPDATE Characters SET gouge_active = 1 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
         cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
         self.turn_player = cursor.fetchone()
@@ -1945,7 +1948,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Hunter snipe attack
@@ -1985,7 +1988,7 @@ class Pvp(commands.Cog):
         # Output damage message
         async with ctx.typing():
             await asyncio.sleep(2)
-        await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+        await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
         # Check duelists hp
         if self.other_player['current_hp'] - damage <= 0:
@@ -2008,7 +2011,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Hunter rapidfire attack
@@ -2046,7 +2049,7 @@ class Pvp(commands.Cog):
             if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+                await ctx.send(f"{self.other_player['username']} dodged the attack!")
                 if self.other_player['counter_active'] > 0:
                     async with ctx.typing():
                         await asyncio.sleep(2)
@@ -2057,17 +2060,17 @@ class Pvp(commands.Cog):
                         await ctx.send(f"**{self.other_player['username']} has won the duel!**")
                         return await self.reset_duel(ctx, result, cursor)
                 
-                else:
-                    # Display current HP
-                    await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
-                    # Update HP in DB
-                    try:
-                        cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        self.turn_player = cursor.fetchone()
-                    except Exception as e:
-                        print(e)
-                        return await ctx.send("Error updating character HP.")
+                    else:
+                        # Display current HP
+                        await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
+                        # Update HP in DB
+                        try:
+                            cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            self.turn_player = cursor.fetchone()
+                        except Exception as e:
+                            print(e)
+                            return await ctx.send("Error updating character HP.")
                 dodge = True
 
             # Check to see if enemy blocked
@@ -2080,7 +2083,7 @@ class Pvp(commands.Cog):
             if block_check <= self.other_player['block_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} blocked the attack!")
+                await ctx.send(f"{self.other_player['username']} blocked the attack!")
                 block = True
 
             if not dodge and not block:
@@ -2100,7 +2103,7 @@ class Pvp(commands.Cog):
                 # Output damage message
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+                await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
                 # Add to total damage
                 total_damage += damage
@@ -2126,7 +2129,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Hunter bear attack
@@ -2158,7 +2161,7 @@ class Pvp(commands.Cog):
         if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+            await ctx.send(f"{self.other_player['username']} dodged the attack!")
             if self.other_player['counter_active'] > 0:
                 async with ctx.typing():
                     await asyncio.sleep(2)
@@ -2180,7 +2183,7 @@ class Pvp(commands.Cog):
                     except Exception as e:
                         print(e)
                         return await ctx.send("Error updating character HP.")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -2196,8 +2199,8 @@ class Pvp(commands.Cog):
         if block_check <= self.other_player['block_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send(f"{self.other_player['username']} blocked the attack!")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -2214,7 +2217,7 @@ class Pvp(commands.Cog):
         # Output damage message
         async with ctx.typing():
             await asyncio.sleep(2)
-        await ctx.send(f"{result['username']}'s bear companion dealt **{damage}** damage and stunned the {self.other_player['username']}!")
+        await ctx.send(f"{result['username']}'s bear companion dealt **{damage}** damage and stunned {self.other_player['username']}!")
 
         # Check duelists hp
         if self.other_player['current_hp'] - damage <= 0:
@@ -2234,7 +2237,7 @@ class Pvp(commands.Cog):
                 print(e)
                 return await ctx.send("Error updating character HP.")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Hunter headshot attack
@@ -2266,7 +2269,7 @@ class Pvp(commands.Cog):
         if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+            await ctx.send(f"{self.other_player['username']} dodged the attack!")
             if self.other_player['counter_active'] > 0:
                 async with ctx.typing():
                     await asyncio.sleep(2)
@@ -2288,7 +2291,7 @@ class Pvp(commands.Cog):
                     except Exception as e:
                         print(e)
                         return await ctx.send("Error updating character HP.")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -2304,8 +2307,8 @@ class Pvp(commands.Cog):
         if block_check <= self.other_player['block_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send(f"{self.other_player['username']} blocked the attack!")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -2327,14 +2330,14 @@ class Pvp(commands.Cog):
         # Check to see if hunter insta killed the enemy
         instakill_check = random.randint(1, 100)
         if instakill_check <= 5:
-            await ctx.send(f"{result['username']} has landed a headshot and instantly killed the {self.other_player['username']}!")
+            await ctx.send(f"{result['username']} has landed a headshot and instantly killed {self.other_player['username']}!")
             return await self.reset_duel(ctx, result, cursor)
 
         else:
             # Output damage message
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+            await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
             # Check duelists hp
             if self.other_player['current_hp'] - damage <= 0:
@@ -2357,7 +2360,7 @@ class Pvp(commands.Cog):
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             return
 
     # Hunter volley attack
@@ -2386,7 +2389,7 @@ class Pvp(commands.Cog):
         if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+            await ctx.send(f"{self.other_player['username']} dodged the attack!")
             if self.other_player['counter_active'] > 0:
                 async with ctx.typing():
                     await asyncio.sleep(2)
@@ -2410,7 +2413,7 @@ class Pvp(commands.Cog):
                         return await ctx.send("Error updating character HP.")
             # Update cooldowns
             await self.update_cooldowns(ctx, result, cursor, 'cooldown_8', 5)
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -2426,10 +2429,10 @@ class Pvp(commands.Cog):
         if block_check <= self.other_player['block_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} blocked the attack!")
+            await ctx.send(f"{self.other_player['username']} blocked the attack!")
             # Update cooldowns
             await self.update_cooldowns(ctx, result, cursor, 'cooldown_8', 5)
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -2455,7 +2458,7 @@ class Pvp(commands.Cog):
             # Output damage message
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+            await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
             # Add to total damage
             total_damage += damage
@@ -2490,7 +2493,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Hunter powershot attack
@@ -2522,7 +2525,7 @@ class Pvp(commands.Cog):
         if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+            await ctx.send(f"{self.other_player['username']} dodged the attack!")
             if self.other_player['counter_active'] > 0:
                 async with ctx.typing():
                     await asyncio.sleep(2)
@@ -2544,7 +2547,7 @@ class Pvp(commands.Cog):
                     except Exception as e:
                         print(e)
                         return await ctx.send("Error updating character HP.")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -2560,8 +2563,8 @@ class Pvp(commands.Cog):
         if block_check <= self.other_player['block_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send(f"{self.other_player['username']} blocked the attack!")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -2586,7 +2589,7 @@ class Pvp(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']}'s Powershot was interrupted!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -2595,7 +2598,7 @@ class Pvp(commands.Cog):
         # Output damage message
         async with ctx.typing():
             await asyncio.sleep(2)
-        await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+        await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
         # Check duelists hp
         if self.other_player['current_hp'] - damage <= 0:
@@ -2618,7 +2621,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Hunter unload attack
@@ -2656,7 +2659,7 @@ class Pvp(commands.Cog):
             if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+                await ctx.send(f"{self.other_player['username']} dodged the attack!")
                 if self.other_player['counter_active'] > 0:
                     async with ctx.typing():
                         await asyncio.sleep(2)
@@ -2667,17 +2670,17 @@ class Pvp(commands.Cog):
                         await ctx.send(f"**{self.other_player['username']} has won the duel!**")
                         return await self.reset_duel(ctx, result, cursor)
                 
-                else:
-                    # Display current HP
-                    await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
-                    # Update HP in DB
-                    try:
-                        cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        self.turn_player = cursor.fetchone()
-                    except Exception as e:
-                        print(e)
-                        return await ctx.send("Error updating character HP.")
+                    else:
+                        # Display current HP
+                        await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
+                        # Update HP in DB
+                        try:
+                            cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            self.turn_player = cursor.fetchone()
+                        except Exception as e:
+                            print(e)
+                            return await ctx.send("Error updating character HP.")
                 dodge = True
 
             # Check to see if enemy blocked
@@ -2690,7 +2693,7 @@ class Pvp(commands.Cog):
             if block_check <= self.other_player['block_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} blocked the attack!")
+                await ctx.send(f"{self.other_player['username']} blocked the attack!")
                 block = True
 
             if not dodge and not block:
@@ -2700,7 +2703,7 @@ class Pvp(commands.Cog):
                 # Output damage message
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+                await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
                 # Add to total damage
                 total_damage += damage
@@ -2726,7 +2729,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # --------------------------- GAMBLER ABILITIES ------------------------------
@@ -2770,7 +2773,7 @@ class Pvp(commands.Cog):
             if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+                await ctx.send(f"{self.other_player['username']} dodged the attack!")
                 if self.other_player['counter_active'] > 0:
                     async with ctx.typing():
                         await asyncio.sleep(2)
@@ -2781,17 +2784,17 @@ class Pvp(commands.Cog):
                         await ctx.send(f"**{self.other_player['username']} has won the duel!**")
                         return await self.reset_duel(ctx, result, cursor)
                 
-                else:
-                    # Display current HP
-                    await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
-                    # Update HP in DB
-                    try:
-                        cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        self.turn_player = cursor.fetchone()
-                    except Exception as e:
-                        print(e)
-                        return await ctx.send("Error updating character HP.")
+                    else:
+                        # Display current HP
+                        await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
+                        # Update HP in DB
+                        try:
+                            cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            self.turn_player = cursor.fetchone()
+                        except Exception as e:
+                            print(e)
+                            return await ctx.send("Error updating character HP.")
                 dodge = True
 
             # Check to see if enemy blocked
@@ -2804,7 +2807,7 @@ class Pvp(commands.Cog):
             if block_check <= self.other_player['block_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} blocked the attack!")
+                await ctx.send(f"{self.other_player['username']} blocked the attack!")
                 block = True
 
             if not dodge and not block:
@@ -2820,7 +2823,7 @@ class Pvp(commands.Cog):
                 # Output damage message
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+                await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
                 # Add to total damage
                 total_damage += damage
@@ -2846,7 +2849,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Gambler jack attack
@@ -2885,7 +2888,7 @@ class Pvp(commands.Cog):
             else:
                 # Display current HP
                 await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 10}/{result['max_hp']}**")
-                await ctx.send("------------------------------------------------------")
+                await ctx.send("---------------------------------------------")
                 # Update HP in DB
                 try:
                     cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 10 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
@@ -2915,7 +2918,7 @@ class Pvp(commands.Cog):
             # Output damage message
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+            await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
             # Check duelists hp
             if self.other_player['current_hp'] - damage <= 0:
@@ -2938,7 +2941,7 @@ class Pvp(commands.Cog):
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             return
 
     # Gambler queen attack
@@ -2978,7 +2981,7 @@ class Pvp(commands.Cog):
             else:
                 # Display current HP
                 await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
-                await ctx.send("------------------------------------------------------")
+                await ctx.send("---------------------------------------------")
                 # Update HP in DB
                 try:
                     cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
@@ -3008,7 +3011,7 @@ class Pvp(commands.Cog):
             # Output damage message
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+            await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
             # Check duelists hp
             if self.other_player['current_hp'] - damage <= 0:
@@ -3031,7 +3034,7 @@ class Pvp(commands.Cog):
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             return
 
     # Gambler king attack
@@ -3071,7 +3074,7 @@ class Pvp(commands.Cog):
             else:
                 # Display current HP
                 await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 30}/{result['max_hp']}**")
-                await ctx.send("------------------------------------------------------")
+                await ctx.send("---------------------------------------------")
                 # Update HP in DB
                 try:
                     cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 30 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
@@ -3101,7 +3104,7 @@ class Pvp(commands.Cog):
             # Output damage message
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+            await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
             # Check duelists hp
             if self.other_player['current_hp'] - damage <= 0:
@@ -3124,7 +3127,7 @@ class Pvp(commands.Cog):
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             return
 
     # Gambler Ace attack
@@ -3164,7 +3167,7 @@ class Pvp(commands.Cog):
             else:
                 # Display current HP
                 await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 40}/{result['max_hp']}**")
-                await ctx.send("------------------------------------------------------")
+                await ctx.send("---------------------------------------------")
                 # Update HP in DB
                 try:
                     cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 40 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
@@ -3194,7 +3197,7 @@ class Pvp(commands.Cog):
             # Output damage message
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+            await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
             # Check duelists hp
             if self.other_player['current_hp'] - damage <= 0:
@@ -3217,7 +3220,7 @@ class Pvp(commands.Cog):
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             return
 
     # Gambler joker attack
@@ -3257,7 +3260,7 @@ class Pvp(commands.Cog):
             else:
                 # Display current HP
                 await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 50}/{result['max_hp']}**")
-                await ctx.send("------------------------------------------------------")
+                await ctx.send("---------------------------------------------")
                 # Update HP in DB
                 try:
                     cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 50 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
@@ -3287,7 +3290,7 @@ class Pvp(commands.Cog):
             # Output damage message
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+            await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
             # Check duelists hp
             if self.other_player['current_hp'] - damage <= 0:
@@ -3310,7 +3313,7 @@ class Pvp(commands.Cog):
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             return
 
     # Gambler straight attack
@@ -3350,7 +3353,7 @@ class Pvp(commands.Cog):
             else:
                 # Display current HP
                 await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 60}/{result['max_hp']}**")
-                await ctx.send("------------------------------------------------------")
+                await ctx.send("---------------------------------------------")
                 # Update HP in DB
                 try:
                     cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 60 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
@@ -3380,7 +3383,7 @@ class Pvp(commands.Cog):
             # Output damage message
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+            await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
             # Check duelists hp
             if self.other_player['current_hp'] - damage <= 0:
@@ -3403,7 +3406,7 @@ class Pvp(commands.Cog):
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             return
 
     # Gambler flush attack
@@ -3443,7 +3446,7 @@ class Pvp(commands.Cog):
             else:
                 # Display current HP
                 await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 70}/{result['max_hp']}**")
-                await ctx.send("------------------------------------------------------")
+                await ctx.send("---------------------------------------------")
                 # Update HP in DB
                 try:
                     cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 70 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
@@ -3473,7 +3476,7 @@ class Pvp(commands.Cog):
             # Output damage message
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+            await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
             # Check duelists hp
             if self.other_player['current_hp'] - damage <= 0:
@@ -3496,7 +3499,7 @@ class Pvp(commands.Cog):
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             return
 
     # Gambler blackjack attack
@@ -3536,7 +3539,7 @@ class Pvp(commands.Cog):
             else:
                 # Display current HP
                 await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 80}/{result['max_hp']}**")
-                await ctx.send("------------------------------------------------------")
+                await ctx.send("---------------------------------------------")
                 # Update HP in DB
                 try:
                     cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 80 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
@@ -3566,7 +3569,7 @@ class Pvp(commands.Cog):
             # Output damage message
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+            await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
             # Check duelists hp
             if self.other_player['current_hp'] - damage <= 0:
@@ -3589,7 +3592,7 @@ class Pvp(commands.Cog):
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             return
 
     # Gambler roulette attack
@@ -3668,7 +3671,7 @@ class Pvp(commands.Cog):
         if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+            await ctx.send(f"{self.other_player['username']} dodged the attack!")
             if self.other_player['counter_active'] > 0:
                 async with ctx.typing():
                     await asyncio.sleep(2)
@@ -3690,7 +3693,7 @@ class Pvp(commands.Cog):
                     except Exception as e:
                         print(e)
                         return await ctx.send("Error updating character HP.")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -3706,8 +3709,8 @@ class Pvp(commands.Cog):
         if block_check <= self.other_player['block_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send(f"{self.other_player['username']} blocked the attack!")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -3729,13 +3732,13 @@ class Pvp(commands.Cog):
         if burn_check <= 30:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} was burned for 20 additional damage!")
+            await ctx.send(f"{self.other_player['username']} was burned for 20 additional damage!")
             damage += 20
 
         # Output damage message
         async with ctx.typing():
             await asyncio.sleep(2)
-        await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+        await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
         # Check duelists hp
         if self.other_player['current_hp'] - damage <= 0:
@@ -3758,7 +3761,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Mage frostbolt attack
@@ -3790,7 +3793,7 @@ class Pvp(commands.Cog):
         if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+            await ctx.send(f"{self.other_player['username']} dodged the attack!")
             if self.other_player['counter_active'] > 0:
                 async with ctx.typing():
                     await asyncio.sleep(2)
@@ -3812,7 +3815,7 @@ class Pvp(commands.Cog):
                     except Exception as e:
                         print(e)
                         return await ctx.send("Error updating character HP.")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -3828,8 +3831,8 @@ class Pvp(commands.Cog):
         if block_check <= self.other_player['block_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send(f"{self.other_player['username']} blocked the attack!")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -3852,13 +3855,13 @@ class Pvp(commands.Cog):
         if freeze_check <= 30:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} was frozen!")
+            await ctx.send(f"{self.other_player['username']} was frozen!")
             freeze = True
 
         # Output damage message
         async with ctx.typing():
             await asyncio.sleep(2)
-        await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+        await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
         # Check duelists hp
         if self.other_player['current_hp'] - damage <= 0:
@@ -3882,7 +3885,7 @@ class Pvp(commands.Cog):
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             return
 
     # Mage iceblock attack
@@ -3957,7 +3960,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Mage lifesteal attack
@@ -3988,7 +3991,7 @@ class Pvp(commands.Cog):
         if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+            await ctx.send(f"{self.other_player['username']} dodged the attack!")
             if self.other_player['counter_active'] > 0:
                 async with ctx.typing():
                     await asyncio.sleep(2)
@@ -4010,8 +4013,11 @@ class Pvp(commands.Cog):
                     except Exception as e:
                         print(e)
                         return await ctx.send("Error updating character HP.")
-            await ctx.send("------------------------------------------------------")
-            return await self.enemy_health_check(ctx, result, cursor, False)
+            await ctx.send("---------------------------------------------")
+            temp_player = self.turn_player
+            self.turn_player = self.other_player
+            self.other_player = temp_player
+            return
 
         # Check to see if enemy blocked
         block_check = random.randint(1, 100)
@@ -4023,8 +4029,8 @@ class Pvp(commands.Cog):
         if block_check <= self.other_player['block_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send(f"{self.other_player['username']} blocked the attack!")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -4044,7 +4050,7 @@ class Pvp(commands.Cog):
         # Output damage message
         async with ctx.typing():
             await asyncio.sleep(2)
-        await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']} and healed for **{damage}** HP!")
+        await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']} and healed for **{damage}** HP!")
 
         # Heal user
         if result['current_hp'] + damage > result['max_hp']:
@@ -4087,7 +4093,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Mage wildfire attack
@@ -4121,7 +4127,7 @@ class Pvp(commands.Cog):
             if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+                await ctx.send(f"{self.other_player['username']} dodged the attack!")
                 if self.other_player['counter_active'] > 0:
                     async with ctx.typing():
                         await asyncio.sleep(2)
@@ -4132,17 +4138,17 @@ class Pvp(commands.Cog):
                         await ctx.send(f"**{self.other_player['username']} has won the duel!**")
                         return await self.reset_duel(ctx, result, cursor)
                 
-                else:
-                    # Display current HP
-                    await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
-                    # Update HP in DB
-                    try:
-                        cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        self.turn_player = cursor.fetchone()
-                    except Exception as e:
-                        print(e)
-                        return await ctx.send("Error updating character HP.")
+                    else:
+                        # Display current HP
+                        await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
+                        # Update HP in DB
+                        try:
+                            cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            self.turn_player = cursor.fetchone()
+                        except Exception as e:
+                            print(e)
+                            return await ctx.send("Error updating character HP.")
                 dodge = True
 
             # Check to see if enemy blocked
@@ -4150,7 +4156,7 @@ class Pvp(commands.Cog):
             if block_check <= self.other_player['block_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} blocked the attack!")
+                await ctx.send(f"{self.other_player['username']} blocked the attack!")
                 block = True
 
             if not dodge and not block:
@@ -4170,13 +4176,13 @@ class Pvp(commands.Cog):
                 if burn_check <= 30:
                     async with ctx.typing():
                         await asyncio.sleep(2)
-                    await ctx.send(f"The {self.other_player['username']} was burned for 20 additional damage!")
+                    await ctx.send(f"{self.other_player['username']} was burned for 20 additional damage!")
                     damage += 20
 
                 # Output damage message
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+                await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
                 # Add to total damage
                 total_damage += damage
@@ -4202,7 +4208,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Mage blizzard attack
@@ -4238,7 +4244,7 @@ class Pvp(commands.Cog):
             if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+                await ctx.send(f"{self.other_player['username']} dodged the attack!")
                 if self.other_player['counter_active'] > 0:
                     async with ctx.typing():
                         await asyncio.sleep(2)
@@ -4249,17 +4255,17 @@ class Pvp(commands.Cog):
                         await ctx.send(f"**{self.other_player['username']} has won the duel!**")
                         return await self.reset_duel(ctx, result, cursor)
                 
-                else:
-                    # Display current HP
-                    await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
-                    # Update HP in DB
-                    try:
-                        cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        self.turn_player = cursor.fetchone()
-                    except Exception as e:
-                        print(e)
-                        return await ctx.send("Error updating character HP.")
+                    else:
+                        # Display current HP
+                        await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
+                        # Update HP in DB
+                        try:
+                            cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            self.turn_player = cursor.fetchone()
+                        except Exception as e:
+                            print(e)
+                            return await ctx.send("Error updating character HP.")
                 dodge = True
 
             # Check to see if enemy blocked
@@ -4272,7 +4278,7 @@ class Pvp(commands.Cog):
             if block_check <= self.other_player['block_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} blocked the attack!")
+                await ctx.send(f"{self.other_player['username']} blocked the attack!")
                 block = True
 
             if not dodge and not block:
@@ -4292,13 +4298,13 @@ class Pvp(commands.Cog):
                 if freeze_check <= 30:
                     async with ctx.typing():
                         await asyncio.sleep(2)
-                    await ctx.send(f"The {self.other_player['username']} was frozen!")
+                    await ctx.send(f"{self.other_player['username']} was frozen!")
                     freeze = True
                     
                 # Output damage message
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+                await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
                 # Add to total damage
                 total_damage += damage
@@ -4324,7 +4330,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Mage evocation attack
@@ -4377,7 +4383,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Mage lightning attack
@@ -4406,7 +4412,7 @@ class Pvp(commands.Cog):
         if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+            await ctx.send(f"{self.other_player['username']} dodged the attack!")
             if self.other_player['counter_active'] > 0:
                 async with ctx.typing():
                     await asyncio.sleep(2)
@@ -4430,7 +4436,7 @@ class Pvp(commands.Cog):
                         return await ctx.send("Error updating character HP.")
             # Update cooldowns
             await self.update_cooldowns(ctx, result, cursor, 'cooldown_8', 5)
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -4446,10 +4452,10 @@ class Pvp(commands.Cog):
         if block_check <= self.other_player['block_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} blocked the attack!")
+            await ctx.send(f"{self.other_player['username']} blocked the attack!")
             # Update cooldowns
             await self.update_cooldowns(ctx, result, cursor, 'cooldown_8', 5)
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -4473,7 +4479,7 @@ class Pvp(commands.Cog):
             # Output damage message
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+            await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
             # Add to total damage
             total_damage += damage
@@ -4511,7 +4517,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Mage pyroblast attack
@@ -4543,7 +4549,7 @@ class Pvp(commands.Cog):
         if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+            await ctx.send(f"{self.other_player['username']} dodged the attack!")
             if self.other_player['counter_active'] > 0:
                 async with ctx.typing():
                     await asyncio.sleep(2)
@@ -4565,7 +4571,7 @@ class Pvp(commands.Cog):
                     except Exception as e:
                         print(e)
                         return await ctx.send("Error updating character HP.")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -4581,8 +4587,8 @@ class Pvp(commands.Cog):
         if block_check <= self.other_player['block_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send(f"{self.other_player['username']} blocked the attack!")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -4597,7 +4603,7 @@ class Pvp(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']}'s Pyroblast was interrupted!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
@@ -4614,7 +4620,7 @@ class Pvp(commands.Cog):
         # Output damage message
         async with ctx.typing():
             await asyncio.sleep(2)
-        await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+        await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
         # Check duelists hp
         if self.other_player['current_hp'] - damage <= 0:
@@ -4637,7 +4643,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Mage storm attack
@@ -4680,7 +4686,7 @@ class Pvp(commands.Cog):
         if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} dodged the fireball!")
+            await ctx.send(f"{self.other_player['username']} dodged the fireball!")
             if self.other_player['counter_active'] > 0:
                 async with ctx.typing():
                     await asyncio.sleep(2)
@@ -4714,7 +4720,7 @@ class Pvp(commands.Cog):
         if block_check <= self.other_player['block_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} blocked the fireball!")
+            await ctx.send(f"{self.other_player['username']} blocked the fireball!")
             fireball_block = True
 
         if not fireball_dodge and not fireball_block:
@@ -4734,13 +4740,13 @@ class Pvp(commands.Cog):
             if burn_check <= 30:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} was burned for 20 additional damage!")
+                await ctx.send(f"{self.other_player['username']} was burned for 20 additional damage!")
                 damage += 20
 
             # Output damage message
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+            await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
             # Add to total damage
             total_damage += damage
@@ -4752,7 +4758,7 @@ class Pvp(commands.Cog):
         if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} dodged the frostbolt!")
+            await ctx.send(f"{self.other_player['username']} dodged the frostbolt!")
             if self.other_player['counter_active'] > 0:
                 async with ctx.typing():
                     await asyncio.sleep(2)
@@ -4781,7 +4787,7 @@ class Pvp(commands.Cog):
         if block_check <= self.other_player['block_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} blocked the frostbolt!")
+            await ctx.send(f"{self.other_player['username']} blocked the frostbolt!")
             frostbolt_block = True
 
         if not frostbolt_dodge and not frostbolt_block:
@@ -4801,13 +4807,13 @@ class Pvp(commands.Cog):
             if freeze_check <= 30:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} was frozen!")
+                await ctx.send(f"{self.other_player['username']} was frozen!")
                 freeze = True
 
             # Output damage message
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+            await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
             # Add to total damage
             total_damage += damage
@@ -4819,7 +4825,7 @@ class Pvp(commands.Cog):
         if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} dodged the lightning!")
+            await ctx.send(f"{self.other_player['username']} dodged the lightning!")
             if self.other_player['counter_active'] > 0:
                 async with ctx.typing():
                     await asyncio.sleep(2)
@@ -4843,7 +4849,7 @@ class Pvp(commands.Cog):
                         return await ctx.send("Error updating character HP.")
             # Update cooldowns
             await self.update_cooldowns(ctx, result, cursor, 'cooldown_10', 10)
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             lightning_dodge = True
 
         # Check to see if enemy blocked
@@ -4851,10 +4857,10 @@ class Pvp(commands.Cog):
         if block_check <= self.other_player['block_chance'] - result['hit_chance']:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} blocked the lightning!")
+            await ctx.send(f"{self.other_player['username']} blocked the lightning!")
             # Update cooldowns
             await self.update_cooldowns(ctx, result, cursor, 'cooldown_10', 10)
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             lightning_block = True
 
         while lightning and not lightning_dodge and not lightning_block:
@@ -4872,7 +4878,7 @@ class Pvp(commands.Cog):
             # Output damage message
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+            await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
             # Add to total damage
             total_damage += damage
@@ -4910,7 +4916,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # ---------------------------------- ROGUE ATTACKS --------------------------------------
@@ -4948,7 +4954,7 @@ class Pvp(commands.Cog):
             if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+                await ctx.send(f"{self.other_player['username']} dodged the attack!")
                 if self.other_player['counter_active'] > 0:
                     async with ctx.typing():
                         await asyncio.sleep(2)
@@ -4959,17 +4965,17 @@ class Pvp(commands.Cog):
                         await ctx.send(f"**{self.other_player['username']} has won the duel!**")
                         return await self.reset_duel(ctx, result, cursor)
                 
-                else:
-                    # Display current HP
-                    await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
-                    # Update HP in DB
-                    try:
-                        cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        self.turn_player = cursor.fetchone()
-                    except Exception as e:
-                        print(e)
-                        return await ctx.send("Error updating character HP.")
+                    else:
+                        # Display current HP
+                        await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
+                        # Update HP in DB
+                        try:
+                            cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            self.turn_player = cursor.fetchone()
+                        except Exception as e:
+                            print(e)
+                            return await ctx.send("Error updating character HP.")
                 dodge = True
                 
             # Check to see if enemy blocked
@@ -4982,7 +4988,7 @@ class Pvp(commands.Cog):
             if block_check <= self.other_player['block_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} blocked the attack!")
+                await ctx.send(f"{self.other_player['username']} blocked the attack!")
                 block = True
 
             if not dodge and not block:
@@ -5000,7 +5006,7 @@ class Pvp(commands.Cog):
                 # Output damage message
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+                await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
                 # Add to total damage
                 total_damage += damage
@@ -5008,7 +5014,7 @@ class Pvp(commands.Cog):
         # Output blind message
         async with ctx.typing():
             await asyncio.sleep(2)
-        await ctx.send(f"The {self.other_player['username']} has been blinded and has an additional 50% chance to miss their next attack!")
+        await ctx.send(f"{self.other_player['username']} has been blinded and has an additional 50% chance to miss their next attack!")
         cursor.execute(f"UPDATE Characters SET gouge_active = 1 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
         cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
         self.turn_player = cursor.fetchone()
@@ -5044,7 +5050,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Rogue stab attack
@@ -5082,7 +5088,7 @@ class Pvp(commands.Cog):
             if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+                await ctx.send(f"{self.other_player['username']} dodged the attack!")
                 if self.other_player['counter_active'] > 0:
                     async with ctx.typing():
                         await asyncio.sleep(2)
@@ -5093,17 +5099,17 @@ class Pvp(commands.Cog):
                         await ctx.send(f"**{self.other_player['username']} has won the duel!**")
                         return await self.reset_duel(ctx, result, cursor)
                 
-                else:
-                    # Display current HP
-                    await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
-                    # Update HP in DB
-                    try:
-                        cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        self.turn_player = cursor.fetchone()
-                    except Exception as e:
-                        print(e)
-                        return await ctx.send("Error updating character HP.")
+                    else:
+                        # Display current HP
+                        await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
+                        # Update HP in DB
+                        try:
+                            cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            self.turn_player = cursor.fetchone()
+                        except Exception as e:
+                            print(e)
+                            return await ctx.send("Error updating character HP.")
                 dodge = True
                 
             # Check to see if enemy blocked
@@ -5116,7 +5122,7 @@ class Pvp(commands.Cog):
             if block_check <= self.other_player['block_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} blocked the attack!")
+                await ctx.send(f"{self.other_player['username']} blocked the attack!")
                 block = True
 
             if not dodge and not block:
@@ -5134,7 +5140,7 @@ class Pvp(commands.Cog):
                 # Output damage message
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+                await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
                 # Add to total damage
                 total_damage += damage
@@ -5170,7 +5176,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Rogue sap attack
@@ -5208,7 +5214,7 @@ class Pvp(commands.Cog):
             if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+                await ctx.send(f"{self.other_player['username']} dodged the attack!")
                 if self.other_player['counter_active'] > 0:
                     async with ctx.typing():
                         await asyncio.sleep(2)
@@ -5219,17 +5225,17 @@ class Pvp(commands.Cog):
                         await ctx.send(f"**{self.other_player['username']} has won the duel!**")
                         return await self.reset_duel(ctx, result, cursor)
                 
-                else:
-                    # Display current HP
-                    await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
-                    # Update HP in DB
-                    try:
-                        cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        self.turn_player = cursor.fetchone()
-                    except Exception as e:
-                        print(e)
-                        return await ctx.send("Error updating character HP.")
+                    else:
+                        # Display current HP
+                        await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
+                        # Update HP in DB
+                        try:
+                            cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            self.turn_player = cursor.fetchone()
+                        except Exception as e:
+                            print(e)
+                            return await ctx.send("Error updating character HP.")
                 dodge = True
                 
             # Check to see if enemy blocked
@@ -5242,7 +5248,7 @@ class Pvp(commands.Cog):
             if block_check <= self.other_player['block_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} blocked the attack!")
+                await ctx.send(f"{self.other_player['username']} blocked the attack!")
                 block = True
 
             if not dodge and not block:
@@ -5260,7 +5266,7 @@ class Pvp(commands.Cog):
                 # Output damage message
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+                await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
                 # Add to total damage
                 total_damage += damage
@@ -5271,7 +5277,7 @@ class Pvp(commands.Cog):
         if stun_check <= 50:
             async with ctx.typing():
                 await asyncio.sleep(2)
-            await ctx.send(f"The {self.other_player['username']} has been sapped and will miss their next turn!")
+            await ctx.send(f"{self.other_player['username']} has been sapped and will miss their next turn!")
             sap = True
             
         # Relentless
@@ -5306,7 +5312,7 @@ class Pvp(commands.Cog):
             temp_player = self.turn_player
             self.turn_player = self.other_player
             self.other_player = temp_player
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("---------------------------------------------")
             return
 
     # Rogue bleed attack
@@ -5344,7 +5350,7 @@ class Pvp(commands.Cog):
             if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+                await ctx.send(f"{self.other_player['username']} dodged the attack!")
                 if self.other_player['counter_active'] > 0:
                     async with ctx.typing():
                         await asyncio.sleep(2)
@@ -5355,17 +5361,17 @@ class Pvp(commands.Cog):
                         await ctx.send(f"**{self.other_player['username']} has won the duel!**")
                         return await self.reset_duel(ctx, result, cursor)
                 
-                else:
-                    # Display current HP
-                    await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
-                    # Update HP in DB
-                    try:
-                        cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        self.turn_player = cursor.fetchone()
-                    except Exception as e:
-                        print(e)
-                        return await ctx.send("Error updating character HP.")
+                    else:
+                        # Display current HP
+                        await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
+                        # Update HP in DB
+                        try:
+                            cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            self.turn_player = cursor.fetchone()
+                        except Exception as e:
+                            print(e)
+                            return await ctx.send("Error updating character HP.")
                 dodge = True
                 
             # Check to see if enemy blocked
@@ -5378,7 +5384,7 @@ class Pvp(commands.Cog):
             if block_check <= self.other_player['block_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} blocked the attack!")
+                await ctx.send(f"{self.other_player['username']} blocked the attack!")
                 block = True
 
             if not dodge and not block:
@@ -5396,7 +5402,7 @@ class Pvp(commands.Cog):
                 # Output damage message
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+                await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
                 # Add to total damage
                 total_damage += damage
@@ -5444,7 +5450,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Rogue betrayal attack
@@ -5482,7 +5488,7 @@ class Pvp(commands.Cog):
             if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+                await ctx.send(f"{self.other_player['username']} dodged the attack!")
                 if self.other_player['counter_active'] > 0:
                     async with ctx.typing():
                         await asyncio.sleep(2)
@@ -5493,17 +5499,17 @@ class Pvp(commands.Cog):
                         await ctx.send(f"**{self.other_player['username']} has won the duel!**")
                         return await self.reset_duel(ctx, result, cursor)
                 
-                else:
-                    # Display current HP
-                    await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
-                    # Update HP in DB
-                    try:
-                        cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        self.turn_player = cursor.fetchone()
-                    except Exception as e:
-                        print(e)
-                        return await ctx.send("Error updating character HP.")
+                    else:
+                        # Display current HP
+                        await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
+                        # Update HP in DB
+                        try:
+                            cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            self.turn_player = cursor.fetchone()
+                        except Exception as e:
+                            print(e)
+                            return await ctx.send("Error updating character HP.")
                 dodge = True
                 
             # Check to see if enemy blocked
@@ -5516,7 +5522,7 @@ class Pvp(commands.Cog):
             if block_check <= self.other_player['block_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} blocked the attack!")
+                await ctx.send(f"{self.other_player['username']} blocked the attack!")
                 block = True
 
             if not dodge and not block:
@@ -5534,7 +5540,7 @@ class Pvp(commands.Cog):
                 # Output damage message
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+                await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
                 # Add to total damage
                 total_damage += damage
@@ -5570,7 +5576,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Rogue relentless attack
@@ -5603,7 +5609,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Rogue counter attack
@@ -5641,28 +5647,28 @@ class Pvp(commands.Cog):
             if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+                await ctx.send(f"{self.other_player['username']} dodged the attack!")
                 if self.other_player['counter_active'] > 0:
                     async with ctx.typing():
                         await asyncio.sleep(2)
-                await ctx.send(f"{self.other_player['username']} counterattacks for 20 damage!")
-                # Check if counterattack wins the duel for the enemy
-                if result['current_hp'] - 20 <= 0:
-                    await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
-                    await ctx.send(f"**{self.other_player['username']} has won the duel!**")
-                    return await self.reset_duel(ctx, result, cursor)
-                
-                else:
-                    # Display current HP
-                    await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
-                    # Update HP in DB
-                    try:
-                        cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        self.turn_player = cursor.fetchone()
-                    except Exception as e:
-                        print(e)
-                        return await ctx.send("Error updating character HP.")
+                    await ctx.send(f"{self.other_player['username']} counterattacks for 20 damage!")
+                    # Check if counterattack wins the duel for the enemy
+                    if result['current_hp'] - 20 <= 0:
+                        await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
+                        await ctx.send(f"**{self.other_player['username']} has won the duel!**")
+                        return await self.reset_duel(ctx, result, cursor)
+                    
+                    else:
+                        # Display current HP
+                        await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
+                        # Update HP in DB
+                        try:
+                            cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            self.turn_player = cursor.fetchone()
+                        except Exception as e:
+                            print(e)
+                            return await ctx.send("Error updating character HP.")
                 dodge = True
                 
             # Check to see if enemy blocked
@@ -5675,7 +5681,7 @@ class Pvp(commands.Cog):
             if block_check <= self.other_player['block_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} blocked the attack!")
+                await ctx.send(f"{self.other_player['username']} blocked the attack!")
                 block = True
 
             if not dodge and not block:
@@ -5693,7 +5699,7 @@ class Pvp(commands.Cog):
                 # Output damage message
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+                await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
                 # Add to total damage
                 total_damage += damage
@@ -5737,7 +5743,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Rogue assassinate attack
@@ -5776,7 +5782,7 @@ class Pvp(commands.Cog):
             if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+                await ctx.send(f"{self.other_player['username']} dodged the attack!")
                 if self.other_player['counter_active'] > 0:
                     async with ctx.typing():
                         await asyncio.sleep(2)
@@ -5787,17 +5793,17 @@ class Pvp(commands.Cog):
                         await ctx.send(f"**{self.other_player['username']} has won the duel!**")
                         return await self.reset_duel(ctx, result, cursor)
                 
-                else:
-                    # Display current HP
-                    await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
-                    # Update HP in DB
-                    try:
-                        cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        self.turn_player = cursor.fetchone()
-                    except Exception as e:
-                        print(e)
-                        return await ctx.send("Error updating character HP.")
+                    else:
+                        # Display current HP
+                        await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
+                        # Update HP in DB
+                        try:
+                            cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            self.turn_player = cursor.fetchone()
+                        except Exception as e:
+                            print(e)
+                            return await ctx.send("Error updating character HP.")
                 dodge = True
                 
             # Check to see if enemy blocked
@@ -5810,7 +5816,7 @@ class Pvp(commands.Cog):
             if block_check <= self.other_player['block_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} blocked the attack!")
+                await ctx.send(f"{self.other_player['username']} blocked the attack!")
                 block = True
 
             if not dodge and not block:
@@ -5820,7 +5826,7 @@ class Pvp(commands.Cog):
                     if instakill_check >= 30:
                         async with ctx.typing():
                             await asyncio.sleep(2)
-                        await ctx.send(f"{result['username']} has assassinated the {self.other_player['username']} for an instant kill!")
+                        await ctx.send(f"{result['username']} has assassinated {self.other_player['username']} for an instant kill!")
                         return await self.reset_duel(ctx, result, cursor)
                 
                     if not instakill:
@@ -5838,7 +5844,7 @@ class Pvp(commands.Cog):
                         # Output damage message
                         async with ctx.typing():
                             await asyncio.sleep(2)
-                        await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+                        await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
                         # Add to total damage
                         total_damage += damage
@@ -5858,7 +5864,7 @@ class Pvp(commands.Cog):
                     # Output damage message
                     async with ctx.typing():
                         await asyncio.sleep(2)
-                    await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+                    await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
                     # Add to total damage
                     total_damage += damage
@@ -5892,7 +5898,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Rogue bladestorm attack
@@ -5929,7 +5935,7 @@ class Pvp(commands.Cog):
                 if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
                     async with ctx.typing():
                         await asyncio.sleep(2)
-                    await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+                    await ctx.send(f"{self.other_player['username']} dodged the attack!")
                     if self.other_player['counter_active'] > 0:
                         async with ctx.typing():
                             await asyncio.sleep(2)
@@ -5940,17 +5946,17 @@ class Pvp(commands.Cog):
                             await ctx.send(f"**{self.other_player['username']} has won the duel!**")
                             return await self.reset_duel(ctx, result, cursor)
                 
-                else:
-                    # Display current HP
-                    await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
-                    # Update HP in DB
-                    try:
-                        cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        self.turn_player = cursor.fetchone()
-                    except Exception as e:
-                        print(e)
-                        return await ctx.send("Error updating character HP.")
+                        else:
+                            # Display current HP
+                            await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
+                            # Update HP in DB
+                            try:
+                                cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                                cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                                self.turn_player = cursor.fetchone()
+                            except Exception as e:
+                                print(e)
+                                return await ctx.send("Error updating character HP.")
                     dodge = True
                     
                 # Check to see if enemy blocked
@@ -5963,7 +5969,7 @@ class Pvp(commands.Cog):
                 if block_check <= self.other_player['block_chance'] - result['hit_chance']:
                     async with ctx.typing():
                         await asyncio.sleep(2)
-                    await ctx.send(f"The {self.other_player['username']} blocked the attack!")
+                    await ctx.send(f"{self.other_player['username']} blocked the attack!")
                     block = True
 
                 if not dodge and not block:
@@ -5983,7 +5989,7 @@ class Pvp(commands.Cog):
                     # Output damage message
                     async with ctx.typing():
                         await asyncio.sleep(2)
-                    await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+                    await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
                     # Add to total damage
                     total_damage += damage
@@ -6029,7 +6035,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     # Rogue backstab attack
@@ -6067,7 +6073,7 @@ class Pvp(commands.Cog):
             if dodge_check <= self.other_player['dodge_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} dodged the attack!")
+                await ctx.send(f"{self.other_player['username']} dodged the attack!")
                 if self.other_player['counter_active'] > 0:
                     async with ctx.typing():
                         await asyncio.sleep(2)
@@ -6078,17 +6084,17 @@ class Pvp(commands.Cog):
                         await ctx.send(f"**{self.other_player['username']} has won the duel!**")
                         return await self.reset_duel(ctx, result, cursor)
                 
-                else:
-                    # Display current HP
-                    await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
-                    # Update HP in DB
-                    try:
-                        cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
-                        self.turn_player = cursor.fetchone()
-                    except Exception as e:
-                        print(e)
-                        return await ctx.send("Error updating character HP.")
+                    else:
+                        # Display current HP
+                        await ctx.send(f"{ctx.author.name}'s HP: **{result['current_hp'] - 20}/{result['max_hp']}**")
+                        # Update HP in DB
+                        try:
+                            cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 20 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+                            self.turn_player = cursor.fetchone()
+                        except Exception as e:
+                            print(e)
+                            return await ctx.send("Error updating character HP.")
                 dodge = True
                 
             # Check to see if enemy blocked
@@ -6101,7 +6107,7 @@ class Pvp(commands.Cog):
             if block_check <= self.other_player['block_chance'] - result['hit_chance']:
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"The {self.other_player['username']} blocked the attack!")
+                await ctx.send(f"{self.other_player['username']} blocked the attack!")
                 block = True
 
             if not dodge and not block:
@@ -6119,7 +6125,7 @@ class Pvp(commands.Cog):
                 # Output damage message
                 async with ctx.typing():
                     await asyncio.sleep(2)
-                await ctx.send(f"{result['username']} dealt **{damage}** damage to the {self.other_player['username']}!")
+                await ctx.send(f"{result['username']} dealt **{damage}** damage to {self.other_player['username']}!")
 
                 # Add to total damage
                 total_damage += damage
@@ -6153,7 +6159,7 @@ class Pvp(commands.Cog):
         temp_player = self.turn_player
         self.turn_player = self.other_player
         self.other_player = temp_player
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("---------------------------------------------")
         return
 
     async def update_cooldowns(self, ctx, result, cursor, cooldown, cooldown_duration):

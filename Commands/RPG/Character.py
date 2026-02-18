@@ -523,7 +523,7 @@ class Character(commands.Cog):
                 
             elif args[1].lower() == 'hunter':
                 try:
-                    cursor.execute(f"INSERT INTO `Characters` (`username`, `guild_id`, `class`, `level`, `exp`, `next_level_exp`, `max_hp`, `current_hp`, `dodge_chance`, `block_chance`, `crit_chance`, `hit_chance`, `main_hand_damage`, `off_hand_damage`, `gold`, `boots`, `legs`, `chest`, `gloves`, `helmet`, `main_hand`, `off_hand`, `potions`, `cooldown_1`, `cooldown_2`, `cooldown_3`, `cooldown_4`, `cooldown_5`, `cooldown_6`, `cooldown_7`, `cooldown_8`, `cooldown_9`, `cooldown_10`, `precision_active`, `relentless_active`, `gouge_active`, `counter_active`, `shieldbash_active`) VALUES ('{ctx.author.name}', '{ctx.guild.id}', 'hunter', 1, 0, 50, 150, 150, 15, 15, 20, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)")
+                    cursor.execute(f"INSERT INTO `Characters` (`username`, `guild_id`, `class`, `level`, `exp`, `next_level_exp`, `max_hp`, `current_hp`, `dodge_chance`, `block_chance`, `crit_chance`, `hit_chance`, `main_hand_damage`, `off_hand_damage`, `gold`, `boots`, `legs`, `chest`, `gloves`, `helmet`, `main_hand`, `off_hand`, `potions`, `cooldown_1`, `cooldown_2`, `cooldown_3`, `cooldown_4`, `cooldown_5`, `cooldown_6`, `cooldown_7`, `cooldown_8`, `cooldown_9`, `cooldown_10`, `precision_active`, `relentless_active`, `gouge_active`, `counter_active`, `shieldbash_active`) VALUES ('{ctx.author.name}', '{ctx.guild.id}', 'hunter', 1, 0, 50, 150, 150, 15, 15, 15, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)")
                 except Exception as e:
                     print(e)
                     return await ctx.send("Error creating character.")

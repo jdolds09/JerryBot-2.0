@@ -414,7 +414,7 @@ class Cast(commands.Cog):
                     try:
                         cursor.execute(f"DELETE FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
                         await ctx.send(f"**{ctx.author.name}** has died!")
-                        return await ctx.send("------------------------------------------------------")
+                        return await ctx.send("----------------------------------------------")
                     except Exception as e:
                         print(e)
                         return await ctx.send("Error deleting character.")
@@ -426,7 +426,7 @@ class Cast(commands.Cog):
                         cursor.execute(f"UPDATE `Characters` SET `current_hp` = `current_hp` - 5 WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
                         cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
                         result = cursor.fetchone()
-                        return await ctx.send("------------------------------------------------------")
+                        return await ctx.send("----------------------------------------------")
                     except Exception as e:
                         print(e)
                         return await ctx.send("Error updating character HP.")
@@ -445,7 +445,7 @@ class Cast(commands.Cog):
                 await asyncio.sleep(2)
             await ctx.send(f"{ctx.author.name}'s attack missed!")
             if result['relentless_active'] == 0 and result['class'] != "rogue":
-                await ctx.send("------------------------------------------------------")
+                await ctx.send("----------------------------------------------")
                 return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
             
         # Check to see if enemy blocked
@@ -456,7 +456,7 @@ class Cast(commands.Cog):
                 await asyncio.sleep(2)
             await ctx.send(f"{ctx.author.name}'s attack was blocked!")
             if result['relentless_active'] == 0 and result['class'] != "rogue":
-                await ctx.send("------------------------------------------------------")
+                await ctx.send("----------------------------------------------")
                 return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
         
         if not dodge and not block:
@@ -491,7 +491,7 @@ class Cast(commands.Cog):
                     await asyncio.sleep(2)
                 await ctx.send(f"{ctx.author.name}'s attack missed!")
                 if result['relentless_active'] == 0:
-                    await ctx.send("------------------------------------------------------")
+                    await ctx.send("----------------------------------------------")
                     return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
                 
             # Check to see if enemy blocked
@@ -502,7 +502,7 @@ class Cast(commands.Cog):
                     await asyncio.sleep(2)
                 await ctx.send(f"{ctx.author.name}'s attack was blocked!")
                 if result['relentless_active'] == 0:
-                    await ctx.send("------------------------------------------------------")
+                    await ctx.send("----------------------------------------------")
                     return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
             
             if not dodge and not block:
@@ -540,10 +540,10 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)            
             await ctx.send(f"{ctx.author.name} is relentless and attacks again!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             await self.user_basic_attack(ctx, result, cursor, battle_cog)
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -573,7 +573,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} dodged the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
             
         # Check to see if enemy blocked
@@ -582,7 +582,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Calculate damage
@@ -610,9 +610,9 @@ class Cast(commands.Cog):
         if stun_check <= 50:
             stun = True
             await ctx.send(f"{result['username']} stunned the {self.enemy[ctx.guild.id]['name']}!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
         else:
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             stun = False
 
        # Check to see if enemy died
@@ -679,7 +679,7 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
         # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -710,7 +710,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} dodged the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Check to see if enemy blocked
@@ -719,7 +719,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Calculate damage
@@ -750,7 +750,7 @@ class Cast(commands.Cog):
         cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
         result = cursor.fetchone()
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -781,7 +781,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} dodged the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Check to see if enemy blocked
@@ -790,7 +790,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Calculate damage
@@ -835,7 +835,7 @@ class Cast(commands.Cog):
                 print(e)
                 return await ctx.send("Error updating character HP.")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -866,7 +866,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} dodged the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Check to see if enemy blocked
@@ -875,7 +875,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Calculate damage
@@ -901,7 +901,7 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -932,7 +932,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} dodged the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Check to see if enemy blocked
@@ -941,7 +941,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Calculate damage
@@ -995,7 +995,7 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -1026,7 +1026,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} dodged the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Check to see if enemy blocked
@@ -1035,7 +1035,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
         
         # Check to see if warrior missed
@@ -1044,7 +1044,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']} missed the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Calculate damage
@@ -1067,7 +1067,7 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -1097,7 +1097,7 @@ class Cast(commands.Cog):
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} dodged the attack!")
             # Update cooldowns
             await self.update_cooldowns(ctx, result, cursor, 'cooldown_8', 5)
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Check to see if enemy blocked
@@ -1108,7 +1108,7 @@ class Cast(commands.Cog):
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} blocked the attack!")
             # Update cooldowns
             await self.update_cooldowns(ctx, result, cursor, 'cooldown_8', 5)
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         whirlwind = True
@@ -1147,7 +1147,7 @@ class Cast(commands.Cog):
         # Update cooldowns
         await self.update_cooldowns(ctx, result, cursor, 'cooldown_8', 5)
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -1205,7 +1205,7 @@ class Cast(commands.Cog):
                 await asyncio.sleep(2)
             await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")      
 
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
 
             # Check to see if enemy died
             await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -1236,7 +1236,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} dodged the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Check to see if enemy blocked
@@ -1245,7 +1245,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Calculate damage
@@ -1297,7 +1297,7 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -1369,7 +1369,7 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
         # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -1392,7 +1392,7 @@ class Cast(commands.Cog):
             return await ctx.send(f"{result['username']}'s Precision attack is on cooldown for {result['cooldown_2']} more turns!")
         
         # Update cooldowns
-        await self.update_cooldowns(ctx, result, cursor, 'cooldown_2', 6)
+        await self.update_cooldowns(ctx, result, cursor, 'cooldown_2', 3)
 
         # Set precision to 3
         cursor.execute(f"UPDATE Characters SET precision_active = 3 WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
@@ -1402,7 +1402,7 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{result['username']} is precise and their next 3 attacks will be critical hits!")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
         # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -1433,7 +1433,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} dodged the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
             
         # Check to see if enemy blocked
@@ -1442,7 +1442,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Calculate damage
@@ -1479,7 +1479,7 @@ class Cast(commands.Cog):
         cursor.execute(f"SELECT * FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
         result = cursor.fetchone()
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -1530,7 +1530,7 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -1602,7 +1602,7 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
         # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -1633,7 +1633,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} dodged the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
             
         # Check to see if enemy blocked
@@ -1642,7 +1642,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Calculate damage
@@ -1664,7 +1664,7 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, True)
@@ -1695,7 +1695,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} dodged the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
             
         # Check to see if enemy blocked
@@ -1704,7 +1704,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Calculate damage
@@ -1742,7 +1742,7 @@ class Cast(commands.Cog):
                 await asyncio.sleep(2)
             await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -1772,7 +1772,7 @@ class Cast(commands.Cog):
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} dodged the attack!")
             # Update cooldowns
             await self.update_cooldowns(ctx, result, cursor, 'cooldown_8', 5)
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Check to see if enemy blocked
@@ -1783,7 +1783,7 @@ class Cast(commands.Cog):
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} blocked the attack!")
             # Update cooldowns
             await self.update_cooldowns(ctx, result, cursor, 'cooldown_8', 5)
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         volley = True
@@ -1828,7 +1828,7 @@ class Cast(commands.Cog):
         # Update cooldowns
         await self.update_cooldowns(ctx, result, cursor, 'cooldown_8', 5)
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -1859,7 +1859,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} dodged the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Check to see if enemy blocked
@@ -1868,7 +1868,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Calculate damage
@@ -1880,7 +1880,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']}'s Powershot was interrupted!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Check if user critical hit
@@ -1906,7 +1906,7 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -1966,7 +1966,7 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
         # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -2038,7 +2038,7 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
         # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -2082,7 +2082,7 @@ class Cast(commands.Cog):
                 try:
                     cursor.execute(f"DELETE FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
                     await ctx.send(f"**{ctx.author.name}** has died!")
-                    return await ctx.send("------------------------------------------------------")
+                    return await ctx.send("----------------------------------------------")
                 except Exception as e:
                     print(e)
                     return await ctx.send("Error deleting character.")
@@ -2125,7 +2125,7 @@ class Cast(commands.Cog):
                 await asyncio.sleep(2)
             await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
         # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -2169,7 +2169,7 @@ class Cast(commands.Cog):
                 try:
                     cursor.execute(f"DELETE FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
                     await ctx.send(f"**{ctx.author.name}** has died!")
-                    return await ctx.send("------------------------------------------------------")
+                    return await ctx.send("----------------------------------------------")
                 except Exception as e:
                     print(e)
                     return await ctx.send("Error deleting character.")
@@ -2210,7 +2210,7 @@ class Cast(commands.Cog):
                 await asyncio.sleep(2)
             await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
         # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -2254,7 +2254,7 @@ class Cast(commands.Cog):
                 try:
                     cursor.execute(f"DELETE FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
                     await ctx.send(f"**{ctx.author.name}** has died!")
-                    return await ctx.send("------------------------------------------------------")
+                    return await ctx.send("----------------------------------------------")
                 except Exception as e:
                     print(e)
                     return await ctx.send("Error deleting character.")
@@ -2295,7 +2295,7 @@ class Cast(commands.Cog):
                 await asyncio.sleep(2)
             await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
         # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -2339,7 +2339,7 @@ class Cast(commands.Cog):
                 try:
                     cursor.execute(f"DELETE FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
                     await ctx.send(f"**{ctx.author.name}** has died!")
-                    await ctx.send("------------------------------------------------------")
+                    await ctx.send("----------------------------------------------")
                 except Exception as e:
                     print(e)
                     return await ctx.send("Error deleting character.")
@@ -2380,7 +2380,7 @@ class Cast(commands.Cog):
                 await asyncio.sleep(2)
             await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
         # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -2424,7 +2424,7 @@ class Cast(commands.Cog):
                 try:
                     cursor.execute(f"DELETE FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
                     await ctx.send(f"**{ctx.author.name}** has died!")
-                    return await ctx.send("------------------------------------------------------")
+                    return await ctx.send("----------------------------------------------")
                 except Exception as e:
                     print(e)
                     return await ctx.send("Error deleting character.")
@@ -2465,7 +2465,7 @@ class Cast(commands.Cog):
                 await asyncio.sleep(2)
             await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
         # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -2509,7 +2509,7 @@ class Cast(commands.Cog):
                 try:
                     cursor.execute(f"DELETE FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
                     await ctx.send(f"**{ctx.author.name}** has died!")
-                    return await ctx.send("------------------------------------------------------")
+                    return await ctx.send("----------------------------------------------")
                 except Exception as e:
                     print(e)
                     return await ctx.send("Error deleting character.")
@@ -2550,7 +2550,7 @@ class Cast(commands.Cog):
                 await asyncio.sleep(2)
             await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
         # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -2594,7 +2594,7 @@ class Cast(commands.Cog):
                 try:
                     cursor.execute(f"DELETE FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
                     await ctx.send(f"**{ctx.author.name}** has died!")
-                    return await ctx.send("------------------------------------------------------")
+                    return await ctx.send("----------------------------------------------")
                 except Exception as e:
                     print(e)
                     return await ctx.send("Error deleting character.")
@@ -2635,7 +2635,7 @@ class Cast(commands.Cog):
                 await asyncio.sleep(2)
             await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
         # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -2679,7 +2679,7 @@ class Cast(commands.Cog):
                 try:
                     cursor.execute(f"DELETE FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
                     await ctx.send(f"**{ctx.author.name}** has died!")
-                    return await ctx.send("------------------------------------------------------")
+                    return await ctx.send("----------------------------------------------")
                 except Exception as e:
                     print(e)
                     return await ctx.send("Error deleting character.")
@@ -2720,7 +2720,7 @@ class Cast(commands.Cog):
                 await asyncio.sleep(2)
             await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
         # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -2768,7 +2768,7 @@ class Cast(commands.Cog):
             try:
                 cursor.execute(f"DELETE FROM `Characters` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
                 await ctx.send(f"**{ctx.author.name}** has died!")
-                return await ctx.send("------------------------------------------------------")
+                return await ctx.send("----------------------------------------------")
             except Exception as e:
                 print(e)
                 return await ctx.send("Error deleting character.")
@@ -2785,7 +2785,7 @@ class Cast(commands.Cog):
             
             self.enemy[ctx.guild.id]['current_hp'] = 0
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
         # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -2816,7 +2816,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} dodged the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Check to see if enemy blocked
@@ -2825,7 +2825,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Calculate damage
@@ -2858,7 +2858,7 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -2889,7 +2889,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} dodged the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Check to see if enemy blocked
@@ -2898,7 +2898,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Calculate damage
@@ -2932,7 +2932,7 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, freeze)
@@ -3004,7 +3004,7 @@ class Cast(commands.Cog):
         # Update cooldowns
         await self.update_cooldowns(ctx, result, cursor, 'cooldown_3', 3)
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -3034,7 +3034,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} dodged the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Check to see if enemy blocked
@@ -3043,7 +3043,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Calculate damage
@@ -3086,7 +3086,7 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -3163,7 +3163,7 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -3242,7 +3242,7 @@ class Cast(commands.Cog):
         # Update cooldowns
         await self.update_cooldowns(ctx, result, cursor, 'cooldown_6', 5)
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, freeze)
@@ -3292,7 +3292,7 @@ class Cast(commands.Cog):
             cursor.execute(f"UPDATE Characters SET cooldown_10 = 0 WHERE username = '{result['username']}' AND guild_id = '{ctx.guild.id}'")
         cursor.execute(f"UPDATE Characters SET cooldown_7 = 100 WHERE username = '{result['username']}' AND guild_id = '{ctx.guild.id}'")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -3322,7 +3322,7 @@ class Cast(commands.Cog):
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} dodged the attack!")
             # Update cooldowns
             await self.update_cooldowns(ctx, result, cursor, 'cooldown_8', 5)
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Check to see if enemy blocked
@@ -3333,7 +3333,7 @@ class Cast(commands.Cog):
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} blocked the attack!")
             # Update cooldowns
             await self.update_cooldowns(ctx, result, cursor, 'cooldown_8', 5)
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         lightning = True
@@ -3374,7 +3374,7 @@ class Cast(commands.Cog):
         # Update cooldowns
         await self.update_cooldowns(ctx, result, cursor, 'cooldown_8', 5)
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -3405,7 +3405,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} dodged the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Check to see if enemy blocked
@@ -3414,7 +3414,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} blocked the attack!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Calculate damage
@@ -3426,7 +3426,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']}'s Pyroblast was interrupted!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Check if user critical hit
@@ -3448,7 +3448,7 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -3580,7 +3580,7 @@ class Cast(commands.Cog):
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} dodged the lightning!")
             # Update cooldowns
             await self.update_cooldowns(ctx, result, cursor, 'cooldown_10', 10)
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         # Check to see if enemy blocked
@@ -3591,7 +3591,7 @@ class Cast(commands.Cog):
             await ctx.send(f"The {self.enemy[ctx.guild.id]['name']} blocked the lightning!")
             # Update cooldowns
             await self.update_cooldowns(ctx, result, cursor, 'cooldown_10', 10)
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             return await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
         while lightning:
@@ -3630,7 +3630,7 @@ class Cast(commands.Cog):
         # Update cooldowns
         await self.update_cooldowns(ctx, result, cursor, 'cooldown_10', 10)
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, freeze)
@@ -3716,7 +3716,7 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -3794,7 +3794,7 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -3881,7 +3881,7 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, sap)
@@ -3980,7 +3980,7 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -4058,7 +4058,7 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -4091,7 +4091,7 @@ class Cast(commands.Cog):
         # Update cooldowns
         await self.update_cooldowns(ctx, result, cursor, 'cooldown_6', 100)
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -4177,7 +4177,7 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -4289,7 +4289,7 @@ class Cast(commands.Cog):
             result = cursor.fetchone()
             await self.user_assassinate_attack(ctx, result, cursor, battle_cog)
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -4380,7 +4380,7 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -4458,7 +4458,7 @@ class Cast(commands.Cog):
             await asyncio.sleep(2)
         await ctx.send(f"{self.enemy[ctx.guild.id]['name']}'s HP: **{self.enemy[ctx.guild.id]['current_hp']}/{self.enemy[ctx.guild.id]['max_hp']}**")
 
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
@@ -4658,14 +4658,14 @@ class Cast(commands.Cog):
                     await asyncio.sleep(2)
                 await ctx.send(f"{result['username']} dealt 20 damage to the {self.enemy[ctx.guild.id]['name']}!")
                 self.enemy[ctx.guild.id]['current_hp'] -= 20
-                await ctx.send("------------------------------------------------------")
+                await ctx.send("----------------------------------------------")
                 # Check to see if enemy died
                 return await self.enemy_health_check(ctx, result, battle_cog, cursor, True)
             else:                     
                 async with ctx.typing():
                     await asyncio.sleep(2)
                 await ctx.send(f"{result['username']} dodged the attack!")
-                return await ctx.send("------------------------------------------------------")
+                return await ctx.send("----------------------------------------------")
 
         # Check to see if user blocked
         block_check = random.randint(1, 100)
@@ -4676,7 +4676,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']} blocked the attack!")
-            return await ctx.send("------------------------------------------------------")
+            return await ctx.send("----------------------------------------------")
 
         # Calculate damage
         damage = self.enemy[ctx.guild.id]['damage']
@@ -4719,7 +4719,7 @@ class Cast(commands.Cog):
                 print(e)
                 return await ctx.send("Error updating character HP.")
             
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
     
     async def enemy_fireball_attack(self, ctx, battle_cog, result, cursor):
         # Output enemy attack message
@@ -4742,13 +4742,13 @@ class Cast(commands.Cog):
                 await ctx.send(f"{result['username']} dealt 20 damage to the {self.enemy[ctx.guild.id]['name']}!")
                 self.enemy[ctx.guild.id]['current_hp'] -= 20
                 # Check to see if enemy died
-                await ctx.send("------------------------------------------------------")
+                await ctx.send("----------------------------------------------")
                 return await self.enemy_health_check(ctx, result, battle_cog, cursor, True)
             else:                     
                 async with ctx.typing():
                     await asyncio.sleep(2)
                 await ctx.send(f"{result['username']} dodged the attack!")
-                return await ctx.send("------------------------------------------------------")
+                return await ctx.send("----------------------------------------------")
 
         # Check to see if user blocked
         block_check = random.randint(1, 100)
@@ -4759,7 +4759,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']} blocked the attack!")
-            return await ctx.send("------------------------------------------------------")
+            return await ctx.send("----------------------------------------------")
 
         # Calculate damage
         damage = 20
@@ -4809,7 +4809,7 @@ class Cast(commands.Cog):
             except Exception as e:
                 print(e)
                 return await ctx.send("Error updating character HP.")
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
             
     async def enemy_frostbolt_attack(self, ctx, battle_cog, result, cursor):
         frozen = False
@@ -4834,13 +4834,13 @@ class Cast(commands.Cog):
                 await ctx.send(f"{result['username']} dealt 20 damage to the {self.enemy[ctx.guild.id]['name']}!")
                 self.enemy[ctx.guild.id]['current_hp'] -= 20
                 # Check to see if enemy died
-                await ctx.send("------------------------------------------------------")
+                await ctx.send("----------------------------------------------")
                 return await self.enemy_health_check(ctx, result, battle_cog, cursor, True)
             else:                     
                 async with ctx.typing():
                     await asyncio.sleep(2)
                 await ctx.send(f"{result['username']} dodged the attack!")
-                return await ctx.send("------------------------------------------------------")
+                return await ctx.send("----------------------------------------------")
 
         # Check to see if user blocked
         block_check = random.randint(1, 100)
@@ -4851,7 +4851,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']} blocked the attack!")
-            return await ctx.send("------------------------------------------------------")
+            return await ctx.send("----------------------------------------------")
 
         # Calculate damage
         damage = 20
@@ -4874,7 +4874,7 @@ class Cast(commands.Cog):
             picture = discord.File(file_path)
             await ctx.send(file=picture)
             await ctx.send(f"**{result['username']}** has died!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             self.participants.remove(result)
             self.participant_names.remove(result['username'])
             # Delete character
@@ -4904,7 +4904,7 @@ class Cast(commands.Cog):
                 return await ctx.send("Error updating character HP.")
             
             # If user is frozen, skip their next turn
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             if frozen:
                 await self.choose_enemy_attack(ctx, battle_cog, result, cursor)
         
@@ -4936,7 +4936,7 @@ class Cast(commands.Cog):
                     await ctx.send(f"{result['username']} dealt 20 damage to the {self.enemy[ctx.guild.id]['name']}!")
                     self.enemy[ctx.guild.id]['current_hp'] -= 20
                     # Check to see if enemy died
-                    await ctx.send("------------------------------------------------------")
+                    await ctx.send("----------------------------------------------")
                     return await self.enemy_health_check(ctx, result, battle_cog, cursor, True)
                 else:                     
                     async with ctx.typing():
@@ -5000,7 +5000,7 @@ class Cast(commands.Cog):
                 print(e)
                 return await ctx.send("Error updating character HP.")
             
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
                     
     async def enemy_snipe_attack(self, ctx, battle_cog, result, cursor):
         # Output enemy attack message
@@ -5023,13 +5023,13 @@ class Cast(commands.Cog):
                 await ctx.send(f"{result['username']} dealt 20 damage to the {self.enemy[ctx.guild.id]['name']}!")
                 self.enemy[ctx.guild.id]['current_hp'] -= 20
                 # Check to see if enemy died
-                await ctx.send("------------------------------------------------------")
+                await ctx.send("----------------------------------------------")
                 return await self.enemy_health_check(ctx, result, battle_cog, cursor, True)
             else:                     
                 async with ctx.typing():
                     await asyncio.sleep(2)
                 await ctx.send(f"{result['username']} dodged the attack!")
-                return await ctx.send("------------------------------------------------------")
+                return await ctx.send("----------------------------------------------")
 
         # Check to see if user blocked
         block_check = random.randint(1, 100)
@@ -5040,7 +5040,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']} blocked the attack!")
-            return await ctx.send("------------------------------------------------------")
+            return await ctx.send("----------------------------------------------")
 
         # Calculate damage
         damage = 40
@@ -5083,7 +5083,7 @@ class Cast(commands.Cog):
                 print(e)
                 return await ctx.send("Error updating character HP.")
             
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
             
     async def enemy_sap_attack(self, ctx, battle_cog, result, cursor):
         # Output enemy attack message
@@ -5106,13 +5106,13 @@ class Cast(commands.Cog):
                 await ctx.send(f"{result['username']} dealt 20 damage to the {self.enemy[ctx.guild.id]['name']}!")
                 self.enemy[ctx.guild.id]['current_hp'] -= 20
                 # Check to see if enemy died
-                await ctx.send("------------------------------------------------------")
+                await ctx.send("----------------------------------------------")
                 return await self.enemy_health_check(ctx, result, battle_cog, cursor, True)
             else:                     
                 async with ctx.typing():
                     await asyncio.sleep(2)
                 await ctx.send(f"{result['username']} dodged the attack!")
-                return await ctx.send("------------------------------------------------------")
+                return await ctx.send("----------------------------------------------")
 
         # Check to see if user blocked
         block_check = random.randint(1, 100)
@@ -5123,7 +5123,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']} blocked the attack!")
-            return await ctx.send("------------------------------------------------------")
+            return await ctx.send("----------------------------------------------")
 
         # Calculate damage
         damage = 10
@@ -5146,7 +5146,7 @@ class Cast(commands.Cog):
             picture = discord.File(file_path)
             await ctx.send(file=picture)
             await ctx.send(f"**{result['username']}** has died!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             self.participants.remove(result)
             self.participant_names.remove(result['username'])
             # Delete character
@@ -5177,7 +5177,7 @@ class Cast(commands.Cog):
                 print(e)
                 return await ctx.send("Error updating character HP.")
             
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             
             # If user is stunned, skip their next turn
             if stun:
@@ -5210,7 +5210,7 @@ class Cast(commands.Cog):
                     await ctx.send(f"{result['username']} dealt 20 damage to the {self.enemy[ctx.guild.id]['name']}!")
                     self.enemy[ctx.guild.id]['current_hp'] -= 20
                     # Check to see if enemy died
-                    await ctx.send("------------------------------------------------------")
+                    await ctx.send("----------------------------------------------")
                     return await self.enemy_health_check(ctx, result, battle_cog, cursor, True)
                 else:                     
                     async with ctx.typing():
@@ -5277,7 +5277,7 @@ class Cast(commands.Cog):
                 print(e)
                 return await ctx.send("Error updating character HP.")
             
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
                     
     async def enemy_crush_attack(self, ctx, battle_cog, result, cursor):
         # Output enemy attack message
@@ -5300,13 +5300,13 @@ class Cast(commands.Cog):
                 await ctx.send(f"{result['username']} dealt 20 damage to the {self.enemy[ctx.guild.id]['name']}!")
                 self.enemy[ctx.guild.id]['current_hp'] -= 20
                 # Check to see if enemy died
-                await ctx.send("------------------------------------------------------")
+                await ctx.send("----------------------------------------------")
                 return await self.enemy_health_check(ctx, result, battle_cog, cursor, True)
             else:                     
                 async with ctx.typing():
                     await asyncio.sleep(2)
                 await ctx.send(f"{result['username']} dodged the attack!")
-                return await ctx.send("------------------------------------------------------")
+                return await ctx.send("----------------------------------------------")
 
         # Check to see if user blocked
         block_check = random.randint(1, 100)
@@ -5317,7 +5317,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']} blocked the attack!")
-            return await ctx.send("------------------------------------------------------")
+            return await ctx.send("----------------------------------------------")
 
         # Calculate damage
         damage = 20
@@ -5340,7 +5340,7 @@ class Cast(commands.Cog):
             picture = discord.File(file_path)
             await ctx.send(file=picture)
             await ctx.send(f"**{result['username']}** has died!")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
             self.participants.remove(result)
             self.participant_names.remove(result['username'])
             # Delete character
@@ -5363,7 +5363,7 @@ class Cast(commands.Cog):
 
             # Display current HP
             await ctx.send(f"{result['username']}'s HP: **{result['current_hp'] - damage}/{result['max_hp']}**")
-            await ctx.send("------------------------------------------------------")
+            await ctx.send("----------------------------------------------")
 
             # Update HP in DB
             try:
@@ -5410,7 +5410,7 @@ class Cast(commands.Cog):
                     await ctx.send(f"{result['username']} dealt 20 damage to the {self.enemy[ctx.guild.id]['name']}!")
                     self.enemy[ctx.guild.id]['current_hp'] -= 20
                     # Check to see if enemy died
-                    await ctx.send("------------------------------------------------------")
+                    await ctx.send("----------------------------------------------")
                     return await self.enemy_health_check(ctx, result, battle_cog, cursor, True)
                 else:                     
                     async with ctx.typing():
@@ -5474,7 +5474,7 @@ class Cast(commands.Cog):
                 print(e)
                 return await ctx.send("Error updating character HP.")
         
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
             
     async def enemy_haymaker_attack(self, ctx, battle_cog, result, cursor):
         # Output enemy attack message
@@ -5497,13 +5497,13 @@ class Cast(commands.Cog):
                 await ctx.send(f"{result['username']} dealt 20 damage to the {self.enemy[ctx.guild.id]['name']}!")
                 self.enemy[ctx.guild.id]['current_hp'] -= 20
                 # Check to see if enemy died
-                await ctx.send("------------------------------------------------------")
+                await ctx.send("----------------------------------------------")
                 return await self.enemy_health_check(ctx, result, battle_cog, cursor, True)
             else:                     
                 async with ctx.typing():
                     await asyncio.sleep(2)
                 await ctx.send(f"{result['username']} dodged the attack!")
-                return await ctx.send("------------------------------------------------------")
+                return await ctx.send("----------------------------------------------")
 
         # Check to see if user blocked
         block_check = random.randint(1, 100)
@@ -5514,7 +5514,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']} blocked the attack!")
-            return await ctx.send("------------------------------------------------------")
+            return await ctx.send("----------------------------------------------")
         
         # Check to see if enemy missed
         miss_check = random.randint(1, 100)
@@ -5564,7 +5564,7 @@ class Cast(commands.Cog):
                 print(e)
                 return await ctx.send("Error updating character HP.")
             
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
             
     async def enemy_lifesteal_attack(self, ctx, battle_cog, result, cursor):
         # Output enemy attack message
@@ -5590,13 +5590,13 @@ class Cast(commands.Cog):
                 await ctx.send(f"{result['username']} dealt 20 damage to the {self.enemy[ctx.guild.id]['name']}!")
                 self.enemy[ctx.guild.id]['current_hp'] -= 20
                 # Check to see if enemy died
-                await ctx.send("------------------------------------------------------")
+                await ctx.send("----------------------------------------------")
                 return await self.enemy_health_check(ctx, result, battle_cog, cursor, True)
             else:                     
                 async with ctx.typing():
                     await asyncio.sleep(2)
                 await ctx.send(f"{result['username']} dodged the attack!")
-                return await ctx.send("------------------------------------------------------")
+                return await ctx.send("----------------------------------------------")
 
         # Check to see if user blocked
         block_check = random.randint(1, 100)
@@ -5607,7 +5607,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']} blocked the attack!")
-            return await ctx.send("------------------------------------------------------")
+            return await ctx.send("----------------------------------------------")
 
         # Calculate damage
         damage = random.choice(damage_list)
@@ -5655,7 +5655,7 @@ class Cast(commands.Cog):
                 print(e)
                 return await ctx.send("Error updating character HP.")
             
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
             
     async def enemy_wildfire_attack(self, ctx, battle_cog, result, cursor):
         # Output enemy attack message
@@ -5684,7 +5684,7 @@ class Cast(commands.Cog):
                     await ctx.send(f"{result['username']} dealt 20 damage to the {self.enemy[ctx.guild.id]['name']}!")
                     self.enemy[ctx.guild.id]['current_hp'] -= 20
                     # Check to see if enemy died
-                    await ctx.send("------------------------------------------------------")
+                    await ctx.send("----------------------------------------------")
                     return await self.enemy_health_check(ctx, result, battle_cog, cursor, True)
                 else:                     
                     async with ctx.typing():
@@ -5756,7 +5756,7 @@ class Cast(commands.Cog):
                 print(e)
                 return await ctx.send("Error updating character HP.")
             
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
                     
     async def enemy_lightning_attack(self, ctx, battle_cog, result, cursor):
         # Output enemy attack message
@@ -5779,13 +5779,13 @@ class Cast(commands.Cog):
                 await ctx.send(f"{result['username']} dealt 20 damage to the {self.enemy[ctx.guild.id]['name']}!")
                 self.enemy[ctx.guild.id]['current_hp'] -= 20
                 # Check to see if enemy died
-                await ctx.send("------------------------------------------------------")
+                await ctx.send("----------------------------------------------")
                 return await self.enemy_health_check(ctx, result, battle_cog, cursor, True)
             else:                     
                 async with ctx.typing():
                     await asyncio.sleep(2)
                 await ctx.send(f"{result['username']} dodged the attack!")
-                return await ctx.send("------------------------------------------------------")
+                return await ctx.send("----------------------------------------------")
 
         # Check to see if user blocked
         block_check = random.randint(1, 100)
@@ -5796,7 +5796,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']} blocked the attack!")
-            return await ctx.send("------------------------------------------------------")
+            return await ctx.send("----------------------------------------------")
 
         # Calculate damage
         damage = 50
@@ -5847,7 +5847,7 @@ class Cast(commands.Cog):
                 await self.enemy_lightning_attack(ctx, battle_cog, result, cursor)
 
             else:
-                await ctx.send("------------------------------------------------------")
+                await ctx.send("----------------------------------------------")
 
     async def enemy_rapidfire_attack(self, ctx, battle_cog, result, cursor):
         # Output enemy attack message
@@ -5877,7 +5877,7 @@ class Cast(commands.Cog):
                     await ctx.send(f"{result['username']} dealt 20 damage to the {self.enemy[ctx.guild.id]['name']}!")
                     self.enemy[ctx.guild.id]['current_hp'] -= 20
                     # Check to see if enemy died
-                    await ctx.send("------------------------------------------------------")
+                    await ctx.send("----------------------------------------------")
                     return await self.enemy_health_check(ctx, result, battle_cog, cursor, True)
                 else:                     
                     async with ctx.typing():
@@ -5941,7 +5941,7 @@ class Cast(commands.Cog):
                 print(e)
                 return await ctx.send("Error updating character HP.")
             
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
                     
     async def enemy_volley_attack(self, ctx, battle_cog, result, cursor):
         # Output enemy attack message
@@ -5964,13 +5964,13 @@ class Cast(commands.Cog):
                 await ctx.send(f"{result['username']} dealt 20 damage to the {self.enemy[ctx.guild.id]['name']}!")
                 self.enemy[ctx.guild.id]['current_hp'] -= 20
                 # Check to see if enemy died
-                await ctx.send("------------------------------------------------------")
+                await ctx.send("----------------------------------------------")
                 return await self.enemy_health_check(ctx, result, battle_cog, cursor, True)
             else:                     
                 async with ctx.typing():
                     await asyncio.sleep(2)
                 await ctx.send(f"{result['username']} dodged the attack!")
-                return await ctx.send("------------------------------------------------------")
+                return await ctx.send("----------------------------------------------")
 
         # Check to see if user blocked
         block_check = random.randint(1, 100)
@@ -5981,7 +5981,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']} blocked the attack!")
-            return await ctx.send("------------------------------------------------------")
+            return await ctx.send("----------------------------------------------")
 
         # Calculate damage
         damage = 50
@@ -6031,7 +6031,7 @@ class Cast(commands.Cog):
                 await ctx.send(f"The volley strikes again!")
                 await self.enemy_volley_attack(ctx, battle_cog, result, cursor)
             else:
-                await ctx.send("------------------------------------------------------")
+                await ctx.send("----------------------------------------------")
 
     async def enemy_bladestorm_attack(self, ctx, battle_cog, result, cursor):
         # Output enemy attack message
@@ -6061,7 +6061,7 @@ class Cast(commands.Cog):
                     await ctx.send(f"{result['username']} dealt 20 damage to the {self.enemy[ctx.guild.id]['name']}!")
                     self.enemy[ctx.guild.id]['current_hp'] -= 20
                     # Check to see if enemy died
-                    await ctx.send("------------------------------------------------------")
+                    await ctx.send("----------------------------------------------")
                     return await self.enemy_health_check(ctx, result, battle_cog, cursor, True)
                 else:                     
                     async with ctx.typing():
@@ -6132,7 +6132,7 @@ class Cast(commands.Cog):
                     await ctx.send(f"The bladestorm strikes again!")
                     await self.enemy_bladestorm_attack(ctx, battle_cog, result, cursor)
                 else:
-                    await ctx.send("------------------------------------------------------")
+                    await ctx.send("----------------------------------------------")
 
     async def enemy_beserk_attack(self, ctx, battle_cog, result, cursor):
         # Output enemy attack message
@@ -6155,13 +6155,13 @@ class Cast(commands.Cog):
                 await ctx.send(f"{result['username']} dealt 20 damage to the {self.enemy[ctx.guild.id]['name']}!")
                 self.enemy[ctx.guild.id]['current_hp'] -= 20
                 # Check to see if enemy died
-                await ctx.send("------------------------------------------------------")
+                await ctx.send("----------------------------------------------")
                 return await self.enemy_health_check(ctx, result, battle_cog, cursor, True)
             else:                     
                 async with ctx.typing():
                     await asyncio.sleep(2)
                 await ctx.send(f"{result['username']} dodged the attack!")
-                return await ctx.send("------------------------------------------------------")
+                return await ctx.send("----------------------------------------------")
 
         # Check to see if user blocked
         block_check = random.randint(1, 100)
@@ -6172,7 +6172,7 @@ class Cast(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(2)
             await ctx.send(f"{result['username']} blocked the attack!")
-            return await ctx.send("------------------------------------------------------")
+            return await ctx.send("----------------------------------------------")
 
         # Calculate damage
         damage = self.beserk_damage
@@ -6215,7 +6215,7 @@ class Cast(commands.Cog):
                 print(e)
                 return await ctx.send("Error updating character HP.")
             
-        await ctx.send("------------------------------------------------------")
+        await ctx.send("----------------------------------------------")
             
         # Update beskerk damage for next attack
         self.beserk_damage *= 2
