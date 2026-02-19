@@ -71,61 +71,61 @@ class Character(commands.Cog):
             if result['boots'] == 1:
                 await ctx.send("**__Boots__**: Shitty Boots")
             elif result['boots'] == 2:
-                await ctx.send("**__Boots__**: 🟩 Good Boots of Asskicking (+10 Health)")
+                await ctx.send("**__Boots__**: 🟩 Good Boots of Asskicking (+20 Max HP)")
             elif result['boots'] == 3:
-                await ctx.send("**__Boots__**: 🟦 Rare Boots of Asskicking (+10 Health, +1% Dodge & Block)")
+                await ctx.send("**__Boots__**: 🟦 Rare Boots of Asskicking (+20 Max HP, +1% Dodge & Block)")
             elif result['boots'] == 4:
-                await ctx.send("**__Boots__**: 🟪 Epic Boots of Asskicking (+10 Health, +1% Dodge & Block, +1% Crit Chance)")
+                await ctx.send("**__Boots__**: 🟪 Epic Boots of Asskicking (+20 Max HP, +1% Dodge & Block, +1% Crit Chance)")
             elif result['boots'] == 5:
-                await ctx.send("**__Boots__**: 🟨 Legendary Boots of Asskicking (+10 Health, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
+                await ctx.send("**__Boots__**: 🟨 Legendary Boots of Asskicking (+20 Max HP, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
 
             #Ouput legs
             if result['legs'] == 1:
                 await ctx.send("**__Legs__**: Shitty Greaves")
             elif result['legs'] == 2:
-                await ctx.send("**__Legs__**: 🟩 Good Greaves of Asskicking (+10 Health)")
+                await ctx.send("**__Legs__**: 🟩 Good Greaves of Asskicking (+20 Max HP)")
             elif result['legs'] == 3:
-                await ctx.send("**__Legs__**: 🟦 Rare Greaves of Asskicking (+10 Health, +1% Dodge & Block)")
+                await ctx.send("**__Legs__**: 🟦 Rare Greaves of Asskicking (+20 Max HP, +1% Dodge & Block)")
             elif result['legs'] == 4:
-                await ctx.send("**__Legs__**: 🟪 Epic Greaves of Asskicking (+10 Health, +1% Dodge & Block, +1% Crit Chance)")
+                await ctx.send("**__Legs__**: 🟪 Epic Greaves of Asskicking (+20 Max HP, +1% Dodge & Block, +1% Crit Chance)")
             elif result['legs'] == 5:
-                await ctx.send("**__Legs__**: 🟨 Legendary Greaves of Asskicking (+10 Health, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
+                await ctx.send("**__Legs__**: 🟨 Legendary Greaves of Asskicking (+20 Max HP, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
 
             # Output chest
             if result['chest'] == 1:
                 await ctx.send("**__Chest__**: Shitty Chestplate")
             elif result['chest'] == 2:
-                await ctx.send("**__Chest__**: 🟩 Good Chestplate of Asskicking (+10 Health)")
+                await ctx.send("**__Chest__**: 🟩 Good Chestplate of Asskicking (+20 Max HP)")
             elif result['chest'] == 3:
-                await ctx.send("**__Chest__**: 🟦 Rare Chestplate of Asskicking (+10 Health, +1% Dodge & Block)")
+                await ctx.send("**__Chest__**: 🟦 Rare Chestplate of Asskicking (+20 Max HP, +1% Dodge & Block)")
             elif result['chest'] == 4:
-                await ctx.send("**__Chest__**: 🟪 Epic Chestplate of Asskicking (+10 Health, +1% Dodge & Block, +1% Crit Chance)")
+                await ctx.send("**__Chest__**: 🟪 Epic Chestplate of Asskicking (+20 Max HP, +1% Dodge & Block, +1% Crit Chance)")
             elif result['chest'] == 5:
-                await ctx.send("**__Chest__**: 🟨 Legendary Chestplate of Asskicking (+10 Health, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
+                await ctx.send("**__Chest__**: 🟨 Legendary Chestplate of Asskicking (+20 Max HP, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
 
             # Output gloves
             if result['gloves'] == 1:
                 await ctx.send("**__Gloves__**: Shitty Gauntlets")
             elif result['gloves'] == 2:
-                await ctx.send("**__Gloves__**: 🟩 Good Gauntlets of Asskicking (+10 Health)")
+                await ctx.send("**__Gloves__**: 🟩 Good Gauntlets of Asskicking (+20 Max HP)")
             elif result['gloves'] == 3:
-                await ctx.send("**__Gloves__**: 🟦 Rare Gauntlets of Asskicking (+10 Health, +1% Dodge & Block)")
+                await ctx.send("**__Gloves__**: 🟦 Rare Gauntlets of Asskicking (+20 Max HP, +1% Dodge & Block)")
             elif result['gloves'] == 4:
-                await ctx.send("**__Gloves__**: 🟪 Epic Gauntlets of Asskicking (+10 Health, +1% Dodge & Block, +1% Crit Chance)")
+                await ctx.send("**__Gloves__**: 🟪 Epic Gauntlets of Asskicking (+20 Max HP, +1% Dodge & Block, +1% Crit Chance)")
             elif result['gloves'] == 5:
-                await ctx.send("**__Gloves__**: 🟨 Legendary Gauntlets of Asskicking (+10 Health, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
+                await ctx.send("**__Gloves__**: 🟨 Legendary Gauntlets of Asskicking (+20 Max HP, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
 
             # Output helmet
             if result['helmet'] == 1:
                 await ctx.send("**__Helmet__**: Shitty Helmet")
             elif result['helmet'] == 2:
-                await ctx.send("**__Helmet__**: 🟩 Good Helmet of Asskicking (+10 Health)")
+                await ctx.send("**__Helmet__**: 🟩 Good Helmet of Asskicking (+20 Max HP)")
             elif result['helmet'] == 3:
-                await ctx.send("**__Helmet__**: 🟦 Rare Helmet of Asskicking (+10 Health, +1% Dodge & Block)")
+                await ctx.send("**__Helmet__**: 🟦 Rare Helmet of Asskicking (+20 Max HP, +1% Dodge & Block)")
             elif result['helmet'] == 4:
-                await ctx.send("**__Helmet__**: 🟪 Epic Helmet of Asskicking (+10 Health, +1% Dodge & Block, +1% Crit Chance)")
+                await ctx.send("**__Helmet__**: 🟪 Epic Helmet of Asskicking (+20 Max HP, +1% Dodge & Block, +1% Crit Chance)")
             elif result['helmet'] == 5:
-                await ctx.send("**__Helmet__**: 🟨 Legendary Helmet of Asskicking (+10 Health, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
+                await ctx.send("**__Helmet__**: 🟨 Legendary Helmet of Asskicking (+20 Max HP, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
 
             # Output main hand
             if result['main_hand'] == 1:
@@ -157,60 +157,60 @@ class Character(commands.Cog):
             if result['boots'] == 1:
                 await ctx.send("**__Boots__**: Shitty Boots")
             elif result['boots'] == 2:
-                    await ctx.send("**__Boots__**: 🟩 Good Boots of Shooting Motherfuckers with Arrows (+10 Health)")
+                    await ctx.send("**__Boots__**: 🟩 Good Boots of Shooting Motherfuckers with Arrows (+20 Max HP)")
             elif result['boots'] == 3:
-                    await ctx.send("**__Boots__**: 🟦 Rare Boots of Shooting Motherfuckers with Arrows (+10 Health, +1% Dodge & Block)")
+                    await ctx.send("**__Boots__**: 🟦 Rare Boots of Shooting Motherfuckers with Arrows (+20 Max HP, +1% Dodge & Block)")
             elif result['boots'] == 4:
-                    await ctx.send("**__Boots__**: 🟪 Epic Boots of Shooting Motherfuckers with Arrows (+10 Health, +1% Dodge & Block, +1% Crit Chance)")
+                    await ctx.send("**__Boots__**: 🟪 Epic Boots of Shooting Motherfuckers with Arrows (+20 Max HP, +1% Dodge & Block, +1% Crit Chance)")
             elif result['boots'] == 5:
-                    await ctx.send("**__Boots__**: 🟨 Legendary Boots of Shooting Motherfuckers with Arrows (+10 Health, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
+                    await ctx.send("**__Boots__**: 🟨 Legendary Boots of Shooting Motherfuckers with Arrows (+20 Max HP, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
             #Ouput legs
             if result['legs'] == 1:
                 await ctx.send("**__Legs__**: Shitty Pants")
             elif result['legs'] == 2:
-                await ctx.send("**__Legs__**: 🟩 Good Pants of Shooting Motherfuckers with Arrows (+10 Health)")
+                await ctx.send("**__Legs__**: 🟩 Good Pants of Shooting Motherfuckers with Arrows (+20 Max HP)")
             elif result['legs'] == 3:
-                await ctx.send("**__Legs__**: 🟦 Rare Pants of Shooting Motherfuckers with Arrows (+10 Health, +1% Dodge & Block)")
+                await ctx.send("**__Legs__**: 🟦 Rare Pants of Shooting Motherfuckers with Arrows (+20 Max HP, +1% Dodge & Block)")
             elif result['legs'] == 4:
-                await ctx.send("**__Legs__**: 🟪 Epic Pants of Shooting Motherfuckers with Arrows (+10 Health, +1% Dodge & Block, +1% Crit Chance)")
+                await ctx.send("**__Legs__**: 🟪 Epic Pants of Shooting Motherfuckers with Arrows (+20 Max HP, +1% Dodge & Block, +1% Crit Chance)")
             elif result['legs'] == 5:
-                await ctx.send("**__Legs__**: 🟨 Legendary Pants of Shooting Motherfuckers with Arrows (+10 Health, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
+                await ctx.send("**__Legs__**: 🟨 Legendary Pants of Shooting Motherfuckers with Arrows (+20 Max HP, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
 
             # Output chest
             if result['chest'] == 1:
                 await ctx.send("**__Chest__**: Shitty Chainmail")
             elif result['chest'] == 2:
-                await ctx.send("**__Chest__**: 🟩 Good Chainmail of Shooting Motherfuckers with Arrows (+10 Health)")
+                await ctx.send("**__Chest__**: 🟩 Good Chainmail of Shooting Motherfuckers with Arrows (+20 Max HP)")
             elif result['chest'] == 3:
-                await ctx.send("**__Chest__**: 🟦 Rare Chainmail of Shooting Motherfuckers with Arrows (+10 Health, +1% Dodge & Block)")
+                await ctx.send("**__Chest__**: 🟦 Rare Chainmail of Shooting Motherfuckers with Arrows (+20 Max HP, +1% Dodge & Block)")
             elif result['chest'] == 4:
-                await ctx.send("**__Chest__**: 🟪 Epic Chainmail of Shooting Motherfuckers with Arrows (+10 Health, +1% Dodge & Block, +1% Crit Chance)")
+                await ctx.send("**__Chest__**: 🟪 Epic Chainmail of Shooting Motherfuckers with Arrows (+20 Max HP, +1% Dodge & Block, +1% Crit Chance)")
             elif result['chest'] == 5:
-                await ctx.send("**__Chest__**: 🟨 Legendary Chainmail of Shooting Motherfuckers with Arrows (+10 Health, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
+                await ctx.send("**__Chest__**: 🟨 Legendary Chainmail of Shooting Motherfuckers with Arrows (+20 Max HP, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
 
             # Output gloves
             if result['gloves'] == 1:
                 await ctx.send("**__Gloves__**: Shitty Gloves")
             elif result['gloves'] == 2:
-                await ctx.send("**__Gloves__**: 🟩 Good Gloves of Shooting Motherfuckers with Arrows (+10 Health)")
+                await ctx.send("**__Gloves__**: 🟩 Good Gloves of Shooting Motherfuckers with Arrows (+20 Max HP)")
             elif result['gloves'] == 3:
-                await ctx.send("**__Gloves__**: 🟦 Rare Gloves of Shooting Motherfuckers with Arrows (+10 Health, +1% Dodge & Block)")
+                await ctx.send("**__Gloves__**: 🟦 Rare Gloves of Shooting Motherfuckers with Arrows (+20 Max HP, +1% Dodge & Block)")
             elif result['gloves'] == 4:
-                await ctx.send("**__Gloves__**: 🟪 Epic Gloves of Shooting Motherfuckers with Arrows (+10 Health, +1% Dodge & Block, +1% Crit Chance)")
+                await ctx.send("**__Gloves__**: 🟪 Epic Gloves of Shooting Motherfuckers with Arrows (+20 Max HP, +1% Dodge & Block, +1% Crit Chance)")
             elif result['gloves'] == 5:
-                await ctx.send("**__Gloves__**: 🟨 Legendary Gloves of Shooting Motherfuckers with Arrows (+10 Health, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
+                await ctx.send("**__Gloves__**: 🟨 Legendary Gloves of Shooting Motherfuckers with Arrows (+20 Max HP, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
 
             # Output helmet
             if result['helmet'] == 1:
                 await ctx.send("**__Helmet__**: Shitty Hood")
             elif result['helmet'] == 2:
-                await ctx.send("**__Helmet__**: 🟩 Good Hood of Shooting Motherfuckers with Arrows (+10 Health)")
+                await ctx.send("**__Helmet__**: 🟩 Good Hood of Shooting Motherfuckers with Arrows (+20 Max HP)")
             elif result['helmet'] == 3:
-                await ctx.send("**__Helmet__**: 🟦 Rare Hood of Shooting Motherfuckers with Arrows (+10 Health, +1% Dodge & Block)")
+                await ctx.send("**__Helmet__**: 🟦 Rare Hood of Shooting Motherfuckers with Arrows (+20 Max HP, +1% Dodge & Block)")
             elif result['helmet'] == 4:
-                await ctx.send("**__Helmet__**: 🟪 Epic Hood of Shooting Motherfuckers with Arrows (+10 Health, +1% Dodge & Block, +1% Crit Chance)")
+                await ctx.send("**__Helmet__**: 🟪 Epic Hood of Shooting Motherfuckers with Arrows (+20 Max HP, +1% Dodge & Block, +1% Crit Chance)")
             elif result['helmet'] == 5:
-                await ctx.send("**__Helmet__**: 🟨 Legendary Hood of Shooting Motherfuckers with Arrows (+10 Health, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
+                await ctx.send("**__Helmet__**: 🟨 Legendary Hood of Shooting Motherfuckers with Arrows (+20 Max HP, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
 
             # Output main hand
             if result['main_hand'] == 1:
@@ -242,60 +242,60 @@ class Character(commands.Cog):
             if result['boots'] == 1:
                 await ctx.send("**__Boots__**: Shitty Boots")
             elif result['boots'] == 2:
-                await ctx.send("**__Boots__**: 🟩 Good Boots of Casting Spells and Shit (+10 Health)")
+                await ctx.send("**__Boots__**: 🟩 Good Boots of Casting Spells and Shit (+20 Max HP)")
             elif result['boots'] == 3:
-                await ctx.send("**__Boots__**: 🟦 Rare Boots of Casting Spells and Shit (+10 Health, +1% Dodge & Block)")
+                await ctx.send("**__Boots__**: 🟦 Rare Boots of Casting Spells and Shit (+20 Max HP, +1% Dodge & Block)")
             elif result['boots'] == 4:
-                await ctx.send("**__Boots__**: 🟪 Epic Boots of Casting Spells and Shit (+10 Health, +1% Dodge & Block, +1% Crit Chance)")
+                await ctx.send("**__Boots__**: 🟪 Epic Boots of Casting Spells and Shit (+20 Max HP, +1% Dodge & Block, +1% Crit Chance)")
             elif result['boots'] == 5:
-                await ctx.send("**__Boots__**: 🟨 Legendary Boots of Casting Spells and Shit (+10 Health, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
+                await ctx.send("**__Boots__**: 🟨 Legendary Boots of Casting Spells and Shit (+20 Max HP, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
             #Ouput legs
             if result['legs'] == 1:
                 await ctx.send("**__Legs__**: Shitty Pants")
             elif result['legs'] == 2:
-                await ctx.send("**__Legs__**: 🟩 Good Pants of Casting Spells and Shit (+10 Health)")
+                await ctx.send("**__Legs__**: 🟩 Good Pants of Casting Spells and Shit (+20 Max HP)")
             elif result['legs'] == 3:
-                await ctx.send("**__Legs__**: 🟦 Rare Pants of Casting Spells and Shit (+10 Health, +1% Dodge & Block)")
+                await ctx.send("**__Legs__**: 🟦 Rare Pants of Casting Spells and Shit (+20 Max HP, +1% Dodge & Block)")
             elif result['legs'] == 4:
-                await ctx.send("**__Legs__**: 🟪 Epic Pants of Casting Spells and Shit (+10 Health, +1% Dodge & Block, +1% Crit Chance)")
+                await ctx.send("**__Legs__**: 🟪 Epic Pants of Casting Spells and Shit (+20 Max HP, +1% Dodge & Block, +1% Crit Chance)")
             elif result['legs'] == 5:
-                await ctx.send("**__Legs__**: 🟨 Legendary Pants of Casting Spells and Shit (+10 Health, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
+                await ctx.send("**__Legs__**: 🟨 Legendary Pants of Casting Spells and Shit (+20 Max HP, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
 
             # Output chest
             if result['chest'] == 1:
                 await ctx.send("**__Chest__**: Shitty Robes")
             elif result['chest'] == 2:
-                await ctx.send("**__Chest__**: 🟩 Good Robes of Casting Spells and Shit (+10 Health)")
+                await ctx.send("**__Chest__**: 🟩 Good Robes of Casting Spells and Shit (+20 Max HP)")
             elif result['chest'] == 3:
-                await ctx.send("**__Chest__**: 🟦 Rare Robes of Casting Spells and Shit (+10 Health, +1% Dodge & Block)")
+                await ctx.send("**__Chest__**: 🟦 Rare Robes of Casting Spells and Shit (+20 Max HP, +1% Dodge & Block)")
             elif result['chest'] == 4:
-                await ctx.send("**__Chest__**: 🟪 Epic Robes of Casting Spells and Shit (+10 Health, +1% Dodge & Block, +1% Crit Chance)")
+                await ctx.send("**__Chest__**: 🟪 Epic Robes of Casting Spells and Shit (+20 Max HP, +1% Dodge & Block, +1% Crit Chance)")
             elif result['chest'] == 5:
-                await ctx.send("**__Chest__**: 🟨 Legendary Robes of Casting Spells and Shit (+10 Health, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
+                await ctx.send("**__Chest__**: 🟨 Legendary Robes of Casting Spells and Shit (+20 Max HP, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
 
             # Output gloves
             if result['gloves'] == 1:
                 await ctx.send("**__Gloves__**: Shitty Gloves")
             elif result['gloves'] == 2:
-                await ctx.send("**__Gloves__**: 🟩 Good Gloves of Casting Spells and Shit (+10 Health)")
+                await ctx.send("**__Gloves__**: 🟩 Good Gloves of Casting Spells and Shit (+20 Max HP)")
             elif result['gloves'] == 3:
-                await ctx.send("**__Gloves__**: 🟦 Rare Gloves of Casting Spells and Shit (+10 Health, +1% Dodge & Block)")
+                await ctx.send("**__Gloves__**: 🟦 Rare Gloves of Casting Spells and Shit (+20 Max HP, +1% Dodge & Block)")
             elif result['gloves'] == 4:
-                await ctx.send("**__Gloves__**: 🟪 Epic Gloves of Casting Spells and Shit (+10 Health, +1% Dodge & Block, +1% Crit Chance)")
+                await ctx.send("**__Gloves__**: 🟪 Epic Gloves of Casting Spells and Shit (+20 Max HP, +1% Dodge & Block, +1% Crit Chance)")
             elif result['gloves'] == 5:
-                await ctx.send("**__Gloves__**: 🟨 Legendary Gloves of Casting Spells and Shit (+10 Health, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
+                await ctx.send("**__Gloves__**: 🟨 Legendary Gloves of Casting Spells and Shit (+20 Max HP, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
 
             # Output helmet
             if result['helmet'] == 1:
                 await ctx.send("**__Helmet__**: Shitty Hood")
             elif result['helmet'] == 2:
-                await ctx.send("**__Helmet__**: 🟩 Good Hood of Casting Spells and Shit (+10 Health)")
+                await ctx.send("**__Helmet__**: 🟩 Good Hood of Casting Spells and Shit (+20 Max HP)")
             elif result['helmet'] == 3:
-                await ctx.send("**__Helmet__**: 🟦 Rare Hood of Casting Spells and Shit (+10 Health, +1% Dodge & Block)")
+                await ctx.send("**__Helmet__**: 🟦 Rare Hood of Casting Spells and Shit (+20 Max HP, +1% Dodge & Block)")
             elif result['helmet'] == 4:
-                await ctx.send("**__Helmet__**: 🟪 Epic Hood of Casting Spells and Shit (+10 Health, +1% Dodge & Block, +1% Crit Chance)")
+                await ctx.send("**__Helmet__**: 🟪 Epic Hood of Casting Spells and Shit (+20 Max HP, +1% Dodge & Block, +1% Crit Chance)")
             elif result['helmet'] == 5:
-                await ctx.send("**__Helmet__**: 🟨 Legendary Hood of Casting Spells and Shit (+10 Health, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
+                await ctx.send("**__Helmet__**: 🟨 Legendary Hood of Casting Spells and Shit (+20 Max HP, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
 
             # Output main hand
             if result['main_hand'] == 1:
@@ -327,61 +327,61 @@ class Character(commands.Cog):
             if result['boots'] == 1:
                 await ctx.send("**__Boots__**: Shitty Boots")
             elif result['boots'] == 2:
-                await ctx.send("**__Boots__**: 🟩 Good Boots of Shanking (+10 Health)")
+                await ctx.send("**__Boots__**: 🟩 Good Boots of Shanking (+20 Max HP)")
             elif result['boots'] == 3:
-                await ctx.send("**__Boots__**: 🟦 Rare Boots of Shanking (+10 Health, +1% Dodge & Block)")
+                await ctx.send("**__Boots__**: 🟦 Rare Boots of Shanking (+20 Max HP, +1% Dodge & Block)")
             elif result['boots'] == 4:
-                await ctx.send("**__Boots__**: 🟪 Epic Boots of Shanking (+10 Health, +1% Dodge & Block, +1% Crit Chance)")
+                await ctx.send("**__Boots__**: 🟪 Epic Boots of Shanking (+20 Max HP, +1% Dodge & Block, +1% Crit Chance)")
             elif result['boots'] == 5:
-                await ctx.send("**__Boots__**: 🟨 Legendary Boots of Shanking (+10 Health, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
+                await ctx.send("**__Boots__**: 🟨 Legendary Boots of Shanking (+20 Max HP, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
 
             #Ouput legs
             if result['legs'] == 1:
                 await ctx.send("**__Legs__**: Shitty Pants")
             elif result['legs'] == 2:
-                await ctx.send("**__Legs__**: 🟩 Good Pants of Shanking (+10 Health)")
+                await ctx.send("**__Legs__**: 🟩 Good Pants of Shanking (+20 Max HP)")
             elif result['legs'] == 3:
-                await ctx.send("**__Legs__**: 🟦 Rare Pants of Shanking (+10 Health, +1% Dodge & Block)")
+                await ctx.send("**__Legs__**: 🟦 Rare Pants of Shanking (+20 Max HP, +1% Dodge & Block)")
             elif result['legs'] == 4:
-                await ctx.send("**__Legs__**: 🟪 Epic Pants of Shanking (+10 Health, +1% Dodge & Block, +1% Crit Chance)")
+                await ctx.send("**__Legs__**: 🟪 Epic Pants of Shanking (+20 Max HP, +1% Dodge & Block, +1% Crit Chance)")
             elif result['legs'] == 5:
-                await ctx.send("**__Legs__**: 🟨 Legendary Pants of Shanking (+10 Health, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
+                await ctx.send("**__Legs__**: 🟨 Legendary Pants of Shanking (+20 Max HP, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
 
             # Output chest
             if result['chest'] == 1:
                 await ctx.send("**__Chest__**: Shitty Vest")
             elif result['chest'] == 2:
-                await ctx.send("**__Chest__**: 🟩 Good Vest of Shanking (+10 Health)")
+                await ctx.send("**__Chest__**: 🟩 Good Vest of Shanking (+20 Max HP)")
             elif result['chest'] == 3:
-                await ctx.send("**__Chest__**: 🟦 Rare Vest of Shanking (+10 Health, +1% Dodge & Block)")
+                await ctx.send("**__Chest__**: 🟦 Rare Vest of Shanking (+20 Max HP, +1% Dodge & Block)")
             elif result['chest'] == 4:
-                await ctx.send("**__Chest__**: 🟪 Epic Vest of Shanking (+10 Health, +1% Dodge & Block, +1% Crit Chance)")
+                await ctx.send("**__Chest__**: 🟪 Epic Vest of Shanking (+20 Max HP, +1% Dodge & Block, +1% Crit Chance)")
             elif result['chest'] == 5:
-                await ctx.send("**__Chest__**: 🟨 Legendary Vest of Shanking (+10 Health, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
+                await ctx.send("**__Chest__**: 🟨 Legendary Vest of Shanking (+20 Max HP, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
 
             # Output gloves
             if result['gloves'] == 1:
                 await ctx.send("**__Gloves__**: Shitty Gloves")
             elif result['gloves'] == 2:
-                await ctx.send("**__Gloves__**: 🟩 Good Gloves of Shanking (+10 Health)")
+                await ctx.send("**__Gloves__**: 🟩 Good Gloves of Shanking (+20 Max HP)")
             elif result['gloves'] == 3:
-                await ctx.send("**__Gloves__**: 🟦 Rare Gloves of Shanking (+10 Health, +1% Dodge & Block)")
+                await ctx.send("**__Gloves__**: 🟦 Rare Gloves of Shanking (+20 Max HP, +1% Dodge & Block)")
             elif result['gloves'] == 4:
-                await ctx.send("**__Gloves__**: 🟪 Epic Gloves of Shanking (+10 Health, +1% Dodge & Block, +1% Crit Chance)")
+                await ctx.send("**__Gloves__**: 🟪 Epic Gloves of Shanking (+20 Max HP, +1% Dodge & Block, +1% Crit Chance)")
             elif result['gloves'] == 5:
-                await ctx.send("**__Gloves__**: 🟨 Legendary Gloves of Shanking (+10 Health, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
+                await ctx.send("**__Gloves__**: 🟨 Legendary Gloves of Shanking (+20 Max HP, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
 
             # Output helmet
             if result['helmet'] == 1:
                 await ctx.send("**__Helmet__**: Shitty Hood")
             elif result['helmet'] == 2:
-                await ctx.send("**__Helmet__**: 🟩 Good Hood of Shanking (+10 Health)")
+                await ctx.send("**__Helmet__**: 🟩 Good Hood of Shanking (+20 Max HP)")
             elif result['helmet'] == 3:
-                await ctx.send("**__Helmet__**: 🟦 Rare Hood of Shanking (+10 Health, +1% Dodge & Block)")
+                await ctx.send("**__Helmet__**: 🟦 Rare Hood of Shanking (+20 Max HP, +1% Dodge & Block)")
             elif result['helmet'] == 4:
-                await ctx.send("**__Helmet__**: 🟪 Epic Hood of Shanking (+10 Health, +1% Dodge & Block, +1% Crit Chance)")
+                await ctx.send("**__Helmet__**: 🟪 Epic Hood of Shanking (+20 Max HP, +1% Dodge & Block, +1% Crit Chance)")
             elif result['helmet'] == 5:
-                await ctx.send("**__Helmet__**: 🟨 Legendary Hood of Shanking (+10 Health, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
+                await ctx.send("**__Helmet__**: 🟨 Legendary Hood of Shanking (+20 Max HP, +1% Dodge & Block, +1% Crit Chance, +1% hit chance)")
 
             # Output main hand
             if result['main_hand'] == 1:
@@ -412,61 +412,61 @@ class Character(commands.Cog):
             if result['boots'] == 1:
                 await ctx.send("**__Boots__**: Shitty Boots")
             elif result['boots'] == 2:
-                await ctx.send("**__Boots__**: 🟩 Good Boots of Luck (+10 Health)")
+                await ctx.send("**__Boots__**: 🟩 Good Boots of Luck (+20 Max HP)")
             elif result['boots'] == 3:
-                await ctx.send("**__Boots__**: 🟦 Rare Boots of Luck (+10 Health, +1% Dodge & Block)")
+                await ctx.send("**__Boots__**: 🟦 Rare Boots of Luck (+20 Max HP, +1% Dodge & Block)")
             elif result['boots'] == 4:
-                await ctx.send("**__Boots__**: 🟪 Epic Boots of Luck (+10 Health, +1% Dodge & Block, +1% Crit Chance)")
+                await ctx.send("**__Boots__**: 🟪 Epic Boots of Luck (+20 Max HP, +1% Dodge & Block, +1% Crit Chance)")
             elif result['boots'] == 5:
-                await ctx.send("**__Boots__**: 🟨 Legendary Boots of Luck (+10 Health, +1% Dodge & Block, +1% Crit Chance, +1% Chance of Success)")
+                await ctx.send("**__Boots__**: 🟨 Legendary Boots of Luck (+20 Max HP, +1% Dodge & Block, +1% Crit Chance, +1% Chance of Success)")
 
             #Ouput legs
             if result['legs'] == 1:
                 await ctx.send("**__Legs__**: Shitty Pants")
             elif result['legs'] == 2:
-                await ctx.send("**__Legs__**: 🟩 Good Pants of Luck (+10 Health)")
+                await ctx.send("**__Legs__**: 🟩 Good Pants of Luck (+20 Max HP)")
             elif result['legs'] == 3:
-                await ctx.send("**__Legs__**: 🟦 Rare Pants of Luck (+10 Health, +1% Dodge & Block)")
+                await ctx.send("**__Legs__**: 🟦 Rare Pants of Luck (+20 Max HP, +1% Dodge & Block)")
             elif result['legs'] == 4:
-                await ctx.send("**__Legs__**: 🟪 Epic Pants of Luck (+10 Health, +1% Dodge & Block, +1% Crit Chance)")
+                await ctx.send("**__Legs__**: 🟪 Epic Pants of Luck (+20 Max HP, +1% Dodge & Block, +1% Crit Chance)")
             elif result['legs'] == 5:
-                await ctx.send("**__Legs__**: 🟨 Legendary Pants of Luck (+10 Health, +1% Dodge & Block, +1% Crit Chance, +1% Chance of Success)")
+                await ctx.send("**__Legs__**: 🟨 Legendary Pants of Luck (+20 Max HP, +1% Dodge & Block, +1% Crit Chance, +1% Chance of Success)")
 
             # Output chest
             if result['chest'] == 1:
                 await ctx.send("**__Chest__**: Shitty Jacket")
             elif result['chest'] == 2:
-                await ctx.send("**__Chest__**: 🟩 Good Jacket of Luck (+10 Health)")
+                await ctx.send("**__Chest__**: 🟩 Good Jacket of Luck (+20 Max HP)")
             elif result['chest'] == 3:
-                await ctx.send("**__Chest__**: 🟦 Rare Jacket of Luck (+10 Health, +1% Dodge & Block)")
+                await ctx.send("**__Chest__**: 🟦 Rare Jacket of Luck (+20 Max HP, +1% Dodge & Block)")
             elif result['chest'] == 4:
-                await ctx.send("**__Chest__**: 🟪 Epic Jacket of Luck (+10 Health, +1% Dodge & Block, +1% Crit Chance)")
+                await ctx.send("**__Chest__**: 🟪 Epic Jacket of Luck (+20 Max HP, +1% Dodge & Block, +1% Crit Chance)")
             elif result['chest'] == 5:
-                await ctx.send("**__Chest__**: 🟨 Legendary Jacket of Luck (+10 Health, +1% Dodge & Block, +1% Crit Chance, +1% Chance of Success)")
+                await ctx.send("**__Chest__**: 🟨 Legendary Jacket of Luck (+20 Max HP, +1% Dodge & Block, +1% Crit Chance, +1% Chance of Success)")
 
             # Output gloves
             if result['gloves'] == 1:
                 await ctx.send("**__Gloves__**: Shitty Gloves")
             elif result['gloves'] == 2:
-                await ctx.send("**__Gloves__**: 🟩 Good Gloves of Luck (+10 Health)")
+                await ctx.send("**__Gloves__**: 🟩 Good Gloves of Luck (+20 Max HP)")
             elif result['gloves'] == 3:
-                await ctx.send("**__Gloves__**: 🟦 Rare Gloves of Luck (+10 Health, +1% Dodge & Block)")
+                await ctx.send("**__Gloves__**: 🟦 Rare Gloves of Luck (+20 Max HP, +1% Dodge & Block)")
             elif result['gloves'] == 4:
-                await ctx.send("**__Gloves__**: 🟪 Epic Gloves of Luck (+10 Health, +1% Dodge & Block, +1% Crit Chance)")
+                await ctx.send("**__Gloves__**: 🟪 Epic Gloves of Luck (+20 Max HP, +1% Dodge & Block, +1% Crit Chance)")
             elif result['gloves'] == 5:
-                await ctx.send("**__Gloves__**: 🟨 Legendary Gloves of Luck (+10 Health, +1% Dodge & Block, +1% Crit Chance, +1% Chance of Success)")
+                await ctx.send("**__Gloves__**: 🟨 Legendary Gloves of Luck (+20 Max HP, +1% Dodge & Block, +1% Crit Chance, +1% Chance of Success)")
 
             # Output helmet
             if result['helmet'] == 1:
                 await ctx.send("**__Helmet__**: Shitty Fedora")
             elif result['helmet'] == 2:
-                await ctx.send("**__Helmet__**: 🟩 Good Fedora of Luck (+10 Health)")
+                await ctx.send("**__Helmet__**: 🟩 Good Fedora of Luck (+20 Max HP)")
             elif result['helmet'] == 3:
-                await ctx.send("**__Helmet__**: 🟦 Rare Fedora of Luck (+10 Health, +1% Dodge & Block)")
+                await ctx.send("**__Helmet__**: 🟦 Rare Fedora of Luck (+20 Max HP, +1% Dodge & Block)")
             elif result['helmet'] == 4:
-                await ctx.send("**__Helmet__**: 🟪 Epic Fedora of Luck (+10 Health, +1% Dodge & Block, +1% Crit Chance)")
+                await ctx.send("**__Helmet__**: 🟪 Epic Fedora of Luck (+20 Max HP, +1% Dodge & Block, +1% Crit Chance)")
             elif result['helmet'] == 5:
-                await ctx.send("**__Helmet__**: 🟨 Legendary Fedora of Luck (+10 Health, +1% Dodge & Block, +1% Crit Chance, +1% Chance of Success)")
+                await ctx.send("**__Helmet__**: 🟨 Legendary Fedora of Luck (+20 Max HP, +1% Dodge & Block, +1% Crit Chance, +1% Chance of Success)")
 
             # Output main hand
             if result['main_hand'] == 1:

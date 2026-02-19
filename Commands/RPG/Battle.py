@@ -343,7 +343,7 @@ class Battle(commands.Cog):
             self.enemy[guild_id]['dodge_chance'] = 10
             self.enemy[guild_id]['block_chance'] = 10
             self.enemy[guild_id]['crit_chance'] = 20
-            self.enemy[guild_id]['damage'] = 30
+            self.enemy[guild_id]['damage'] = 20
             self.enemy[guild_id]['attacks'] = ["basic", "wildfire", "lightning"]
             self.enemy[guild_id]['gold'] = 50
             self.enemy[guild_id]['exp'] = 100
@@ -365,7 +365,7 @@ class Battle(commands.Cog):
             self.enemy[guild_id]['dodge_chance'] = 10
             self.enemy[guild_id]['block_chance'] = 20
             self.enemy[guild_id]['crit_chance'] = 10
-            self.enemy[guild_id]['damage'] = 30
+            self.enemy[guild_id]['damage'] = 20
             self.enemy[guild_id]['attacks'] = ["basic", "haymaker", "flurry"]
             self.enemy[guild_id]['gold'] = 50
             self.enemy[guild_id]['exp'] = 100
@@ -407,7 +407,7 @@ class Battle(commands.Cog):
             self.enemy[guild_id]['dodge_chance'] = 15
             self.enemy[guild_id]['block_chance'] = 15
             self.enemy[guild_id]['crit_chance'] = 20
-            self.enemy[guild_id]['damage'] = 30
+            self.enemy[guild_id]['damage'] = 20
             self.enemy[guild_id]['attacks'] = ["basic", "rapidfire", "volley"]
             self.enemy[guild_id]['gold'] = 50
             self.enemy[guild_id]['exp'] = 100
