@@ -145,8 +145,8 @@ class Battle(commands.Cog):
             self.enemy[guild_id]['attacks'] = ["basic"]
             self.enemy[guild_id]['gold'] = 10
             self.enemy[guild_id]['exp'] = 10
-            self.enemy[guild_id]['good_drop_chance'] = 10
-            self.enemy[guild_id]['rare_drop_chance'] = 1
+            self.enemy[guild_id]['good_drop_chance'] = 20
+            self.enemy[guild_id]['rare_drop_chance'] = 10
             self.enemy[guild_id]['epic_drop_chance'] = 0
             self.enemy[guild_id]['legendary_drop_chance'] = 0
 
@@ -166,8 +166,8 @@ class Battle(commands.Cog):
             self.enemy[guild_id]['attacks'] = ["basic"]
             self.enemy[guild_id]['gold'] = 10
             self.enemy[guild_id]['exp'] = 10
-            self.enemy[guild_id]['good_drop_chance'] = 10
-            self.enemy[guild_id]['rare_drop_chance'] = 0
+            self.enemy[guild_id]['good_drop_chance'] = 20
+            self.enemy[guild_id]['rare_drop_chance'] = 10
             self.enemy[guild_id]['epic_drop_chance'] = 0
             self.enemy[guild_id]['legendary_drop_chance'] = 0
 
@@ -191,8 +191,8 @@ class Battle(commands.Cog):
             self.enemy[guild_id]['attacks'] = ["basic", "fireball", "frostbolt"]
             self.enemy[guild_id]['gold'] = 20
             self.enemy[guild_id]['exp'] = 20
-            self.enemy[guild_id]['good_drop_chance'] = 20
-            self.enemy[guild_id]['rare_drop_chance'] = 10
+            self.enemy[guild_id]['good_drop_chance'] = 30
+            self.enemy[guild_id]['rare_drop_chance'] = 20
             self.enemy[guild_id]['epic_drop_chance'] = 0
             self.enemy[guild_id]['legendary_drop_chance'] = 0
 
@@ -212,8 +212,8 @@ class Battle(commands.Cog):
             self.enemy[guild_id]['attacks'] = ["basic", "trishot", "snipe"]
             self.enemy[guild_id]['gold'] = 20
             self.enemy[guild_id]['exp'] = 20
-            self.enemy[guild_id]['good_drop_chance'] = 20
-            self.enemy[guild_id]['rare_drop_chance'] = 10
+            self.enemy[guild_id]['good_drop_chance'] = 30
+            self.enemy[guild_id]['rare_drop_chance'] = 20
             self.enemy[guild_id]['epic_drop_chance'] = 0
             self.enemy[guild_id]['legendary_drop_chance'] = 0
 
@@ -233,8 +233,8 @@ class Battle(commands.Cog):
             self.enemy[guild_id]['attacks'] = ["basic", "sap", "stab"]
             self.enemy[guild_id]['gold'] = 20
             self.enemy[guild_id]['exp'] = 20
-            self.enemy[guild_id]['good_drop_chance'] = 20
-            self.enemy[guild_id]['rare_drop_chance'] = 10
+            self.enemy[guild_id]['good_drop_chance'] = 30
+            self.enemy[guild_id]['rare_drop_chance'] = 20
             self.enemy[guild_id]['epic_drop_chance'] = 0
             self.enemy[guild_id]['legendary_drop_chance'] = 0
 
@@ -254,8 +254,8 @@ class Battle(commands.Cog):
             self.enemy[guild_id]['attacks'] = ["basic", "crush", "flurry"]
             self.enemy[guild_id]['gold'] = 20
             self.enemy[guild_id]['exp'] = 20
-            self.enemy[guild_id]['good_drop_chance'] = 20
-            self.enemy[guild_id]['rare_drop_chance'] = 10
+            self.enemy[guild_id]['good_drop_chance'] = 30
+            self.enemy[guild_id]['rare_drop_chance'] = 20
             self.enemy[guild_id]['epic_drop_chance'] = 0
             self.enemy[guild_id]['legendary_drop_chance'] = 0
 
@@ -279,9 +279,9 @@ class Battle(commands.Cog):
             self.enemy[guild_id]['attacks'] = ["basic", "crush", "flurry"]
             self.enemy[guild_id]['gold'] = 30
             self.enemy[guild_id]['exp'] = 50
-            self.enemy[guild_id]['good_drop_chance'] = 30
-            self.enemy[guild_id]['rare_drop_chance'] = 20
-            self.enemy[guild_id]['epic_drop_chance'] = 10
+            self.enemy[guild_id]['good_drop_chance'] = 40
+            self.enemy[guild_id]['rare_drop_chance'] = 30
+            self.enemy[guild_id]['epic_drop_chance'] = 20
             self.enemy[guild_id]['legendary_drop_chance'] = 0
 
             file_path = f"Images/troll.jpg"
@@ -300,9 +300,9 @@ class Battle(commands.Cog):
             self.enemy[guild_id]['attacks'] = ["basic", "crush", "haymaker"]
             self.enemy[guild_id]['gold'] = 30
             self.enemy[guild_id]['exp'] = 50
-            self.enemy[guild_id]['good_drop_chance'] = 30
-            self.enemy[guild_id]['rare_drop_chance'] = 20
-            self.enemy[guild_id]['epic_drop_chance'] = 10
+            self.enemy[guild_id]['good_drop_chance'] = 40
+            self.enemy[guild_id]['rare_drop_chance'] = 30
+            self.enemy[guild_id]['epic_drop_chance'] = 20
             self.enemy[guild_id]['legendary_drop_chance'] = 0
 
             file_path = f"Images/ogre.jpeg"
@@ -321,9 +321,9 @@ class Battle(commands.Cog):
             self.enemy[guild_id]['attacks'] = ["lifesteal"]
             self.enemy[guild_id]['gold'] = 30
             self.enemy[guild_id]['exp'] = 50
-            self.enemy[guild_id]['good_drop_chance'] = 30
-            self.enemy[guild_id]['rare_drop_chance'] = 20
-            self.enemy[guild_id]['epic_drop_chance'] = 10
+            self.enemy[guild_id]['good_drop_chance'] = 40
+            self.enemy[guild_id]['rare_drop_chance'] = 30
+            self.enemy[guild_id]['epic_drop_chance'] = 20
             self.enemy[guild_id]['legendary_drop_chance'] = 0
 
             file_path = f"Images/vampire.webp"
@@ -347,9 +347,9 @@ class Battle(commands.Cog):
             self.enemy[guild_id]['attacks'] = ["basic", "wildfire", "lightning"]
             self.enemy[guild_id]['gold'] = 50
             self.enemy[guild_id]['exp'] = 100
-            self.enemy[guild_id]['good_drop_chance'] = 40
-            self.enemy[guild_id]['rare_drop_chance'] = 30
-            self.enemy[guild_id]['epic_drop_chance'] = 20
+            self.enemy[guild_id]['good_drop_chance'] = 50
+            self.enemy[guild_id]['rare_drop_chance'] = 40
+            self.enemy[guild_id]['epic_drop_chance'] = 30
             self.enemy[guild_id]['legendary_drop_chance'] = 5
 
             # Send image
@@ -369,9 +369,9 @@ class Battle(commands.Cog):
             self.enemy[guild_id]['attacks'] = ["basic", "haymaker", "flurry"]
             self.enemy[guild_id]['gold'] = 50
             self.enemy[guild_id]['exp'] = 100
-            self.enemy[guild_id]['good_drop_chance'] = 40
-            self.enemy[guild_id]['rare_drop_chance'] = 30
-            self.enemy[guild_id]['epic_drop_chance'] = 20
+            self.enemy[guild_id]['good_drop_chance'] = 50
+            self.enemy[guild_id]['rare_drop_chance'] = 40
+            self.enemy[guild_id]['epic_drop_chance'] = 30
             self.enemy[guild_id]['legendary_drop_chance'] = 5
 
             file_path = f"Images/gladiator.jpg"
@@ -390,9 +390,9 @@ class Battle(commands.Cog):
             self.enemy[guild_id]['attacks'] = ["basic", "bladestorm", "stab"]
             self.enemy[guild_id]['gold'] = 50
             self.enemy[guild_id]['exp'] = 100
-            self.enemy[guild_id]['good_drop_chance'] = 40
-            self.enemy[guild_id]['rare_drop_chance'] = 30
-            self.enemy[guild_id]['epic_drop_chance'] = 20
+            self.enemy[guild_id]['good_drop_chance'] = 50
+            self.enemy[guild_id]['rare_drop_chance'] = 40
+            self.enemy[guild_id]['epic_drop_chance'] = 30
             self.enemy[guild_id]['legendary_drop_chance'] = 5
 
             file_path = f"Images/renegade.png"
@@ -411,9 +411,9 @@ class Battle(commands.Cog):
             self.enemy[guild_id]['attacks'] = ["basic", "rapidfire", "volley"]
             self.enemy[guild_id]['gold'] = 50
             self.enemy[guild_id]['exp'] = 100
-            self.enemy[guild_id]['good_drop_chance'] = 40
-            self.enemy[guild_id]['rare_drop_chance'] = 30
-            self.enemy[guild_id]['epic_drop_chance'] = 20
+            self.enemy[guild_id]['good_drop_chance'] = 50
+            self.enemy[guild_id]['rare_drop_chance'] = 40
+            self.enemy[guild_id]['epic_drop_chance'] = 30
             self.enemy[guild_id]['legendary_drop_chance'] = 5
 
             file_path = f"Images/deadeye.jpg"
@@ -437,8 +437,8 @@ class Battle(commands.Cog):
             self.enemy[guild_id]['gold'] = 100
             self.enemy[guild_id]['exp'] = 200
             self.enemy[guild_id]['good_drop_chance'] = 0
-            self.enemy[guild_id]['rare_drop_chance'] = 40
-            self.enemy[guild_id]['epic_drop_chance'] = 30
+            self.enemy[guild_id]['rare_drop_chance'] = 50
+            self.enemy[guild_id]['epic_drop_chance'] = 40
             self.enemy[guild_id]['legendary_drop_chance'] = 5
 
             file_path = f"Images/beserker.jpg"

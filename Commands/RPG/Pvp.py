@@ -2755,7 +2755,7 @@ class Pvp(commands.Cog):
         total_damage = 0
 
         # Check to see how many times deal attacks
-        deal_check = random.randint(1, 20)
+        deal_check = random.randint(1, 10)
         async with ctx.typing():
             await asyncio.sleep(2)
         await ctx.send(f"{result['username']} dealt {deal_check} attacks!")
@@ -3957,9 +3957,6 @@ class Pvp(commands.Cog):
         # Update cooldowns
         await self.update_cooldowns(ctx, result, cursor, 'cooldown_3', 3)
 
-        temp_player = self.turn_player
-        self.turn_player = self.other_player
-        self.other_player = temp_player
         await ctx.send("---------------------------------------------")
         return
 

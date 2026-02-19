@@ -17,7 +17,7 @@ class Hunter(commands.Cog):
         await ctx.send("**__Starting HP__**: 150")
         await ctx.send("**__Dodge Chance__**: 15%")
         await ctx.send("**__Block Chance__**: 15%")
-        await ctx.send("**__Crit Chance__**: 20%")
+        await ctx.send("**__Crit Chance__**: 15%")
         await ctx.send("**------------------------------------------------------**")
         await ctx.send("**__SPELLS/ABILITIES:__**")
         await ctx.send("**__Basic Attack__**: 10 Damage")

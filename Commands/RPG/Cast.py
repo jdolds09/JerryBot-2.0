@@ -370,6 +370,10 @@ class Cast(commands.Cog):
         elif 'backstab' in args[0].lower():
             await self.user_backstab_attack(ctx, result, cursor, battle_cog)
 
+        # User wants to run
+        elif 'run' in args[0].lower():
+            await self.user_run(ctx, result, cursor, battle_cog)    
+
         else:
             return await ctx.send("Invalid attack dumbass.")
         
@@ -1992,7 +1996,7 @@ class Cast(commands.Cog):
         await self.update_cooldowns(ctx, result, cursor, 'cooldown_1', 3)
 
         # Check to see how many times deal attacks
-        deal_check = random.randint(1, 20)
+        deal_check = random.randint(1, 10)
         async with ctx.typing():
             await asyncio.sleep(2)
         await ctx.send(f"{result['username']} dealt {deal_check} attacks!")
@@ -3005,9 +3009,6 @@ class Cast(commands.Cog):
         await self.update_cooldowns(ctx, result, cursor, 'cooldown_3', 3)
 
         await ctx.send("----------------------------------------------")
-
-       # Check to see if enemy died
-        await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
 
     # Mage lifesteal attack
     async def user_lifesteal_attack(self, ctx, result, cursor, battle_cog):
@@ -4462,6 +4463,48 @@ class Cast(commands.Cog):
 
        # Check to see if enemy died
         await self.enemy_health_check(ctx, result, battle_cog, cursor, False)
+
+    # User run command
+    async def user_run(self, ctx, result, cursor, battle_cog):
+        # Check to see if user is in participants list, if not add them
+        if result['username'] not in self.participant_names:
+            return ctx.send("You are not in the battle.")
+        
+        else:
+            self.participants.remove(result)
+            self.participant_names.remove(result['username'])
+            cursor.execute(f"UPDATE Characters SET current_hp = max_hp WHERE username = '{result['username']}' AND guild_id = '{ctx.guild.id}'")
+            cursor.execute(f"UPDATE Characters SET cooldown_1 = 0, cooldown_2 = 0, cooldown_3 = 0, cooldown_4 = 0, cooldown_5 = 0, cooldown_6 = 0, cooldown_7 = 0, cooldown_8 = 0, cooldown_9 = 0, cooldown_10 = 0 WHERE username = '{result['username']}' AND guild_id = '{ctx.guild.id}'")
+            cursor.execute(f"UPDATE Characters SET precision_active = 0, relentless_active = 0, gouge_active = 0, counter_active = 0, shieldbash_active = 0  WHERE username = '{result['username']}' AND guild_id = '{ctx.guild.id}'")
+            await ctx.send(f"**{result['username']} has fled from the battle!**")
+
+            # If no participants left, end battle
+            if len(self.participants) == 0:
+                battle_cog.encounter[ctx.guild.id]['active_battle'] = False
+                battle_cog.enemy[ctx.guild.id] = {}
+                battle_cog.enemy[ctx.guild.id]['name'] = None
+                battle_cog.enemy[ctx.guild.id]['max_hp'] = None
+                battle_cog.enemy[ctx.guild.id]['current_hp'] = None
+                battle_cog.enemy[ctx.guild.id]['dodge_chance'] = None
+                battle_cog.enemy[ctx.guild.id]['block_chance'] = None
+                battle_cog.enemy[ctx.guild.id]['crit_chance'] = None
+                battle_cog.enemy[ctx.guild.id]['damage'] = None
+                battle_cog.enemy[ctx.guild.id]['attacks'] = []
+                battle_cog.enemy[ctx.guild.id]['gold'] = None
+                battle_cog.enemy[ctx.guild.id]['exp'] = None
+                battle_cog.enemy[ctx.guild.id]['good_drop_chance'] = None
+                battle_cog.enemy[ctx.guild.id]['rare_drop_chance'] = None
+                battle_cog.enemy[ctx.guild.id]['epic_drop_chance'] = None
+                battle_cog.enemy[ctx.guild.id]['legendary_drop_chance'] = None
+
+                # Clear participants list and enemy details
+                self.participants = []
+                self.participant_names = []
+                self.enemy = {}
+                self.active_battle = False
+                self.beserk_damage = 10
+                return await ctx.send("**All participants have fled. The battle has ended.**")
+            return
 
     # --------------------------- UPDATE COOLDOWNS --------------------------------------
 
