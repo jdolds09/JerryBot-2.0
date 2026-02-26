@@ -330,6 +330,10 @@ class Cast(commands.Cog):
         elif 'pyroblast' in args[0].lower():
             await self.user_pyroblast_attack(ctx, result, cursor, battle_cog)
 
+        # User wants to use storm
+        elif 'storm' in args[0].lower():
+            await self.user_storm_attack(ctx, result, cursor, battle_cog) 
+
         # User wants to use gouge
         elif 'gouge' in args[0].lower():
             await self.user_gouge_attack(ctx, result, cursor, battle_cog)
@@ -412,6 +416,10 @@ class Cast(commands.Cog):
                     file_path = f"Images/respects.gif"
                     picture = discord.File(file_path)
                     await ctx.send(file=picture)
+                    for participant in self.participants:
+                        if participant['username'] == ctx.author.name:
+                            result = participant
+                            break
                     self.participants.remove(result)
                     self.participant_names.remove(result['username'])
                     # Delete character
@@ -970,6 +978,10 @@ class Cast(commands.Cog):
             file_path = f"Images/respects.gif"
             picture = discord.File(file_path)
             await ctx.send(file=picture)
+            for participant in self.participants:
+                if participant['username'] == ctx.author.name:
+                    result = participant
+                    break
             self.participants.remove(result)
             self.participant_names.remove(result['username'])
             # Delete character
@@ -1274,6 +1286,10 @@ class Cast(commands.Cog):
             file_path = f"Images/respects.gif"
             picture = discord.File(file_path)
             await ctx.send(file=picture)
+            for participant in self.participants:
+                if participant['username'] == ctx.author.name:
+                    result = participant
+                    break
             self.participants.remove(result)
             self.participant_names.remove(result['username'])
             # Delete character
@@ -2080,6 +2096,10 @@ class Cast(commands.Cog):
                 file_path = f"Images/respects.gif"
                 picture = discord.File(file_path)
                 await ctx.send(file=picture)
+                for participant in self.participants:
+                    if participant['username'] == ctx.author.name:
+                        result = participant
+                        break
                 self.participants.remove(result)
                 self.participant_names.remove(result['username'])
                 # Delete character
@@ -2167,6 +2187,10 @@ class Cast(commands.Cog):
                 file_path = f"Images/respects.gif"
                 picture = discord.File(file_path)
                 await ctx.send(file=picture)
+                for participant in self.participants:
+                    if participant['username'] == ctx.author.name:
+                        result = participant
+                        break
                 self.participants.remove(result)
                 self.participant_names.remove(result['username'])
                 # Delete character
@@ -2252,6 +2276,10 @@ class Cast(commands.Cog):
                 file_path = f"Images/respects.gif"
                 picture = discord.File(file_path)
                 await ctx.send(file=picture)
+                for participant in self.participants:
+                    if participant['username'] == ctx.author.name:
+                        result = participant
+                        break
                 self.participants.remove(result)
                 self.participant_names.remove(result['username'])
                 # Delete character
@@ -2337,6 +2365,10 @@ class Cast(commands.Cog):
                 file_path = f"Images/respects.gif"
                 picture = discord.File(file_path)
                 await ctx.send(file=picture)
+                for participant in self.participants:
+                    if participant['username'] == ctx.author.name:
+                        result = participant
+                        break
                 self.participants.remove(result)
                 self.participant_names.remove(result['username'])
                 # Delete character
@@ -2422,6 +2454,10 @@ class Cast(commands.Cog):
                 file_path = f"Images/respects.gif"
                 picture = discord.File(file_path)
                 await ctx.send(file=picture)
+                for participant in self.participants:
+                    if participant['username'] == ctx.author.name:
+                        result = participant
+                        break
                 self.participants.remove(result)
                 self.participant_names.remove(result['username'])
                 # Delete character
@@ -2507,6 +2543,10 @@ class Cast(commands.Cog):
                 file_path = f"Images/respects.gif"
                 picture = discord.File(file_path)
                 await ctx.send(file=picture)
+                for participant in self.participants:
+                    if participant['username'] == ctx.author.name:
+                        result = participant
+                        break
                 self.participants.remove(result)
                 self.participant_names.remove(result['username'])
                 # Delete character
@@ -2592,6 +2632,10 @@ class Cast(commands.Cog):
                 file_path = f"Images/respects.gif"
                 picture = discord.File(file_path)
                 await ctx.send(file=picture)
+                for participant in self.participants:
+                    if participant['username'] == ctx.author.name:
+                        result = participant
+                        break
                 self.participants.remove(result)
                 self.participant_names.remove(result['username'])
                 # Delete character
@@ -2677,6 +2721,10 @@ class Cast(commands.Cog):
                 file_path = f"Images/respects.gif"
                 picture = discord.File(file_path)
                 await ctx.send(file=picture)
+                for participant in self.participants:
+                    if participant['username'] == ctx.author.name:
+                        result = participant
+                        break
                 self.participants.remove(result)
                 self.participant_names.remove(result['username'])
                 # Delete character
@@ -2766,6 +2814,10 @@ class Cast(commands.Cog):
             file_path = f"Images/respects.gif"
             picture = discord.File(file_path)
             await ctx.send(file=picture)
+            for participant in self.participants:
+                if participant['username'] == ctx.author.name:
+                    result = participant
+                    break
             self.participants.remove(result)
             self.participant_names.remove(result['username'])
             # Delete character
@@ -4466,12 +4518,15 @@ class Cast(commands.Cog):
 
     # User run command
     async def user_run(self, ctx, result, cursor, battle_cog):
-        print('shit')
         # Check to see if user is in participants list, if not add them
         if result['username'] not in self.participant_names:
-            return ctx.send("You are not in the battle.")
+            return await ctx.send("You are not in the battle.")
         
         else:
+            for participant in self.participants:
+                if participant['username'] == ctx.author.name:
+                    result = participant
+                    break
             self.participants.remove(result)
             self.participant_names.remove(result['username'])
             try:
@@ -4746,6 +4801,10 @@ class Cast(commands.Cog):
             picture = discord.File(file_path)
             await ctx.send(file=picture)
             await ctx.send(f"**{result['username']}** has died!")
+            for participant in self.participants:
+                if participant['username'] == ctx.author.name:
+                    result = participant
+                    break
             self.participants.remove(result)
             self.participant_names.remove(result['username'])
             # Delete character
@@ -4837,6 +4896,10 @@ class Cast(commands.Cog):
             picture = discord.File(file_path)
             await ctx.send(file=picture)
             await ctx.send(f"**{result['username']}** has died!")
+            for participant in self.participants:
+                if participant['username'] == ctx.author.name:
+                    result = participant
+                    break
             self.participants.remove(result)
             self.participant_names.remove(result['username'])
             # Delete character
@@ -4922,6 +4985,10 @@ class Cast(commands.Cog):
             await ctx.send(file=picture)
             await ctx.send(f"**{result['username']}** has died!")
             await ctx.send("----------------------------------------------")
+            for participant in self.participants:
+                if participant['username'] == ctx.author.name:
+                    result = participant
+                    break
             self.participants.remove(result)
             self.participant_names.remove(result['username'])
             # Delete character
@@ -5027,6 +5094,10 @@ class Cast(commands.Cog):
             picture = discord.File(file_path)
             await ctx.send(file=picture)
             await ctx.send(f"**{result['username']}** has died!")
+            for participant in self.participants:
+                if participant['username'] == ctx.author.name:
+                    result = participant
+                    break
             self.participants.remove(result)
             self.participant_names.remove(result['username'])
             # Delete character
@@ -5110,6 +5181,10 @@ class Cast(commands.Cog):
             picture = discord.File(file_path)
             await ctx.send(file=picture)
             await ctx.send(f"**{result['username']}** has died!")
+            for participant in self.participants:
+                if participant['username'] == ctx.author.name:
+                    result = participant
+                    break
             self.participants.remove(result)
             self.participant_names.remove(result['username'])
             # Delete character
@@ -5194,6 +5269,10 @@ class Cast(commands.Cog):
             await ctx.send(file=picture)
             await ctx.send(f"**{result['username']}** has died!")
             await ctx.send("----------------------------------------------")
+            for participant in self.participants:
+                if participant['username'] == ctx.author.name:
+                    result = participant
+                    break
             self.participants.remove(result)
             self.participant_names.remove(result['username'])
             # Delete character
@@ -5304,6 +5383,10 @@ class Cast(commands.Cog):
             picture = discord.File(file_path)
             await ctx.send(file=picture)
             await ctx.send(f"**{result['username']}** has died!")
+            for participant in self.participants:
+                if participant['username'] == ctx.author.name:
+                    result = participant
+                    break
             self.participants.remove(result)
             self.participant_names.remove(result['username'])
             # Delete character
@@ -5388,6 +5471,10 @@ class Cast(commands.Cog):
             await ctx.send(file=picture)
             await ctx.send(f"**{result['username']}** has died!")
             await ctx.send("----------------------------------------------")
+            for participant in self.participants:
+                if participant['username'] == ctx.author.name:
+                    result = participant
+                    break
             self.participants.remove(result)
             self.participant_names.remove(result['username'])
             # Delete character
@@ -5501,6 +5588,10 @@ class Cast(commands.Cog):
             picture = discord.File(file_path)
             await ctx.send(file=picture)
             await ctx.send(f"**{result['username']}** has died!")
+            for participant in self.participants:
+                if participant['username'] == ctx.author.name:
+                    result = participant
+                    break
             self.participants.remove(result)
             self.participant_names.remove(result['username'])
             # Delete character
@@ -5591,6 +5682,10 @@ class Cast(commands.Cog):
             picture = discord.File(file_path)
             await ctx.send(file=picture)
             await ctx.send(f"**{result['username']}** has died!")
+            for participant in self.participants:
+                if participant['username'] == ctx.author.name:
+                    result = participant
+                    break
             self.participants.remove(result)
             self.participant_names.remove(result['username'])
             # Delete character
@@ -5682,6 +5777,10 @@ class Cast(commands.Cog):
             picture = discord.File(file_path)
             await ctx.send(file=picture)
             await ctx.send(f"**{result['username']}** has died!")
+            for participant in self.participants:
+                if participant['username'] == ctx.author.name:
+                    result = participant
+                    break
             self.participants.remove(result)
             self.participant_names.remove(result['username'])
             # Delete character
@@ -5783,6 +5882,10 @@ class Cast(commands.Cog):
             picture = discord.File(file_path)
             await ctx.send(file=picture)
             await ctx.send(f"**{result['username']}** has died!")
+            for participant in self.participants:
+                if participant['username'] == ctx.author.name:
+                    result = participant
+                    break
             self.participants.remove(result)
             self.participant_names.remove(result['username'])
             # Delete character
@@ -5865,6 +5968,10 @@ class Cast(commands.Cog):
             file_path = f"Images/respects.gif"
             picture = discord.File(file_path)
             await ctx.send(file=picture)
+            for participant in self.participants:
+                if participant['username'] == ctx.author.name:
+                    result = participant
+                    break
             self.participants.remove(result)
             self.participant_names.remove(result['username'])
             # Delete character
@@ -5968,6 +6075,10 @@ class Cast(commands.Cog):
             picture = discord.File(file_path)
             await ctx.send(file=picture)
             await ctx.send(f"**{result['username']}** has died!")
+            for participant in self.participants:
+                if participant['username'] == ctx.author.name:
+                    result = participant
+                    break
             self.participants.remove(result)
             self.participant_names.remove(result['username'])
             # Delete character
@@ -6051,6 +6162,10 @@ class Cast(commands.Cog):
             picture = discord.File(file_path)
             await ctx.send(file=picture)
             await ctx.send(f"**{result['username']}** has died!")
+            for participant in self.participants:
+                if participant['username'] == ctx.author.name:
+                    result = participant
+                    break
             self.participants.remove(result)
             self.participant_names.remove(result['username'])
             # Delete character
@@ -6152,6 +6267,10 @@ class Cast(commands.Cog):
             picture = discord.File(file_path)
             await ctx.send(file=picture)
             await ctx.send(f"**{result['username']}** has died!")
+            for participant in self.participants:
+                if participant['username'] == ctx.author.name:
+                    result = participant
+                    break
             self.participants.remove(result)
             self.participant_names.remove(result['username'])
             # Delete character
@@ -6242,6 +6361,10 @@ class Cast(commands.Cog):
             picture = discord.File(file_path)
             await ctx.send(file=picture)
             await ctx.send(f"**{result['username']}** has died!")
+            for participant in self.participants:
+                if participant['username'] == ctx.author.name:
+                    result = participant
+                    break
             self.participants.remove(result)
             self.participant_names.remove(result['username'])
             # Delete character
