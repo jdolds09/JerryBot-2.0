@@ -25,9 +25,9 @@ commands = ["meme", "vagina", "cock", "cocks", "dick", "dicks", "wiener", "wiene
 
 no_input_commands = ["meme", "vagina", "cock", "cocks", "dick", "dicks", "wiener", "wieners", "tits", "boob", "boobies",
             "titties", "butt", "butts", "titty", "disconnect", "stop", "commands", "command", "funny", "paper", "rock", "scissors", "size",
-             "leave", "pause", "resume", "shuffle", "skip", "ass", "boobs", "cosplay", "hentai", "penis", "porn", "pussy", "classes", 
-             "level", "xp", "experience", "lvl", "cooldown", "cooldowns", "spellbook", "abilities", "fight", "battle", "exp", "gold",
-            "spells", "loot", "potion", "use", "cd", "cds"]
+            "leave", "pause", "resume", "shuffle", "skip", "ass", "boobs", "cosplay", "hentai", "penis", "porn", "pussy", "classes", 
+            "level", "xp", "experience", "lvl", "cooldown", "cooldowns", "spellbook", "abilities", "fight", "battle", "exp", "gold",
+            "spells", "loot", "potion", "use", "cd", "cds", "food", "scrandle"]
 
 # Chat history
 #chat_history = []
