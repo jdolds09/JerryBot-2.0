@@ -54,19 +54,16 @@ class Food(commands.Cog):
         # Randomly select an image url from the list
         image = random.choice(image_urls)
         image_string = f"{image}"
-        print(image_string)
         # If image is in preview or gallery format, remove from list and select another url
         while "preview" in image_string or "gallery" in image_string:
-            print(image_string)
             image_urls.remove(image)
             image = random.choice(image_urls)
             image_string = f"{image}"
 
         while "jpeg" not in image_string and "jpg" not in image_string and "png" not in image_string and "gif" not in image_string:
-                print(image_string)
-                image_urls.remove(image)
-                image = random.choice(image_urls)
-                image_string = f"{image}"
+            image_urls.remove(image)
+            image = random.choice(image_urls)
+            image_string = f"{image}"
 
         # Post the image
         if image_string:

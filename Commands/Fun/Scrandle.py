@@ -18,7 +18,8 @@ class Scrandle(commands.Cog):
 
         # Subreddits we are going to scrape
         subreddits = ["FoodPorn", "food", "burgers", "Pizza", "eatsandwiches", "tonightsdinner", "southernfood",
-                      "DessertPorn", "BBQ", "appetizers", "mexicanfood", "FoodPics", "Sandwiches", "desserts"]
+                      "DessertPorn", "BBQ", "appetizers", "mexicanfood", "FoodPics", "Sandwiches", "desserts", "cheeseburgers",
+                      "tacos", "sushi", "steak", "pasta", "Bbqporn", "Breakfast"]
 
         search_modes = ["new", "top", "hot", "best"]
         # If the "top" search mode is randomly selected, we need to also specify the time range
@@ -64,6 +65,7 @@ class Scrandle(commands.Cog):
             # Randomly select an image url from the list
             image = random.choice(image_urls)
             image_string = f"{image}"
+
             # If image is in preview or gallery format, remove from list and select another url
             while "preview" in image_string or "gallery" in image_string:
                 image_urls.remove(image)
