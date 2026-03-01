@@ -70,6 +70,11 @@ class Scrandle(commands.Cog):
                 image = random.choice(image_urls)
                 image_string = f"{image}"
 
+            while "jpeg" not in image_string and "jpg" not in image_string and "png" not in image_string and "gif" not in image_string:
+                image_urls.remove(image)
+                image = random.choice(image_urls)
+                image_string = f"{image}"
+
             # Post the image
             if image_string:
                 await ctx.send(image_string)
