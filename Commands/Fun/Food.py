@@ -15,7 +15,7 @@ class Food(commands.Cog):
 
         # Subreddits we are going to scrape
         subreddits = ["FoodPorn", "food", "burgers", "Pizza", "eatsandwiches", "tonightsdinner", "southernfood",
-                      "DessertPorn", "BBQ", "appetizers", "mexicanfood", "FoodPics", "Sandwiches", "desserts"]
+                      "DessertPorn", "BBQ", "appetizers", "FoodPics", "Sandwiches", "desserts"]
 
         search_modes = ["new", "top", "hot", "best"]
         # If the "top" search mode is randomly selected, we need to also specify the time range
