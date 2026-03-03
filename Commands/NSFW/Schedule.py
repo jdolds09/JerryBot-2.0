@@ -6,7 +6,6 @@ import random
 class Schedule(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.running_tasks = {}
 
     # Schedule function
     @commands.command()
@@ -15,20 +14,9 @@ class Schedule(commands.Cog):
         if not ctx.channel.is_nsfw():
             return await ctx.send("You must be in a NSFW channel dumbass.")
 
-        # Stop the schedule task
-        if message is not None:
-            if 'stop' in message.lower():
-                return await Schedule.stop_task(self, ctx)
+        self.post_images.start(self, ctx)
 
-        # User entered !schedule command while task was already running
-        if ctx.guild.id in self.running_tasks and not self.running_tasks[ctx.guild.id].done():
-            await ctx.send("Schedule command is already running dumbass.")
-            return await ctx.send("Please use **!schedule stop** and then **!schedule** to restart the task.")
-
-        # Execute the task loop
-        self.running_tasks[ctx.guild.id] = Schedule.post_images.start(self, ctx)
-
-    @tasks.loop(hours=1)
+    @tasks.loop(hours=2)
     async def post_images(self, ctx):
         # Subreddits we are going to scrape
         subreddits = ["ass", "butt", "cosplaybutts","girlsinyogapants", "smalltitsbigass", "booty", "WhiteCheeks", "HungryButts", "beautifulbutt",
@@ -101,16 +89,6 @@ class Schedule(commands.Cog):
                     await ctx.send("Unable to fetch image.")
             except Exception as e:
                 print(e)
-
-    async def stop_task(self, ctx):
-        # Stop the task for the discord server
-        if ctx.guild.id in self.running_tasks:
-            self.running_tasks[ctx.guild.id].cancel()
-            del self.running_tasks[ctx.guild.id]
-            return await ctx.send("Task stopped.")
-        # Task was not running
-        else:
-            return await ctx.send("Task is not running dumbass.")
 
     async def command_help(self, ctx):
         await ctx.send("**!schedule OPTIONAL: [stop]**: Fetches images from reddit every 2 hours. **!schedule stop** will stop the task.")
