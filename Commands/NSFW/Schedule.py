@@ -95,6 +95,7 @@ class Schedule(commands.Cog):
 
                 # Post the image
                 if image_string:
+                    image_urls = []
                     await ctx.send(image_string)
                 else:
                     await ctx.send("Unable to fetch image.")
