@@ -25,7 +25,7 @@ class Scrandle(commands.Cog):
         # If the "top" search mode is randomly selected, we need to also specify the time range
         top_search_modes = ["hour", "day", "week", "month", "year", "all"]
         # This will hold all the image urls we are able to scrape from the JSON file
-        image_urls = None
+        image_urls = []
 
         i = 1
 
@@ -34,7 +34,7 @@ class Scrandle(commands.Cog):
             await ctx.send(f"**{i}**")
             i += 1
 
-            while image_urls is None or len(image_urls) == 0:
+            while len(image_urls) == 0:
                 # choose a random subreddit and search mode
                 subreddit = random.choice(subreddits)
                 search_mode = random.choice(search_modes)
@@ -68,15 +68,19 @@ class Scrandle(commands.Cog):
                 image_string = f"{image}"
 
                 # If image is in preview or gallery format, remove from list and select another url
-                if image_urls and ("preview" in image_string or "gallery" in image_string):
-                    image_urls.remove(image)
-                    image = random.choice(image_urls)
-                    image_string = f"{image}"
+                while "preview" in image_string or "gallery" in image_string:
+                    if len(image_urls) > 0:
+                        image_urls.remove(image)
+                        image = random.choice(image_urls)
+                        image_string = f"{image}"
 
-                if image_urls and ("jpeg" not in image_string and "jpg" not in image_string and "png" not in image_string and "gif" not in image_string):
-                    image_urls.remove(image)
-                    image = random.choice(image_urls)
-                    image_string = f"{image}"
+                while "jpeg" not in image_string and "jpg" not in image_string and "png" not in image_string and "gif" not in image_string:
+                    if len(image_urls) > 0:
+                        image_urls.remove(image)
+                        image = random.choice(image_urls)
+                        image_string = f"{image}"
+                    else:
+                        break
 
             # Post the image
             if image_string:
