@@ -9,12 +9,12 @@ class Schedule(commands.Cog):
 
     # Schedule function
     @commands.command()
-    async def schedule(self, ctx, *, message=None):
+    async def schedule(self, ctx):
         # Return if not in a NSFW channel
         if not ctx.channel.is_nsfw():
             return await ctx.send("You must be in a NSFW channel dumbass.")
 
-        self.post_images.start(self, ctx)
+        self.post_images.start(ctx)
 
     @tasks.loop(hours=2)
     async def post_images(self, ctx):
