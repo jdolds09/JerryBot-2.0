@@ -13,8 +13,13 @@ class Schedule(commands.Cog):
         # Return if not in a NSFW channel
         if not ctx.channel.is_nsfw():
             return await ctx.send("You must be in a NSFW channel dumbass.")
+        
+        if self.post_images.is_running():
+            self.post_images.stop()
+            self.post_images.start(ctx)
 
-        self.post_images.start(ctx)
+        else: 
+            self.post_images.start(ctx)
 
     @tasks.loop(hours=2)
     async def post_images(self, ctx):
