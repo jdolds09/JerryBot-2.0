@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 import os
 import random
 
-class Battle(commands.Cog):
+class Combat(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.tier_1_enemies = ["skeleton", "goblin"]
@@ -16,9 +16,9 @@ class Battle(commands.Cog):
         self.encounter = {}
         self.enemy = {}
 
-    # Battle function
+    # Combat function
     @commands.command(aliases=['fight'])
-    async def battle(self, ctx):
+    async def combat(self, ctx):
         # Connect to DB
         load_dotenv()
         try:
@@ -447,4 +447,4 @@ class Battle(commands.Cog):
             await ctx.send("You've encountered a **Beserker**!")
 
 async def setup(bot):
-    await bot.add_cog(Battle(bot))
+    await bot.add_cog(Combat(bot))

@@ -43,7 +43,7 @@ class Potion(commands.Cog):
         if result['potions'] <= 0:
             return await ctx.send("You don't have any potions left.")
         
-        battle_cog = self.bot.get_cog("Battle")
+        battle_cog = self.bot.get_cog("Combat")
         if not battle_cog.encounter or not battle_cog.encounter[ctx.guild.id]['active_battle']:
             return await ctx.send("There is no active battle dumbass.")
         

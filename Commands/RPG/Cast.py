@@ -166,7 +166,7 @@ class Cast(commands.Cog):
         guild_id = ctx.guild.id
 
         # Get the enemy details
-        battle_cog = self.bot.get_cog("Battle")
+        battle_cog = self.bot.get_cog("Combat")
         if not battle_cog.encounter or not battle_cog.encounter[guild_id]['active_battle']:
             return await ctx.send("There is no active battle dumbass.")
         

@@ -65,6 +65,13 @@ async def rpg_load():
             commands.append(filename[:-3])
             await bot.load_extension(f"Commands.RPG.{filename[:-3]}")
 
+# Load Pokemon Commands
+async def pokemon_load():
+    for filename in os.listdir("Commands/Pokemon"):
+        if filename.endswith(".py"):
+            commands.append(filename[:-3])
+            await bot.load_extension(f"Commands.Pokemon.{filename[:-3]}")
+
 # Load Help Command
 async def help_load():
     commands.append('help')
@@ -126,6 +133,7 @@ async def main():
         await music_load()
         await nsfw_load()
         await rpg_load()
+        await pokemon_load()
         await help_load()
         await bot.start(token)
 
