@@ -18,15 +18,15 @@ class Schedule(commands.Cog):
         if len(args) > 0:
             if 'stop' in args[0]:
                 if ctx.guild.id in self.running_tasks:
-                    self.running_tasks[ctx.guild.id].cancel()
+                    await self.running_tasks[ctx.guild.id].stop()
                     del self.running_tasks[ctx.guild.id]
                 return await ctx.send("Task stopped.")
             
-        if ctx.guild.id in self.running_tasks and self.running_tasks[ctx.guild.id].is_running():
-            self.running_tasks[ctx.guild.id].cancel()
+        if ctx.guild.id in self.running_tasks and not self.running_tasks[ctx.guild.id].done():
+            await self.running_tasks[ctx.guild.id].stop()
             self.running_tasks[ctx.guild.id].start(ctx)
         
-        elif ctx.guild.id in self.running_tasks and not self.running_tasks[ctx.guild.id].is_running():
+        elif ctx.guild.id in self.running_tasks and self.running_tasks[ctx.guild.id].done():
             self.running_tasks[ctx.guild.id].start(ctx)
 
         else:
