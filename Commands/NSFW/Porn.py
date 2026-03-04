@@ -56,24 +56,25 @@ class Porn(commands.Cog):
                 image_urls.append(post.get("url"))
 
             # Randomly select an image url from the list
-            image = random.choice(image_urls)
-            image_string = f"{image}"
-            # If image is in preview or gallery format, remove from list and select another url
-            while "preview" in image_string or "gallery" in image_string:
-                if len(image_urls) > 0:
-                    image_urls.remove(image)
+            if len(image_urls) > 0:
+                image = random.choice(image_urls)
+                image_string = f"{image}"
+                # If image is in preview or gallery format, remove from list and select another url
+                while "preview" in image_string or "gallery" in image_string:
                     if len(image_urls) > 0:
-                        image = random.choice(image_urls)
-                        image_string = f"{image}"
+                        image_urls.remove(image)
+                        if len(image_urls) > 0:
+                            image = random.choice(image_urls)
+                            image_string = f"{image}"
 
-            while "jpeg" not in image_string and "jpg" not in image_string and "png" not in image_string and "gif" not in image_string:
-                if len(image_urls) > 0:
-                    image_urls.remove(image)
+                while "jpeg" not in image_string and "jpg" not in image_string and "png" not in image_string and "gif" not in image_string:
                     if len(image_urls) > 0:
-                        image = random.choice(image_urls)
-                        image_string = f"{image}"
-                else:
-                    break
+                        image_urls.remove(image)
+                        if len(image_urls) > 0:
+                            image = random.choice(image_urls)
+                            image_string = f"{image}"
+                    else:
+                        break
 
         # Post the image
         if image_string:
