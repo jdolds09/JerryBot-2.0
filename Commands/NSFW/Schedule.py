@@ -6,20 +6,31 @@ import random
 class Schedule(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.running_tasks = {}
 
     # Schedule function
     @commands.command()
-    async def schedule(self, ctx):
+    async def schedule(self, ctx, *args):
         # Return if not in a NSFW channel
         if not ctx.channel.is_nsfw():
             return await ctx.send("You must be in a NSFW channel dumbass.")
         
-        if self.post_images.is_running():
-            await self.post_images.stop()
-            self.post_images.start(ctx)
+        if len(args) > 0:
+            if 'stop' in args[0]:
+                if ctx.guild.id in self.running_tasks:
+                    self.running_tasks[ctx.guild.id].cancel()
+                    del self.running_tasks[ctx.guild.id]
+                return await ctx.send("Task stopped.")
+            
+        if ctx.guild.id in self.running_tasks and self.running_tasks[ctx.guild.id].is_running():
+            self.running_tasks[ctx.guild.id].cancel()
+            self.running_tasks[ctx.guild.id].start(ctx)
+        
+        elif ctx.guild.id in self.running_tasks and not self.running_tasks[ctx.guild.id].is_running():
+            self.running_tasks[ctx.guild.id].start(ctx)
 
-        else: 
-            self.post_images.start(ctx)
+        else:
+            self.running_tasks[ctx.guild.id] = self.post_images.start(ctx)
 
     @tasks.loop(hours=2)
     async def post_images(self, ctx):
