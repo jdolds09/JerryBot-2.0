@@ -17,18 +17,22 @@ class Schedule(commands.Cog):
         if not ctx.channel.is_nsfw():
             return await ctx.send("You must be in a NSFW channel dumbass.")
         
-        # Subreddits we are going to scrape
-        subreddits = ["ass", "butt", "cosplaybutts","girlsinyogapants", "smalltitsbigass", "booty", "WhiteCheeks", "HungryButts", "beautifulbutt",
-            "pawg", "asstastic","CuteLittleButts", "bootypetite", "PantyPeel","tightsqueeze", "twerking", "twerk", "Boobies", "tits", "boobs",
-            "PerfectTits", "adorableporn", "amazingtits", "topless", "fortyfivefiftyfive", "BustyPetite", "Titties", "NSFWfashion", "Playboy",
-            "bodyperfection", "Nudes", "Nude_Selfie", "BestTits", "boobbounce", "TittyDrop", "CasualJiggles", "stripgirls", "BiggerThanYouThought",
-            "cosplaygirls", "cosplay", "cosplaybabes", "CosplayLewd", "nsfwcosplay", "geekygirls", "cosplaybutts", "suicidegirls", "cameltoe", "Innie",
-            "vagina", "Innies", "GodPussy", "shavedpussies", "simps", "rearpussy", "gonewild", "FunWithFriends", "TooCuteForPorn", "RealGirls"]
-        
-        run_schedule = True
+        try:
+            # Subreddits we are going to scrape
+            subreddits = ["ass", "butt", "cosplaybutts","girlsinyogapants", "smalltitsbigass", "booty", "WhiteCheeks", "HungryButts", "beautifulbutt",
+                "pawg", "asstastic","CuteLittleButts", "bootypetite", "PantyPeel","tightsqueeze", "twerking", "twerk", "Boobies", "tits", "boobs",
+                "PerfectTits", "adorableporn", "amazingtits", "topless", "fortyfivefiftyfive", "BustyPetite", "Titties", "NSFWfashion", "Playboy",
+                "bodyperfection", "Nudes", "Nude_Selfie", "BestTits", "boobbounce", "TittyDrop", "CasualJiggles", "stripgirls", "BiggerThanYouThought",
+                "cosplaygirls", "cosplay", "cosplaybabes", "CosplayLewd", "nsfwcosplay", "geekygirls", "cosplaybutts", "suicidegirls", "cameltoe", "Innie",
+                "vagina", "Innies", "GodPussy", "shavedpussies", "simps", "rearpussy", "gonewild", "FunWithFriends", "TooCuteForPorn", "RealGirls"]
+            
+            run_schedule = True
 
-        if 'stop' in args[0]:
-            run_schedule = False
+            if 'stop' in args[0]:
+                run_schedule = False
+                await ctx.send("Task stopped.")
+        except Exception as e:
+            print(e)
 
         while run_schedule:
             for _ in range(20):
