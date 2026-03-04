@@ -15,7 +15,7 @@ class Schedule(commands.Cog):
             return await ctx.send("You must be in a NSFW channel dumbass.")
         
         if self.post_images.is_running():
-            self.post_images.stop()
+            await self.post_images.stop()
             self.post_images.start(ctx)
 
         else: 
