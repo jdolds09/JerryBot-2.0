@@ -24,10 +24,12 @@ class Schedule(commands.Cog):
             
         if ctx.guild.id in self.running_tasks and not self.running_tasks[ctx.guild.id].done():
             await self.running_tasks[ctx.guild.id].stop()
-            self.running_tasks[ctx.guild.id].start(ctx)
+            del self.running_tasks[ctx.guild.id]
+            self.running_tasks[ctx.guild.id] = self.post_images.start(ctx)
         
         elif ctx.guild.id in self.running_tasks and self.running_tasks[ctx.guild.id].done():
-            self.running_tasks[ctx.guild.id].start(ctx)
+            del self.running_tasks[ctx.guild.id]
+            self.running_tasks[ctx.guild.id] = self.post_images.start(ctx)
 
         else:
             self.running_tasks[ctx.guild.id] = self.post_images.start(ctx)
