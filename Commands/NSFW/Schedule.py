@@ -20,19 +20,15 @@ class Schedule(commands.Cog):
                 if ctx.guild.id in self.running_tasks:
                     await self.running_tasks[ctx.guild.id].stop()
                     del self.running_tasks[ctx.guild.id]
-                return await ctx.send("Task stopped.")
+                    return await ctx.send("Task stopped.")
+                else:
+                    return await ctx.send("No task is currently running.")
             
-        if ctx.guild.id in self.running_tasks and self.running_tasks[ctx.guild.id].is_running():
+        if ctx.guild.id in self.running_tasks:
             await self.running_tasks[ctx.guild.id].stop()
             del self.running_tasks[ctx.guild.id]
-            self.running_tasks[ctx.guild.id] = self.post_images.start(ctx)
-        
-        elif ctx.guild.id in self.running_tasks and not self.running_tasks[ctx.guild.id].is_running():
-            del self.running_tasks[ctx.guild.id]
-            self.running_tasks[ctx.guild.id] = self.post_images.start(ctx)
-
-        else:
-            self.running_tasks[ctx.guild.id] = self.post_images.start(ctx)
+            
+        self.running_tasks[ctx.guild.id] = self.post_images.start(ctx)
 
     @tasks.loop(hours=2)
     async def post_images(self, ctx):
