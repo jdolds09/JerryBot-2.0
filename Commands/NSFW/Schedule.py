@@ -26,15 +26,20 @@ class Schedule(commands.Cog):
                 "cosplaygirls", "cosplay", "cosplaybabes", "CosplayLewd", "nsfwcosplay", "geekygirls", "cosplaybutts", "suicidegirls", "cameltoe", "Innie",
                 "vagina", "Innies", "GodPussy", "shavedpussies", "simps", "rearpussy", "gonewild", "FunWithFriends", "TooCuteForPorn", "RealGirls"]
             
-            run_schedule = True
+            # This is to keep track of whether the task is running for each server 
+            # so that if a user in that server types !schedule stop, it will stop the task for that server
+            if ctx.guild.id not in self.running_tasks:
+                self.running_tasks[ctx.guild.id] = {}
+            
+            self.running_tasks[ctx.guild.id]["schedule_running"] = True
 
             if 'stop' in args[0]:
-                run_schedule = False
+                self.running_tasks[ctx.guild.id]["schedule_running"] = False
                 await ctx.send("Task stopped.")
         except Exception as e:
             print(e)
 
-        while run_schedule:
+        while self.running_tasks[ctx.guild.id]["schedule_running"]:
             for _ in range(20):
                 try:
                     search_modes = ["new", "top", "hot", "best"]

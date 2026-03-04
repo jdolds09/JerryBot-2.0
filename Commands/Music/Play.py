@@ -168,7 +168,7 @@ class Play(commands.Cog):
 
                 # Play!
                 try:
-                    source = await discord.FFmpegOpusAudio.from_probe(url, **FFMPEG_OPTIONS, executable="bin\\ffmpeg\\ffmpeg.exe")
+                    source = await discord.FFmpegOpusAudio.from_probe(url, **FFMPEG_OPTIONS, executable="bin/ffmpeg/ffmpeg.exe")
                     ctx.voice_client.play(source, after=lambda _:self.bot.loop.create_task(self.playTrack(ctx, tracks)))
                 except Exception as e:
                     print(e)
