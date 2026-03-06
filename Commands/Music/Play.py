@@ -109,12 +109,10 @@ class Play(commands.Cog):
             tracks = [tracks]
 
         # Bot is not connected to channel, connect the bot to channel and start filling the queue
-        try:
-            if not ctx.voice_client:
-                await ctx.author.voice.channel.connect()
-        except Exception as e:
-            print(e)
-    
+
+        if not ctx.voice_client:
+            await ctx.author.voice.channel.connect()
+
             # Clear the queue
             try:
                 self.queue[guild_id].clear()
@@ -133,9 +131,9 @@ class Play(commands.Cog):
 
         # Bot is already connected to channel, add requested song(s) to queue
         else:
-            if len(tracks) == 1:
+            if len(tracks) == 1 and ctx.voice_client.is_playing():
                 await ctx.send(f"{titles[0]} added to the queue!")
-            else:
+            elif len(tracks) > 1 and ctx.voice_client.is_playing():
                 await ctx.send("Songs have been added to the queue!")
             try:
                 for track in tracks:

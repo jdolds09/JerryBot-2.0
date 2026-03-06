@@ -12,17 +12,32 @@ class Battle(commands.Cog):
     # Battle function
     @commands.command()
     async def battle(self, ctx):
-        # Generate a random number from 1-3
-        random_number = random.randint(1,3)
-        if random_number == 1:
-            await ctx.send('Rock! Fuck we tied. Go againe!')
-        elif random_number == 2:
-            await ctx.send('Paper! HAHAHA I WIN!')
-        else:
-            await ctx.send('Scissors! Shit...')
+        # Connect to DB
+        load_dotenv()
+        try:
+            db = mysql.connector.connect(host=os.getenv("DB_HOST"),
+                                        user=os.getenv("DB_USER"),
+                                        password=os.getenv("DB_PASSWORD"),
+                                        database=os.getenv("DB_USER"),
+                                        port = 3306,
+                                        autocommit=True)
+            
+            cursor = db.cursor(dictionary=True)
+        except Exception as e:
+            print(e)
+            return await ctx.send("Error connecting to database.")
 
-    async def command_help(self, ctx):
-        await ctx.send("**!rock**: Play Rock Paper Scissors by choosing Rock.")
+        # Fetch user's trainer
+        try:
+            cursor.execute(f"SELECT * FROM `Trainers` WHERE `username` = '{ctx.author.name}' AND `guild_id` = '{ctx.guild.id}'")
+            result = cursor.fetchone()
+            # User doesn't have a trainer
+            if not result:
+                return await ctx.send("You don't have a trainer dumbass.")
+            
+        except Exception as e:
+            print(e)
+            return await ctx.send("Error grabbing trainer details")
 
 async def setup(bot):
     await bot.add_cog(Battle(bot))

@@ -15,7 +15,7 @@ class Trainer(commands.Cog):
                                  'bellsprout', 'tentacool', 'geodude','ponyta', 'slowpoke', 'magnemite', 'farfetchd', 'doduo', 'seel', 
                                  'grimer', 'shellder', 'gastly', 'onix', 'drowzee', 'krabby', 'voltorb', 'exeggcute', 'cubone', 'hitmonlee', 
                                  'hitmonchan', 'lickitung', 'koffing', 'rhyhorn', 'chansey', 'tangela', 'horsea', 'goldeen', 
-                                 'staryu', 'magikarp', 'porygon', 'omanyte', 'kabuto']
+                                 'staryu', 'magikarp', 'eevee', 'porygon', 'omanyte', 'kabuto', 'dratini']
 
     # Trainer function
     @commands.command()
@@ -195,120 +195,159 @@ class Trainer(commands.Cog):
         if starter == 'bulbasaur':
             move_1 = 'growl'
             move_2 = 'tackle'
+            move_3 = None
         elif starter == 'charmander':
             move_1 = 'growl'
             move_2 = 'scratch'
+            move_3 = None
         elif starter == 'squirtle':
             move_1 = 'tackle'
             move_2 = 'tail whip'
+            move_3 = None
         elif starter == 'caterpie':
             move_1 = 'tackle'
             move_2 = 'string shot'
+            move_3 = None
         elif starter == 'weedle':
             move_1 = 'poison sting'
             move_2 = 'string shot'
+            move_3 = None
         elif starter == 'pidgey':
             move_1 = 'gust'
-            move_2 = 'sand attack'
+            move_2 = 'sand-attack'
+            move_3 = None
         elif starter == 'rattata':
             move_1 = 'tackle'
             move_2 = 'tail whip'
+            move_3 = None
         elif starter == 'spearow':
             move_1 = 'peck'
             move_2 = 'growl'
+            move_3 = None
         elif starter == 'ekans':
             move_1 = 'leer'
             move_2 = 'wrap'
+            move_3 = None
         elif starter == 'pikachu':
             move_1 = 'thundershock'
             move_2 = 'growl'
+            move_3 = None
         elif starter == 'sandshrew':
             move_1 = 'scratch'
             move_2 = None
+            move_3 = None
         elif starter == 'nidoran_female':
             move_1 = 'growl'
             move_2 = 'tackle'
+            move_3 = None
         elif starter == 'nidoran_male':
             move_1 = 'leer'
             move_2 = 'tackle'
+            move_3 = None
         elif starter == 'clefairy':
             move_1 = 'growl'
             move_2 = 'pound'
+            move_3 = None
         elif starter == 'vulpix':
             move_1 = 'ember'
             move_2 = 'tail whip'
+            move_3 = None
         elif starter == 'jigglypuff':
             move_1 = 'sing'
             move_2 = None
+            move_3 = None
         elif starter == 'zubat':
             move_1 = 'leech life'
             move_2 = None
+            move_3 = None
         elif starter == 'oddish':
             move_1 = 'absorb'
             move_2 = None
+            move_3 = None
         elif starter == 'paras':
             move_1 = 'scratch'
             move_2 = None
+            move_3 = None
         elif starter == 'venonat':
             move_1 = 'tackle'
             move_2 = None
+            move_3 = None
         elif starter == 'diglett':
             move_1 = 'scratch'
             move_2 = None
+            move_3 = None
         elif starter == 'meowth':
             move_1 = 'growl'
             move_2 = 'scratch'
+            move_3 = None
         elif starter == 'psyduck':
             move_1 = 'scratch'
             move_2 = None
+            move_3 = None
         elif starter == 'mankey':
             move_1 = 'leer'
             move_2 = 'scratch'
+            move_3 = None
         elif starter == 'growlithe':
             move_1 = 'bite'
             move_2 = 'roar'
+            move_3 = None
         elif starter == 'poliwag':
             move_1 = 'bubble'
             move_2 = None
+            move_3 = None
         elif starter == 'abra':
             move_1 = 'teleport'
             move_2 = None
+            move_3 = None
         elif starter == 'machop':
             move_1 = 'karate chop'
             move_2 = None
+            move_3 = None
         elif starter == 'bellsprout':
             move_1 = 'growth'
             move_2 = 'vine whip'
+            move_3 = None
         elif starter == 'tentacool':
             move_1 = 'acid'
             move_2 = None
+            move_3 = None
         elif starter == 'geodude':
             move_1 = 'tackle'
             move_2 = None
+            move_3 = None
         elif starter == 'ponyta':
             move_1 = 'ember'
             move_2 = None
+            move_3 = None
         elif starter == 'slowpoke':
             move_1 = 'confusion'
             move_2 = None
+            move_3 = None
         elif starter == 'magnemite':
             move_1 = 'tackle'
             move_2 = None
+            move_3 = None
         elif starter == 'farfetchd':
             move_1 = 'peck'
-            move_2 = 'sand attack'
+            move_2 = 'sand-attack'
+            move_3 = None
         elif starter == 'doduo':
             move_1 = 'peck'
             move_2 = None
+            move_3 = None
         elif starter == 'seel':
             move_1 = 'headbutt'
             move_2 = None
+            move_3 = None
         elif starter == 'grimer':
             move_1 = 'pound'
             move_2 = None
+            move_3 = None
         elif starter == 'shellder':
             move_1 = 'tackle'
             move_2 = 'withdraw'
+            move_3 = None
         elif starter == 'gastly':
             move_1 = 'confuse ray'
             move_2 = 'lick'
@@ -316,24 +355,123 @@ class Trainer(commands.Cog):
         elif starter == 'onix':
             move_1 = 'screech'
             move_2 = 'tackle'
+            move_3 = None
         elif starter == 'drowzee':
             move_1 = 'hypnosis'
             move_2 = 'pound'
+            move_3 = None
         elif starter == 'krabby':
             move_1 = 'bubble'
             move_2 = 'leer'
+            move_3 = None
+        elif starter == 'voltorb':
+            move_1 = 'screech'
+            move_2 = 'tackle'
+            move_3 = None
+        elif starter == 'exeggcute':
+            move_1 = 'barrage'
+            move_2 = 'hypnosis'
+            move_3 = None
+        elif starter == 'cubone':
+            move_1 = 'growl'
+            move_2 = 'tackle'
+            move_3 = 'tail whip'
+        elif starter == 'hitmonlee':
+            move_1 = 'double kick'
+            move_2 = 'meditate'
+            move_3 = None
+        elif starter == 'hitmonchan':
+            move_1 = 'agility'
+            move_2 = 'comet punch'
+            move_3 = None
+        elif starter == 'lickitung':
+            move_1 = 'supersonic'
+            move_2 = 'wrap'
+            move_3 = None
+        elif starter == 'koffing':
+            move_1 = 'smog'
+            move_2 = 'tackle'
+            move_3 = None
+        elif starter == 'rhyhorn':
+            move_1 = 'horn attack'
+            move_2 = None
+            move_3 = None
+        elif starter == 'chansey':
+            move_1 = 'doubleslap'
+            move_2 = 'pound'
+            move_3 = None
+        elif starter == 'tangela':
+            move_1 = 'bind'
+            move_2 = 'constrict'
+            move_3 = None
+        elif starter == 'horsea':
+            move_1 = 'bubble'
+            move_2 = None
+            move_3 = None
+        elif starter == 'goldeen':
+            move_1 = 'peck'
+            move_2 = 'tail whip'
+            move_3 = None
+        elif starter == 'staryu':
+            move_1 = 'tackle'
+            move_2 = None
+            move_3 = None
+        elif starter == 'magikarp':
+            move_1 = 'splash'
+            move_2 = None
+            move_3 = None
+        elif starter == 'eevee':
+            move_1 = 'sand-attack'
+            move_2 = 'tackle'
+            move_3 = None
+        elif starter == 'porygon':
+            move_1 = 'sharpen'
+            move_2 = 'tackle'
+            move_3 = None
+        elif starter == 'omanyte':
+            move_1 = 'water gun'
+            move_2 = 'withdraw'
+            move_3 = None
+        elif starter == 'kabuto':
+            move_1 = 'harden'
+            move_2 = 'scratch'
+            move_3 = None
+        elif starter == 'dratini':
+            move_1 = 'leer'
+            move_2 = 'wrap'
+            move_3 = None
 
-        # Update database
-        data = (f"{ctx.author.name}", f"{ctx.guild.id}", 0, 0, 10, 0, 0, 5, 0, 0, 0, f"{starter}", None, None, None, None, None, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-        query = "INSERT INTO Trainers (username, guild_id, money, badges, pokeballs, greatballs, ultraballs, potions, super_potions, hyper_potions, full_restores, pokemon_1, pokemon_2, pokemon_3, pokemon_4, pokemon_5, pokemon_6, tm01, tm02, tm03, tm04, tm05, tm06, tm07, tm08, tm09, tm10, tm11, tm12, tm13, tm14, tm15, tm16, tm17, tm18, tm19, tm20, tm21, tm22, tm23, tm24, tm25, tm26, tm27, tm28, tm29, tm30, tm31, tm32, tm33, tm34, tm35, tm36, tm37, tm38, tm39, tm40, tm41, tm42, tm43, tm44, tm45, tm46, tm47, tm48, tm49, tm50) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        # Data to update trainer table
+        data = (f"{ctx.author.name}", f"{ctx.guild.id}", 0, 0, 10, 0, 0, 5, 0, 0, 0, f"{starter}", None, None, None, None, None, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        query = "INSERT INTO Trainers (username, guild_id, money, badges, pokeballs, greatballs, ultraballs, potions, super_potions, hyper_potions, full_restores, pokemon_1, pokemon_2, pokemon_3, pokemon_4, pokemon_5, pokemon_6, fire_stones, water_stones, thunder_stones, leaf_stones, moon_stones, tm01, tm02, tm03, tm04, tm05, tm06, tm07, tm08, tm09, tm10, tm11, tm12, tm13, tm14, tm15, tm16, tm17, tm18, tm19, tm20, tm21, tm22, tm23, tm24, tm25, tm26, tm27, tm28, tm29, tm30, tm31, tm32, tm33, tm34, tm35, tm36, tm37, tm38, tm39, tm40, tm41, tm42, tm43, tm44, tm45, tm46, tm47, tm48, tm49, tm50) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
-        pokemon_data = (f"{ctx.author.name}", f"{ctx.guild.id}", f"{starter}", 5, 125, 91, )
+        # Set starter stats
+        cursor.execute(f"SELECT * FROM Stats WHERE name = '{starter}'")
+        stats = cursor.fetchone()
+        
+        hp = random.randint((stats['hp']) + 5, (stats['hp']) + 15)
+        attack = random.randint((stats['attack']) + 5, (stats['attack']) + 15)
+        defense = random.randint((stats['defense']) + 5, (stats['defense']) + 15)
+        special_attack = random.randint((stats['special_attack']) + 5, (stats['special_attack']) + 15)
+        special_defense = random.randint((stats['special_defense']) + 5, (stats['special_defense']) + 15)
+        speed = random.randint((stats['speed']) + 5, (stats['speed']) + 15)
+        
+        # Data to update pokemon table
+        pokemon_data = (f"{ctx.author.name}", f"{ctx.guild.id}", f"{starter}", 5, 125, 91, move_1, move_2, move_3, None, hp, hp, attack, defense, special_attack, special_defense, speed, 0, 0, 0, 0, 0, 0)
+        pokemon_query = "INSERT INTO Pokemon (username, guild_id, name, level, exp, next_level_exp, move_1, move_2, move_3, move_4, current_hp, max_hp, attack, defense, special_attack, special_defense, speed, asleep, poisoned, paralyzed, burned, confused, frozen) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
+        # Update database tables
         try:
             cursor.execute(query, data)
         except Exception as e:
             print(e)
             return await ctx.send("Error creating trainer in database.")
+        
+        try:
+            cursor.execute(pokemon_query, pokemon_data)
+        except Exception as e:
+            print(e)
+            return await ctx.send("Error creating pokemon in database.")
 
     # Delete a pokemon trainer    
     async def delete_trainer(self, ctx, cursor):
