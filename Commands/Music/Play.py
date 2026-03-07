@@ -50,6 +50,7 @@ class Play(commands.Cog):
                         return await ctx.send("The YouTube link is invalid!")
             except Exception as e:
                 print(e)
+                return await ctx.send("An error occurred while processing the YouTube link. Please try again.")
 
         # User entered a query
         else:
@@ -66,13 +67,17 @@ class Play(commands.Cog):
     async def searchQuery(self, ctx, args, titles, urls):
         # Get a YouTube metadata from user's query
         with yt_dlp.YoutubeDL(YDL_OPTIONS) as ydl:
-            url = None
-            info_dictionary = ydl.extract_info(f"ytsearch:{args}", download=False)
-            if 'entries' in info_dictionary:
-                info = info_dictionary['entries'][0]
-                titles.append(info["title"])
-                urls.append(info["webpage_url"])
-                url = info['url']
+            try:
+                url = None
+                info_dictionary = ydl.extract_info(f"ytsearch:{args}", download=False)
+                if 'entries' in info_dictionary:
+                    info = info_dictionary['entries'][0]
+                    titles.append(info["title"])
+                    urls.append(info["webpage_url"])
+                    url = info['url']
+            except Exception as e:
+                print(e)
+                return await ctx.send("An error occurred while searching for your query. Please try again.")
         return url
 
     async def searchPlaylist(self, ctx, args, titles, urls):
@@ -95,7 +100,7 @@ class Play(commands.Cog):
                     return None
             except Exception as e:
                 print(e)
-                return None
+                return await ctx.send("An error occurred while searching for the playlist. Please try again.")
 
     async def addTrack(self, ctx, tracks, titles, webpage_urls):
         # Get guild id
