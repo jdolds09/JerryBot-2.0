@@ -4,7 +4,7 @@ import yt_dlp
 
 YDL_PLAYLIST_OPTIONS = {'format': 'bestaudio', 'noplaylist' : False, 'no_warnings': True, 'skip_download': True, 'ignoreerrors': True, 'extract_flat': 'in_playlist', 'force_generic_extractor': True}
 YDL_OPTIONS = {'format': 'bestaudio', 'noplaylist' : True, 'ignoreerrors': True, 'no_warnings': True}
-FFMPEG_OPTIONS = {"before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",'options' : '-vn -c:a pcm_s16le output.raw'}
+FFMPEG_OPTIONS = {"before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",'options' : '-vn -c:a pcm_s16le -ar 44100 -ac 2'}
 
 class Play(commands.Cog):
     def __init__(self, bot):
