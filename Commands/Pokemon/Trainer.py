@@ -449,12 +449,12 @@ class Trainer(commands.Cog):
         cursor.execute(f"SELECT * FROM Stats WHERE name = '{starter}'")
         stats = cursor.fetchone()
         
-        hp = random.randint((stats['hp']) + 5, (stats['hp']) + 15)
-        attack = random.randint((stats['attack']) + 5, (stats['attack']) + 15)
-        defense = random.randint((stats['defense']) + 5, (stats['defense']) + 15)
-        special_attack = random.randint((stats['special_attack']) + 5, (stats['special_attack']) + 15)
-        special_defense = random.randint((stats['special_defense']) + 5, (stats['special_defense']) + 15)
-        speed = random.randint((stats['speed']) + 5, (stats['speed']) + 15)
+        hp = random.randint((stats['hp'] + 5), (stats['hp'] + 15))
+        attack = random.randint((stats['attack'] + 5), (stats['attack'] + 15))
+        defense = random.randint((stats['defense'] + 5), (stats['defense'] + 15))
+        special_attack = random.randint((stats['special_attack'] + 5), (stats['special_attack'] + 15))
+        special_defense = random.randint((stats['special_defense'] + 5), (stats['special_defense'] + 15))
+        speed = random.randint((stats['speed'] + 5), (stats['speed'] + 15))
         
         # Data to update pokemon table
         pokemon_data = (f"{ctx.author.name}", f"{ctx.guild.id}", f"{starter}", 5, 125, 91, move_1, move_2, move_3, None, hp, hp, attack, defense, special_attack, special_defense, speed, 0, 0, 0, 0, 0, 0)
@@ -480,6 +480,13 @@ class Trainer(commands.Cog):
         trainer = cursor.fetchone()
         if not trainer:
             return await ctx.send("You don't have a trainer dumbass.")
+        
+        # Delete trainer's pokemon
+        try:
+            cursor.execute(f"DELETE FROM Pokemon WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
+        except Exception as e:
+            print(e)
+            return await ctx.send("Error deleting trainer's pokemon from database.")
         
         # Delete trainer
         try:
