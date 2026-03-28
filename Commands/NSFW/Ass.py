@@ -66,6 +66,7 @@ class Ass(commands.Cog):
                 image_string = f"{image}"
                 # If image is in preview or gallery format, remove from list and select another url
                 while "preview" in image_string or "gallery" in image_string:
+                    image_string = ""
                     if len(image_urls) > 0:
                         image_urls.remove(image)
                         if len(image_urls) > 0:
@@ -73,11 +74,12 @@ class Ass(commands.Cog):
                             image_string = f"{image}"
 
                 while "jpeg" not in image_string and "jpg" not in image_string and "png" not in image_string and "gif" not in image_string:
+                    image_string = ""
                     if len(image_urls) > 0:
                         image_urls.remove(image)
-                        if len(image_urls) > 0:
-                            image = random.choice(image_urls)
-                            image_string = f"{image}"
+                    if len(image_urls) > 0:
+                        image = random.choice(image_urls)
+                        image_string = f"{image}"
                     else:
                         break
 

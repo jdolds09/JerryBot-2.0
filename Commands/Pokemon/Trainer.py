@@ -15,7 +15,7 @@ class Trainer(commands.Cog):
                                  'bellsprout', 'tentacool', 'geodude','ponyta', 'slowpoke', 'magnemite', 'farfetchd', 'doduo', 'seel', 
                                  'grimer', 'shellder', 'gastly', 'onix', 'drowzee', 'krabby', 'voltorb', 'exeggcute', 'cubone', 'hitmonlee', 
                                  'hitmonchan', 'lickitung', 'koffing', 'rhyhorn', 'chansey', 'tangela', 'horsea', 'goldeen', 
-                                 'staryu', 'magikarp', 'eevee', 'porygon', 'omanyte', 'kabuto', 'dratini']
+                                 'staryu', 'magikarp', 'eevee', 'porygon', 'omanyte', 'kabuto']
 
     # Trainer function
     @commands.command()
@@ -35,10 +35,6 @@ class Trainer(commands.Cog):
             print(e)
             return await ctx.send("Error connecting to database.")
         
-        # Display trainer info
-        if len(args) == 0 or "info" in args[0].lower():
-            await self.trainer_info(ctx, cursor)
-
         # Display trainer's pokemon
         if "pokemon" in args[0].lower():
             await self.trainer_pokemon(ctx, cursor)
@@ -51,11 +47,11 @@ class Trainer(commands.Cog):
         elif "delete" in args[0].lower():
             await self.delete_trainer(ctx, cursor)
 
-        # Invalid argument after !trainer command
+        # Display trainer info
         else:
-            return await ctx.send("Invalid argument after !trainer command.")
+            await self.trainer_info(ctx, cursor)
 
-    # Display trainer info   
+    # Display trainer info function  
     async def trainer_info(self, ctx, cursor):
         # Get trainer info from database
         try:
@@ -140,6 +136,7 @@ class Trainer(commands.Cog):
                 return await ctx.send("Error retrieving pokemon info from database.")
             await ctx.send(f"**{trainer['pokemon_6']}** - Level {pokemon['level']}")
 
+    # Display trainer's pokemon function
     async def trainer_pokemon(self, ctx, cursor):
         # Get trainer's pokemon from database
         try:
@@ -162,9 +159,9 @@ class Trainer(commands.Cog):
             await ctx.send(f"**{pokemon['name']}** - Level {pokemon['level']}")
             i += 1
 
-        await ctx.send(f"**Pokemon caught:** {i}")
+        await ctx.send(f"**Pokemon caught:** {i}/150")
 
-    # Create a pokemon trainer
+    # Create a pokemon trainer function
     async def create_trainer(self, ctx, cursor):
         # See if user already has a trainer
         cursor.execute(f"SELECT * FROM Trainers WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
@@ -436,10 +433,6 @@ class Trainer(commands.Cog):
             move_1 = 'harden'
             move_2 = 'scratch'
             move_3 = None
-        elif starter == 'dratini':
-            move_1 = 'leer'
-            move_2 = 'wrap'
-            move_3 = None
 
         # Data to update trainer table
         data = (f"{ctx.author.name}", f"{ctx.guild.id}", 0, 0, 10, 0, 0, 5, 0, 0, 0, f"{starter}", None, None, None, None, None, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
@@ -455,10 +448,12 @@ class Trainer(commands.Cog):
         special_attack = random.randint((stats['special_attack'] + 5), (stats['special_attack'] + 15))
         special_defense = random.randint((stats['special_defense'] + 5), (stats['special_defense'] + 15))
         speed = random.randint((stats['speed'] + 5), (stats['speed'] + 15))
+        type_1 = stats['type_1']
+        type_2 = stats['type_2']
         
         # Data to update pokemon table
-        pokemon_data = (f"{ctx.author.name}", f"{ctx.guild.id}", f"{starter}", 5, 125, 91, move_1, move_2, move_3, None, hp, hp, attack, defense, special_attack, special_defense, speed, 0, 0, 0, 0, 0, 0)
-        pokemon_query = "INSERT INTO Pokemon (username, guild_id, name, level, exp, next_level_exp, move_1, move_2, move_3, move_4, current_hp, max_hp, attack, defense, special_attack, special_defense, speed, asleep, poisoned, paralyzed, burned, confused, frozen) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        pokemon_data = (f"{ctx.author.name}", f"{ctx.guild.id}", f"{starter}", f"{type_1}", f"{type_2}", 5, 125, 91, f"{move_1}", f"{move_2}", f"{move_3}", None, hp, hp, attack, defense, special_attack, special_defense, speed, 0, 0, 0, 0, 0, 0)
+        pokemon_query = "INSERT INTO Pokemon (username, guild_id, name, type_1, type_2, level, exp, next_level_exp, move_1, move_2, move_3, move_4, current_hp, max_hp, attack, defense, special_attack, special_defense, speed, asleep, poisoned, paralyzed, burned, confused, frozen) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
         # Update database tables
         try:
@@ -470,10 +465,11 @@ class Trainer(commands.Cog):
         try:
             cursor.execute(pokemon_query, pokemon_data)
         except Exception as e:
+            print('shit')
             print(e)
             return await ctx.send("Error creating pokemon in database.")
 
-    # Delete a pokemon trainer    
+    # Delete a pokemon trainer function   
     async def delete_trainer(self, ctx, cursor):
         # See if user has a trainer
         cursor.execute(f"SELECT * FROM Trainers WHERE username = '{ctx.author.name}' AND guild_id = '{ctx.guild.id}'")
