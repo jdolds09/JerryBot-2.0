@@ -9,6 +9,9 @@ load_dotenv()
 token = os.getenv("DISCORD_TOKEN")
 grok_client = OpenAI(api_key=os.getenv("GROK_TOKEN"), base_url="https://api.x.ai/v1")
 
+if not token:
+    raise RuntimeError("DISCORD_TOKEN is not set. Add it to your .env file.")
+
 # Give JerryBot 2.0 all the permissions
 intents = discord.Intents.all()
 
@@ -137,4 +140,8 @@ async def main():
         await help_load()
         await bot.start(token)
 
-asyncio.run(main())
+if __name__ == "__main__":
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        print("JerryBot2.0 shutting down")

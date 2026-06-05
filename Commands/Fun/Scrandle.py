@@ -86,7 +86,7 @@ class Scrandle(commands.Cog):
                             image_string = f"{image}"
                         else:
                             break
-
+                    
             # Post the image
             if image_string:
                 image_urls = []
