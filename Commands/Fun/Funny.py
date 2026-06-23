@@ -36,8 +36,20 @@ class Funny(commands.Cog):
             search_url = f"https://reddit.com/r/{subreddit}/{search_mode}.json"
 
         # Get JSON data
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WIN64; x64) AppleWebKit/537.36'}
-        response = requests.get(search_url, headers=headers, timeout=60)
+        session = requests.Session()
+        session.cookies.set("reddit_session", os.getenv("REDDIT_SESSION"))
+
+        headers = {
+            'Authorization': f'Bearer {os.getenv("TOKEN_V2")}',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+            }
+
+        try:
+            response = session.get(search_url, headers=headers, timeout=60)
+        except Exception as e:
+            print(e)
+
+
         data = response.json().get("data", {})
         children = data.get("children", [])
 
