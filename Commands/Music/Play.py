@@ -71,12 +71,19 @@ class Play(commands.Cog):
         with yt_dlp.YoutubeDL(YDL_OPTIONS) as ydl:
             try:
                 url = None
+                await ctx.send("fuck")
                 info_dictionary = ydl.extract_info(f"ytsearch:{args}", download=False)
+                await ctx.send("fuck")
                 if 'entries' in info_dictionary:
+                    await ctx.send("fuck")
                     info = info_dictionary['entries'][0]
+                    await ctx.send("fuck")
                     titles.append(info["title"])
+                    await ctx.send("fuck")
                     urls.append(info["webpage_url"])
+                    await ctx.send("fuck")
                     url = info['url']
+                    await ctx.send("fuck")
             except Exception as e:
                 print(e)
                 return await ctx.send("An error occurred while searching for your query. Please try again.")
