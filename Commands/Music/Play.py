@@ -5,6 +5,7 @@ import os
 
 YDL_PLAYLIST_OPTIONS = {'noplaylist' : False, 'no_warnings': True, 'skip_download': True, 'ignoreerrors': True, 'extract_flat': 'in_playlist', 'force_generic_extractor': True, 'cookiefile': 'cookies.txt'}
 YDL_OPTIONS = {
+    'format': 'ba',
     'noplaylist': True,
     'extract_flat': False,
     'cookiefile': 'cookies.txt'}
