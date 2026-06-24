@@ -7,13 +7,7 @@ YDL_PLAYLIST_OPTIONS = {'noplaylist' : False, 'no_warnings': True, 'skip_downloa
 YDL_OPTIONS = {
     'format': 'ba/b',
     'noplaylist': True,
-    'nocheckcertificate': True,
-    'ignoreerrors': False,
-    'logtostderr': False,
-    'quiet': True,
-    'no_warnings': True,
-    'default_search': 'auto',
-    'source_address': '0.0.0.0',
+    'extract_flat': False,
     'cookiefile': 'cookies.txt'}
 FFMPEG_OPTIONS = {"before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",'options' : '-vn -c:a pcm_s16le -b:a 192k'}
 ffmpeg_path = os.path.join(os.getcwd(), "ffmpeg", "ffmpeg.exe")
