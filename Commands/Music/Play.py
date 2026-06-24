@@ -85,7 +85,7 @@ class Play(commands.Cog):
                     url = info['url']
                     await ctx.send("fuck")
             except Exception as e:
-                print(e)
+                await ctx.send(f"{e}")
                 return await ctx.send("An error occurred while searching for your query. Please try again.")
         return url
 
