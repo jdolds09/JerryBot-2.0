@@ -3,8 +3,9 @@ from discord.ext import commands
 import yt_dlp
 import os
 
-YDL_PLAYLIST_OPTIONS = {'noplaylist' : False, 'no_warnings': True, 'skip_download': True, 'ignoreerrors': True, 'extract_flat': 'in_playlist', 'force_generic_extractor': True}
+YDL_PLAYLIST_OPTIONS = {'noplaylist' : False, 'no_warnings': True, 'skip_download': True, 'ignoreerrors': True, 'extract_flat': 'in_playlist', 'force_generic_extractor': True, 'cookiefile': 'cookies.txt'}
 YDL_OPTIONS = {
+    'format': 'ba/b',
     'noplaylist': True,
     'nocheckcertificate': True,
     'ignoreerrors': False,
