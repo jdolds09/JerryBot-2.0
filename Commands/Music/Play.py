@@ -4,7 +4,19 @@ import yt_dlp
 import os
 
 YDL_PLAYLIST_OPTIONS = {'noplaylist' : False, 'no_warnings': True, 'skip_download': True, 'ignoreerrors': True, 'extract_flat': 'in_playlist', 'force_generic_extractor': True}
-YDL_OPTIONS = {'noplaylist' : True, 'format': 'bestaudio/best', 'no_warnings': True, 'skip_download': True, 'ignoreerrors': True}
+YDL_OPTIONS = {'format': 'bestaudio/best',
+    'extractaudio': True,
+    'audioformat': 'mp3',
+    'outtmpl': '%(extractor)s-%(id)s-%(title)s.%(ext)s',
+    'restrictfilenames': True,
+    'noplaylist': False,
+    'nocheckcertificate': True,
+    'ignoreerrors': False,
+    'logtostderr': False,
+    'quiet': True,
+    'no_warnings': True,
+    'default_search': 'auto',
+    'source_address': '0.0.0.0'}
 FFMPEG_OPTIONS = {"before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",'options' : '-vn -c:a pcm_s16le -b:a 192k'}
 ffmpeg_path = os.path.join(os.getcwd(), "ffmpeg", "ffmpeg.exe")
 
