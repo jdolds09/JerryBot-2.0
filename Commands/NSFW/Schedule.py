@@ -1,9 +1,10 @@
 import asyncio
-
 import discord
 from discord.ext import commands
 import requests
 import random
+import os
+from dotenv import load_dotenv
 
 class Schedule(commands.Cog):
     def __init__(self, bot):
