@@ -5,9 +5,7 @@ import os
 
 YDL_PLAYLIST_OPTIONS = {'format_sort': ['vcodec:h264', 'res', 'acodec:aac'],'noplaylist' : False, 'no_warnings': True, 'skip_download': True, 'ignoreerrors': True, 'extract_flat': 'in_playlist', 'force_generic_extractor': True, 'cookiefile': 'cookies.txt'}
 YDL_OPTIONS = {
-    'format_sort': ['vcodec:h264', 'res', 'acodec:aac'],
-    'noplaylist': True,
-    'extract_flat': False,
+    'format_sort': ['vcodec:h264', 'res:720', 'acodec:aac'],
     'cookiefile': 'cookies.txt'}
 FFMPEG_OPTIONS = {"before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",'options' : '-vn -c:a pcm_s16le -b:a 192k'}
 ffmpeg_path = os.path.join(os.getcwd(), "ffmpeg", "ffmpeg.exe")
