@@ -1,12 +1,10 @@
 import discord
 from discord.ext import commands
 import yt_dlp
-import os
 
-YDL_PLAYLIST_OPTIONS = {'format_sort': ['vcodec:h264', 'res:720', 'acodec:aac'],'noplaylist' : False, 'no_warnings': True, 'skip_download': True, 'ignoreerrors': True, 'extract_flat': 'in_playlist', 'force_generic_extractor': True, 'cookiefile': 'cookies.txt'}
-YDL_OPTIONS = {'cookiefile': 'cookies.txt'}
+YDL_PLAYLIST_OPTIONS = {'noplaylist' : False, 'no_warnings': True, 'skip_download': True, 'ignoreerrors': True, 'extract_flat': 'in_playlist', 'force_generic_extractor': True}
+YDL_OPTIONS = {'noplaylist' : True, 'ignoreerrors': True, 'no_warnings': True}
 FFMPEG_OPTIONS = {"before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",'options' : '-vn -c:a pcm_s16le -b:a 192k'}
-ffmpeg_path = os.path.join(os.getcwd(), "ffmpeg", "ffmpeg.exe")
 
 class Play(commands.Cog):
     def __init__(self, bot):
@@ -78,7 +76,7 @@ class Play(commands.Cog):
                     urls.append(info["webpage_url"])
                     url = info['url']
             except Exception as e:
-                await ctx.send(f"{e}")
+                print(e)
                 return await ctx.send("An error occurred while searching for your query. Please try again.")
         return url
 
@@ -176,7 +174,7 @@ class Play(commands.Cog):
 
                 # Play!
                 try:
-                    source = discord.FFmpegPCMAudio(url, executable=ffmpeg_path, **FFMPEG_OPTIONS)
+                    source = discord.FFmpegPCMAudio(url, **FFMPEG_OPTIONS)
                     ctx.voice_client.play(source, after=lambda _:self.bot.loop.create_task(self.playTrack(ctx, tracks)))
                 except Exception as e:
                     print(e)
